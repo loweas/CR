@@ -1,6 +1,6 @@
 ---
 title: "The economic impact of climate change on coral reef in the Main Hawaiian Islands"
-author: "ALM"
+author: "Ashley Lowe Mackenzie"
 format:
   html:
     code-fold: true        # Enables dropdown for code
@@ -113,7 +113,19 @@ x1$cost[x1$siteID == 388] <- x1$cost[x1$siteID == 359] + 100
 
 We will need to the outputs of biomass from Atlantis for the nearshore environment. These outputs will then be aggregated by polygon. The percentage change predict each year will provide us the unit that can be used in the Economic Model from previous section.
 
-The following code does this for scenario 1-3
+### Base level Coral
+
+The base level of coral is the average biomass of 2015-2020 for each near polygon.
+
+![](images/match_boxs.png)
+
+### Yearly Percent Change
+
+Then for each time step out to 2100 we sum up the biomass of coral reef:
+
+$C_{pt} = \sum V_{pt} / \sum V_{pt}=0$
+
+The following code does this for scenario SSP1 1-3. The file required if from the Atlantis which is to large for github so please request.
 
 ```{r eval=FALSE}
 
@@ -208,7 +220,9 @@ SSP2=spread(percentchangeSSP2, time, Coral_perchange)
 
 For each predicted scenario from Atlantis (ssp1-3) we will need to run a loop for each time step calculating the welfare changes for each grid and recreational location.
 
-### First predict SSP1
+### Predict SSP1
+
+This loop runs through each time step and calculate the compensating variation with each change in coral biomass overtime.
 
 ```{r eval=FALSE}
 ### parameters
@@ -502,10 +516,6 @@ Two datasets were created in the prediction modeling.
 1.  Aggregated Totals by population and income weighted by Island Each Year
 2.  Raw Welfare Predictions per KM Grid
 
-The raw welfare estimates are not weighted by income or population. The next code snippet will calculate the the total WTP by income track and population density. This dataset could be of interest if you want to show how the welfare changes overtime.
-
-For out paper, I took the snipets of the welfare and coral measurements from the years 2030, 2050 and 2100. This I brought into qgis.
-
 ```{r eval=FALSE}
 all_df$SSP1_TotalWTP=(all_df$SSP1*all_df$incometran_track*all_df$grid_km_censusblock_Pop18_densityKM * 365) 
 all_df$SSP2_TotalWTP=(all_df$SSP2*all_df$incometran_track*all_df$grid_km_censusblock_Pop18_densityKM * 365) 
@@ -632,7 +642,11 @@ ggplot(allssps_islands, aes(x = Year)) +
 
 ### Snap Shot within Island
 
-To take a snap shot of each year we will look at 2020, 2050, 2075 and 2100. Then map out each of the welfare of each km sqared for each person. First you have to create the intervals and the color scheme.
+The raw welfare estimates are not weighted by income or population. The next code snippet will calculate the the total WTP by income track and population density. This dataset could be of interest if you want to show how the welfare changes overtime.
+
+For our paper, I took the snippets of the welfare and coral measurements from the years 2030, 2050 and 2100 and then improved the visuals I used qgis.
+
+Here I have taken a snap shot of each year we will look at 2020, 2050, 2075 and 2100. Then map out each of the welfare of each km squared for each person.
 
 ![](images/maps.png)
 

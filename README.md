@@ -1,17 +1,8 @@
-# CR
----
-title: "The economic impact of climate change on coral reef in the Main Hawaiian Islands"
+
+
+Code for title: "The economic impact of climate change on coral reef in the Main Hawaiian Islands"
 author: "Ashley Lowe Mackenzie et. al"
-format:
-  html:
-    code-fold: true        # Enables dropdown for code
-    code-tools: true       # (Optional) Adds buttons like "Show Code"
-    code-summary: "Show code"  # (Optional) Custom label for dropdown
-    toc: true
-    toc-location: left
-    page-layout: full
-editor: visual
----
+
 
 # Coral Reef Hawaii
 

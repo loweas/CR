@@ -1,10 +1,10 @@
 
 
-Code for title: "The economic impact of climate change on coral reef in the Main Hawaiian Islands"
-author: "Ashley Lowe Mackenzie et. al"
+# Code for title: "The economic impact of climate change on coral reef in the Main Hawaiian Islands"
+## author: "Ashley Lowe Mackenzie et. al"
 
 
-# Coral Reef Hawaii
+## Coral Reef Hawaii
 
 The following code will produce predicts for changes welfare based on changes in conditions for nearshore environmental quality for the main Hawaii island. The main impact estimated is from losses of coral reef biomass. This is down through to models:
 

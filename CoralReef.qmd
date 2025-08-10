@@ -1,11 +1,14 @@
 ---
 title: "The economic impact of climate change on coral reef in the Main Hawaiian Islands"
-author: "Ashley Lowe Mackenzie"
+author: "Ashley Lowe Mackenzie et. al"
 format:
   html:
     code-fold: true        # Enables dropdown for code
     code-tools: true       # (Optional) Adds buttons like "Show Code"
     code-summary: "Show code"  # (Optional) Custom label for dropdown
+    toc: true
+    toc-location: left
+    page-layout: full
 editor: visual
 ---
 
@@ -757,7 +760,45 @@ These produce animations of changes in annual welfare to the year 2100
 -   The Markdown line right after brings the GIF into the rendered output.
 -   Make sure the GIF file path is correct relative to the document, or specify the path if needed.
 
-### SSP1
+Legend for the following animations
+
+```{r}
+color_palette <- c(
+  "≤ -1M"        = "darkred",
+  "-1M to -100K" = "brown",
+  "-100K to -1K" = "lightcoral",
+  "-1K to -100"  = "pink",
+  "-100 to 0"    = "mistyrose",
+  "0"            = "white",
+  "0 to 100"     = "greenyellow",
+  "100 to 1K"    = "limegreen",
+  "> 10K"        = "darkgreen"
+)
+
+# Create a blank plot canvas
+plot(
+  NULL, xaxt = "n", yaxt = "n", bty = "n",
+  xlab = "", ylab = "", xlim = c(0, 1), ylim = c(0, 1)
+)
+
+# Draw the standalone legend
+legend(
+  "center",
+  legend = names(color_palette),
+  fill   = unname(color_palette),
+  bty    = "o",           # border around legend
+  cex    = 1.0,           # text size
+  title  = "Total WTP",
+  title.cex = 1.2,        # title size
+  ncol   = 1,
+  xpd    = TRUE
+)
+
+```
+
+### SSP1 
+
+2030\>\>\>\>2100
 
 ![](images/hawaii_wtpssp1_animation.gif)
 
@@ -791,6 +832,8 @@ anim_save("hawaii_wtpssp1_animation.gif", animation = last_animation())
 
 ### SSP2
 
+2030\>\>\>\>2100
+
 ![](images/hawaii_wtpssp2_animation.gif)
 
 ```{r eval=FALSE}
@@ -819,6 +862,8 @@ anim_save("hawaii_wtpssp2_animation.gif", animation = last_animation())
 ```
 
 ### SSP3
+
+2030\>\>\>\>2100
 
 ![](images/hawaii_wtpssp3_animation.gif)
 

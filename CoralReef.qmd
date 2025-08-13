@@ -14,10 +14,10 @@ editor: visual
 
 # Coral Reef Hawaii
 
-The following code will produce predicts for changes welfare based on changes in conditions for nearshore environmental quality for the main Hawaii island. The main impact estimated is from losses of coral reef biomass. This is down through to models:
+The following code estimates welfare changes associated with varying conditions of nearshore environmental quality on the island of Hawai\'i. The primary impact considered is the loss of coral reef biomass, which serves as an environmental and economic asset. Welfare effects are estimated through two distinct models that capture changes in household utility and behavioral responses to environmental degradation. These models use observed visitation and population data to approximate demand, and they translate changes in reef quality into utility impacts, following standard approaches in environmental and recreational economics. The two models include:
 
 1.  An Economic Model using a random utility framework from [Fezzi. et al 2023](https://doi.org/10.1016/j.ecolecon.2022.107628)
-2.  An Atlantic Model using a biophysical model which estimates changes to ecological conditions.
+2.  Atlantic Biophysical Sub-Model which estimates changes to ecological conditions.
 
 The graphical representation of this process is illustrated below
 
@@ -25,7 +25,7 @@ The graphical representation of this process is illustrated below
 
 ## Running Code
 
-Call these libraries and the source codes from the Original Study. This will provide the coefficients from Random Utility model
+This section calls the necessary R packages and sources external scripts from the original study. These scripts provide the estimated coefficients from the Random Utility Model (RUM), which will be used to simulate individual preferences and estimate welfare changes under different environmental quality scenarios. These parameters reflect the marginal utility of various site attributes, including coral reef biomass, travel cost, and environmental conditions.
 
 ```{r}
 
@@ -55,7 +55,9 @@ m1
 
 ## Travel Cost
 
-The following code will take the economic data collected from each island and calculate the travel cost for each grid to each location as previous estimated following Fezzi. et al 2023
+The following code calculates the **travel cost** from each residential grid to each recreation site across the Hawaiian Islands. It uses economic and geographic data collected from each island, including household income, travel distance, and mode assumptions.
+
+Travel costs are estimated following the methodology of **Fezzi et al. (2023)**, who incorporate both time and monetary expenses into a unified measure of generalized cost. These estimates serve as one of the key explanatory variables in the Random Utility Model (RUM), which is used to simulate recreation site choice.
 
 ```{r eval=FALSE}
 
@@ -114,7 +116,15 @@ x1$cost[x1$siteID == 388] <- x1$cost[x1$siteID == 359] + 100
 
 ## Atlantis Model
 
-We will need to the outputs of biomass from Atlantis for the nearshore environment. These outputs will then be aggregated by polygon. The percentage change predict each year will provide us the unit that can be used in the Economic Model from previous section.
+To assess environmental changes in the nearshore ecosystem, we incorporate biomass outputs from the Atlantis ecosystem model. These outputs represent projected ecological dynamics---specifically, coral reef and associated species biomass---under different management and environmental scenarios.
+
+The biomass values will be:
+
+-   Spatially aggregated by polygon to match the resolution used in the economic model.
+
+-   Processed annually to calculate percentage changes in biomass relative to the baseline year.
+
+These percentage changes provide the key environmental quality metric (e.g., reef health) that feeds into the Economic Model outlined in the previous section. Specifically, the estimated changes will modify site attributes within the Random Utility Model framework to simulate how changes in reef biomass affect recreational behavior and welfare.
 
 ### Base level Coral
 
@@ -221,11 +231,39 @@ SSP2=spread(percentchangeSSP2, time, Coral_perchange)
 
 ## Prediction Model
 
-For each predicted scenario from Atlantis (ssp1-3) we will need to run a loop for each time step calculating the welfare changes for each grid and recreational location.
+For each scenario predicted by the Atlantis ecosystem model (e.g., SSP1, SSP2, SSP3), we run a simulation loop across all time steps to estimate the welfare impacts of changing nearshore coral biomass.
+
+Specifically, for each year in the scenario:
+
+-   Biomass outputs are aggregated spatially (by polygon or site).
+
+-   The percentage change in coral reef biomass relative to the baseline is calculated.
+
+-   These changes are passed into the Random Utility Model, updating site attributes for each grid-cell household.
+
+-   Compensating Variation (CV) is then computed to measure the change in household welfare due to environmental change.
+
+This process is repeated for each:
+
+-   Grid cell (representing origin locations of visitors)
+
+-   Recreational site (destination choices)
+
+-   Time step (e.g., yearly from 2025 to 2100)
+
+-   Scenario (SSP1--3)
 
 ### Predict SSP1
 
-This loop runs through each time step and calculate the compensating variation with each change in coral biomass overtime.
+Below is a loop (conceptual or in code) that:
+
+-   Iterates through each time step of the SSP1 scenario
+
+-   Updates coral biomass conditions
+
+-   Recalculates utilities and choice probabilities
+
+-   Estimates welfare change (CV) for each grid-location pair
 
 ```{r eval=FALSE}
 ### parameters
@@ -577,7 +615,21 @@ write.csv(df1, file="allssps_islands.csv")
 
 ### Across Island aggregation
 
-For the aggregated totals by island, this snipet will produce the projected table of total welfare loss using the circular A-4 discounting rate and a pluralistic discounting rate. We also incorporate the projected population growth under SSP1-SSP3 for the state of Hawaii.
+### Across-Island Aggregation of Welfare Loss
+
+This code snippet produces a projected summary table of total welfare loss by island, under each scenario (SSP1--SSP3). The results are aggregated over time and space, incorporating:
+
+-   Annual compensating variation (CV) estimates at the grid level
+
+-   Population projections for the state of Hawai\'i under SSP1--SSP3, used to scale welfare impacts
+
+    Two discounting frameworks:
+
+-   A standard constant discount rate (e.g., circular A-4 rate, typically 3%)
+
+-   A pluralistic (declining or hyperbolic) discount rate, reflecting alternative time preferences in environmental valuation
+
+These discounted totals provide a long-term estimate of the economic cost of environmental degradation (via coral biomass loss) under different future pathways. The final output summarizes welfare changes per island, scenario, and discounting method, supporting policy evaluation and prioritization.
 
 ![](images/islandgraphpluristic_new.png)
 
@@ -645,11 +697,15 @@ ggplot(allssps_islands, aes(x = Year)) +
 
 ### Snap Shot within Island
 
-The raw welfare estimates are not weighted by income or population. The next code snippet will calculate the the total WTP by income track and population density. This dataset could be of interest if you want to show how the welfare changes overtime.
+The raw welfare estimates generated in previous steps are not yet adjusted for differences in income levels or population density. The next code snippet computes total willingness to pay (WTP) by:
 
-For our paper, I took the snippets of the welfare and coral measurements from the years 2030, 2050 and 2100 and then improved the visuals I used qgis.
+-   Aggregating individual welfare estimates by income tract and grid cell
 
-Here I have taken a snap shot of each year we will look at 2020, 2050, 2075 and 2100. Then map out each of the welfare of each km squared for each person.
+-   Weighting by local population to reflect the total affected individuals
+
+This adjusted dataset is especially useful for understanding distributional impacts of environmental change and for producing spatially explicit visualizations of welfare loss.
+
+**In the paper we present 2030, 2050, 2100 but here we have also 2075**
 
 ![](images/maps.png)
 

@@ -3,16 +3,18 @@ title: "The economic impact of climate change on coral reef in the Main Hawaiian
 author: "Ashley Lowe Mackenzie et. al"
 format:
   html:
-    code-fold: true        # Enables dropdown for code
-    code-tools: true       # (Optional) Adds buttons like "Show Code"
-    code-summary: "Show code"  # (Optional) Custom label for dropdown
     toc: true
     toc-location: left
+    toc-depth: 3
+    toc-expand: true       # <-- THIS makes first-level headings expandable
+    sidebar: true
+    code-fold: true
+    code-summary: "Show code"
     page-layout: full
 editor: visual
 ---
 
-# Coral Reef Hawaii
+## Coral Reef Hawaii
 
 The following code estimates welfare changes associated with varying conditions of nearshore environmental quality on the island of Hawai'i. The primary impact considered is the loss of coral reef biomass, which serves as an environmental and economic asset. Welfare effects are estimated through two distinct models that capture changes in household utility and behavioral responses to environmental degradation. These models use observed visitation and population data to approximate demand, and they translate changes in reef quality into utility impacts, following standard approaches in environmental and recreational economics. The two models include:
 
@@ -23,7 +25,7 @@ The graphical representation of this process is illustrated below
 
 ![](images/Figure2.png)
 
-## Running Code
+# Running Code
 
 This section calls the necessary R packages and sources external scripts from the original study. These scripts provide the estimated coefficients from the Random Utility Model (RUM), which will be used to simulate individual preferences and estimate welfare changes under different environmental quality scenarios. These parameters reflect the marginal utility of various site attributes, including coral reef biomass, travel cost, and environmental conditions.
 
@@ -53,7 +55,7 @@ m1
 
 ```
 
-## Merge
+# Merge
 
 Here we are merging data sets of distance calculation of girded travel cost to each site named site_joins.
 
@@ -77,7 +79,7 @@ coasts <- sites[sites$coastal == 1 & sites$name!="Home",]
 
 ```
 
-## Atlantis Model
+# Atlantis Model
 
 To assess environmental changes in the nearshore ecosystem, we incorporate biomass outputs from the Atlantis ecosystem model. These outputs represent projected ecological dynamics---specifically, coral reef and associated species biomass---under different management and environmental scenarios.
 
@@ -89,13 +91,13 @@ The biomass values will be:
 
 These percentage changes provide the key environmental quality metric (e.g., reef health) that feeds into the Economic Model outlined in the previous section. Specifically, the estimated changes will modify site attributes within the Random Utility Model framework to simulate how changes in reef biomass affect recreational behavior and welfare.
 
-### Base level Coral
+## Base level Coral
 
 The base level of coral is the average biomass of 2015-2020 for each near polygon.
 
 ![](images/match_boxs.png)
 
-### Yearly Percent Change
+## Yearly Percent Change
 
 Then for each time step out to 2100 we sum up the biomass of coral reef:
 
@@ -192,7 +194,7 @@ SSP2=spread(percentchangeSSP2, time, Coral_perchange)
 
 ```
 
-## Travel Cost
+# Travel Cost
 
 The following code calculates the **travel cost** from each residential grid to each recreation site across the Hawaiian Islands. It uses economic and geographic data collected from each island, including household income, travel distance, and mode assumptions.
 
@@ -230,7 +232,7 @@ x1$cost[x1$siteID == 388] <- x1$cost[x1$siteID == 359] + 100
 
 ```
 
-## Prediction Model
+# Prediction Model
 
 For each scenario predicted by the Atlantis ecosystem model (e.g., SSP1, SSP2, SSP3), we run a simulation loop across all time steps to estimate the welfare impacts of changing nearshore coral biomass.
 
@@ -254,7 +256,7 @@ This process is repeated for each:
 
 -   Scenario (SSP1--3)
 
-### Predict SSP1
+## Predict SSP1
 
 Below is a loop (conceptual or in code) that:
 
@@ -330,7 +332,7 @@ colnames(all_df)[2]="SSP1"
 
 ```
 
-### Predict SSP2
+## Predict SSP2
 
 ```{r eval=FALSE}
 ####This is for SSP2
@@ -441,7 +443,7 @@ all_df=merge(all_df, all, all.x = TRUE)
 
 ```
 
-### Predict SSP3
+## Predict SSP3
 
 ```{r eval=FALSE}
 ####This is for SSP3
@@ -551,7 +553,7 @@ all_df=merge(all_df, all, all.x = TRUE)
 
 ```
 
-## Data Aggregation
+# Data Aggregation
 
 Two datasets were created in the prediction modeling.
 
@@ -614,9 +616,9 @@ write.csv(df1, file="allssps_islands.csv")
 
 ```
 
-### Across Island aggregation
+### 
 
-### Across-Island Aggregation of Welfare Loss
+## Across-Island Aggregation of Welfare Loss
 
 This code snippet produces a projected summary table of total welfare loss by island, under each scenario (SSP1--SSP3). The results are aggregated over time and space, incorporating:
 
@@ -696,7 +698,7 @@ ggplot(allssps_islands, aes(x = Year)) +
 
 ```
 
-### Snap Shot within Island
+## Snap Shot within Island
 
 The raw welfare estimates generated in previous steps are not yet adjusted for differences in income levels or population density. The next code snippet computes total willingness to pay (WTP) by:
 
@@ -809,7 +811,7 @@ ggplot(all_df %>% filter(Year %in% c(2020, 2050, 2075, 2100)),
 
 ```
 
-## Animation Welfare
+# Animation Welfare
 
 These produce animations of changes in annual welfare to the year 2100
 
@@ -949,4 +951,4 @@ animate(anim, nframes = 81, fps = 10, width = 800, height = 600, renderer = gifs
 anim_save("hawaii_wtpssp3_animation.gif", animation = last_animation())
 ```
 
-###
+### 

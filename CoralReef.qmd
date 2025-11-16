@@ -14,7 +14,7 @@ editor: visual
 
 # Coral Reef Hawaii
 
-The following code estimates welfare changes associated with varying conditions of nearshore environmental quality on the island of Hawai\'i. The primary impact considered is the loss of coral reef biomass, which serves as an environmental and economic asset. Welfare effects are estimated through two distinct models that capture changes in household utility and behavioral responses to environmental degradation. These models use observed visitation and population data to approximate demand, and they translate changes in reef quality into utility impacts, following standard approaches in environmental and recreational economics. The two models include:
+The following code estimates welfare changes associated with varying conditions of nearshore environmental quality on the island of Hawai'i. The primary impact considered is the loss of coral reef biomass, which serves as an environmental and economic asset. Welfare effects are estimated through two distinct models that capture changes in household utility and behavioral responses to environmental degradation. These models use observed visitation and population data to approximate demand, and they translate changes in reef quality into utility impacts, following standard approaches in environmental and recreational economics. The two models include:
 
 1.  An Economic Model using a random utility framework from [Fezzi. et al 2023](https://doi.org/10.1016/j.ecolecon.2022.107628)
 2.  Atlantic Biophysical Sub-Model which estimates changes to ecological conditions.
@@ -27,7 +27,7 @@ The graphical representation of this process is illustrated below
 
 This section calls the necessary R packages and sources external scripts from the original study. These scripts provide the estimated coefficients from the Random Utility Model (RUM), which will be used to simulate individual preferences and estimate welfare changes under different environmental quality scenarios. These parameters reflect the marginal utility of various site attributes, including coral reef biomass, travel cost, and environmental conditions.
 
-```{r}
+```{r eval=FALSE}
 
 
 library(dplyr)
@@ -37,14 +37,14 @@ library(sf)
 library(gganimate)
 
 ### load functions
-
-source("~/CR/codedata/dummier.R")
-source("~/CR/codedata/travel_cost.R")
-source("~/CR/codedata/gridplot.R")
+getwd()
+source("codedata/dummier.R")
+source("codedata/travel_cost.R")
+source("codedata/gridplot.R")
 
 ### load model ###
 
-load(file = "~/CR/codedata/model3.mod")
+load(file = "codedata/model3.mod")
 
 ### this are the travel cost model estimates ###
 
@@ -53,16 +53,14 @@ m1
 
 ```
 
-## Travel Cost
+## Merge
 
-The following code calculates the **travel cost** from each residential grid to each recreation site across the Hawaiian Islands. It uses economic and geographic data collected from each island, including household income, travel distance, and mode assumptions.
-
-Travel costs are estimated following the methodology of **Fezzi et al. (2023)**, who incorporate both time and monetary expenses into a unified measure of generalized cost. These estimates serve as one of the key explanatory variables in the Random Utility Model (RUM), which is used to simulate recreation site choice.
+Here we are merging data sets of distance calculation of girded travel cost to each site named site_joins.
 
 ```{r eval=FALSE}
 
-dist1 <- read.csv("~/codedata/dist1.csv")
-sites_join <- read.csv("~/codedata/sites_join.csv")
+dist1 <- read.csv("codedata/dist1.csv")
+sites_join <- read.csv("codedata/sites_join.csv")
 
 x1 <- merge(dist1, sites_join)
 x1$coastal[x1$name == "Home"]=0 
@@ -76,41 +74,6 @@ m
 ##using 85K because that was the survey amount
 out$incometran_track=out$medincome_tract/85000
 coasts <- sites[sites$coastal == 1 & sites$name!="Home",]
-
-
-
-
-
-x1=merge(SSP1, x1, by.x = "polygon", by.y = "Box_ID_2", all.y = TRUE)
-
-x1 <- x1[order(x1$km2_ID,x1$siteID),]	## btw it is correct that the dim(x) is lower than dim(dist) because
-## I aggregated some sites
-length(unique(x1$siteID))
-
-### FINISHED LOADING AND MERGING DATASETS ###
-
-#rm(dist, pop, sitesjoin)
-
-### CALCULATE TRAVEL COST ####
-
-x1$cost <- 0
-x1$duration[ x1$siteID == 351] <- x1$duration[ x1$siteID == 351] + 40		## this sites needs 40min walking to be reached
-## Need to also do this for Hawaii
-### Change here for different fuel cost
-x1$cost <- x1$distance.meters*0.001 * (0.20 / 1.5	)				## fuel cost 
-## assumption on fuel cost:
-#
-# 20 miles/gallon
-# $4.3/gallon
-# means $4.3 per 20 miles --> 0.215 $/mile
-# 10 km --> 6.2 miles --> $1.33 travel cost per km
-# 10km * 0.20 / 1.5 = $1.33  so the values coincide with the cost used above.
-x1$cost <- x1$cost + (x1$duration / 60)* 3/4 * 24.14 	## add the value of time (assuming a 25$ per hour average wage rate)
-x1$cost <- x1$cost * 2 							## the value for a return trip
-#### put Molokini cost equal to the one of Makena Landing Beach Park + 100$ (cost of a snorkeling tour)
-x1$cost[x1$siteID == 388] <- x1$cost[x1$siteID == 359] + 100
-
-
 
 ```
 
@@ -146,7 +109,7 @@ library(dplyr)
 library(tidyr)
 
 ###This grabs Atlantis and gets it into the write steps
-SSP3_loPPkF <- readRDS("~/codedata/SSP3_control_last.rds")
+SSP3_loPPkF <- readRDS("codedata/SSP3_control_last.rds")
 biomass_spatial_stanza=SSP3_loPPkF$biomass_spatial_stanza
 ssp3_coral=subset(biomass_spatial_stanza,species=="Pocillopora" |species=="Porites branching" |species=="Porites massive"|species=="Montipora"
                   |species=="Leptoseris")
@@ -172,7 +135,7 @@ percentchangeSSP3$time<- sub("^", "time", percentchangeSSP3$time )
 SSP3=spread(percentchangeSSP3, time, Coral_perchange)
 
 
-SSP1_loPPkF <- readRDS("~/codedata/SSP1_control_last.rds")
+SSP1_loPPkF <- readRDS("codedata/SSP1_control_last.rds")
 biomass_spatial_stanza=SSP1_loPPkF$biomass_spatial_stanza
 ssp1_coral=subset(biomass_spatial_stanza,species=="Pocillopora" |species=="Porites branching" |species=="Porites massive"|species=="Montipora"
                   |species=="Leptoseris")
@@ -200,7 +163,7 @@ percentchangeSSP1$time<- sub("^", "time", percentchangeSSP1$time )
 
 SSP1=spread(percentchangeSSP1, time, Coral_perchange)
 
-SSP2_loPPkF <- readRDS("~/codedata/SSP2_control_last.rds")
+SSP2_loPPkF <- readRDS("codedata/SSP2_control_last.rds")
 biomass_spatial_stanza=SSP2_loPPkF$biomass_spatial_stanza
 ssp2_coral=subset(biomass_spatial_stanza,species=="Pocillopora" |species=="Porites branching" |species=="Porites massive"|species=="Montipora"
                   |species=="Leptoseris"| species=="crustose coralline algae")
@@ -226,6 +189,44 @@ percentchangeSSP2$time<- sub("^", "time", percentchangeSSP2$time )
 
 SSP2=spread(percentchangeSSP2, time, Coral_perchange)
 
+
+```
+
+## Travel Cost
+
+The following code calculates the **travel cost** from each residential grid to each recreation site across the Hawaiian Islands. It uses economic and geographic data collected from each island, including household income, travel distance, and mode assumptions.
+
+Travel costs are estimated following the methodology of **Fezzi et al. (2023)**, who incorporate both time and monetary expenses into a unified measure of generalized cost. These estimates serve as one of the key explanatory variables in the Random Utility Model (RUM), which is used to simulate recreation site choice.
+
+```{r eval=FALSE}
+x1=merge(SSP1, x1, by.x = "polygon", by.y = "Box_ID_2", all.y = TRUE)
+
+x1 <- x1[order(x1$km2_ID,x1$siteID),]	## btw it is correct that the dim(x) is lower than dim(dist) because
+## I aggregated some sites
+length(unique(x1$siteID))
+
+### FINISHED LOADING AND MERGING DATASETS ###
+
+#rm(dist, pop, sitesjoin)
+
+### CALCULATE TRAVEL COST ####
+
+x1$cost <- 0
+x1$duration[ x1$siteID == 351] <- x1$duration[ x1$siteID == 351] + 40		## this sites needs 40min walking to be reached
+## Need to also do this for Hawaii
+### Change here for different fuel cost
+x1$cost <- x1$distance.meters*0.001 * (0.20 / 1.5	)				## fuel cost 
+## assumption on fuel cost:
+#
+# 20 miles/gallon
+# $4.3/gallon
+# means $4.3 per 20 miles --> 0.215 $/mile
+# 10 km --> 6.2 miles --> $1.33 travel cost per km
+# 10km * 0.20 / 1.5 = $1.33  so the values coincide with the cost used above.
+x1$cost <- x1$cost + (x1$duration / 60)* 3/4 * 24.14 	## add the value of time (assuming a 25$ per hour average wage rate)
+x1$cost <- x1$cost * 2 							## the value for a return trip
+#### put Molokini cost equal to the one of Makena Landing Beach Park + 100$ (cost of a snorkeling tour)
+x1$cost[x1$siteID == 388] <- x1$cost[x1$siteID == 359] + 100
 
 ```
 
@@ -621,7 +622,7 @@ This code snippet produces a projected summary table of total welfare loss by is
 
 -   Annual compensating variation (CV) estimates at the grid level
 
--   Population projections for the state of Hawai\'i under SSP1--SSP3, used to scale welfare impacts
+-   Population projections for the state of Hawai'i under SSP1--SSP3, used to scale welfare impacts
 
     Two discounting frameworks:
 
@@ -852,7 +853,7 @@ legend(
 
 ```
 
-### SSP1 
+### SSP1
 
 2030\>\>\>\>2100
 

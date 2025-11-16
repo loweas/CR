@@ -1,7 +1,6 @@
 ---
 title: "The economic impact of climate change on coral reef in the Main Hawaiian Islands"
 author: "Ashley Lowe Mackenzie et. al"
-
 ---
 
 # Coral Reef Hawaii
@@ -30,13 +29,14 @@ library(gganimate)
 
 ### load functions
 
-source("~/CR/codedata/dummier.R")
-source("~/CR/codedata/travel_cost.R")
-source("~/CR/codedata/gridplot.R")
+getwd()
+source("codedata/dummier.R")
+source("codedata/travel_cost.R")
+source("codedata/gridplot.R")
 
 ### load model ###
 
-load(file = "~/CR/codedata/model3.mod")
+load(file = "codedata/model3.mod")
 
 ### this are the travel cost model estimates ###
 
@@ -45,16 +45,14 @@ m1
 
 ```
 
-# Travel Cost
+# Merge
 
-The following code calculates the **travel cost** from each residential grid to each recreation site across the Hawaiian Islands. It uses economic and geographic data collected from each island, including household income, travel distance, and mode assumptions.
-
-Travel costs are estimated following the methodology of **Fezzi et al. (2023)**, who incorporate both time and monetary expenses into a unified measure of generalized cost. These estimates serve as one of the key explanatory variables in the Random Utility Model (RUM), which is used to simulate recreation site choice.
+This file merges distance and sites from across the islands. The distance are based on kilometer grid and sites were determined across island.
 
 ```{r eval=FALSE}
 
-dist1 <- read.csv("~/codedata/dist1.csv")
-sites_join <- read.csv("~/codedata/sites_join.csv")
+dist1 <- read.csv("codedata/dist1.csv")
+sites_join <- read.csv("codedata/sites_join.csv")
 
 x1 <- merge(dist1, sites_join)
 x1$coastal[x1$name == "Home"]=0 
@@ -68,39 +66,6 @@ m
 ##using 85K because that was the survey amount
 out$incometran_track=out$medincome_tract/85000
 coasts <- sites[sites$coastal == 1 & sites$name!="Home",]
-
-
-
-
-
-x1=merge(SSP1, x1, by.x = "polygon", by.y = "Box_ID_2", all.y = TRUE)
-
-x1 <- x1[order(x1$km2_ID,x1$siteID),]	## btw it is correct that the dim(x) is lower than dim(dist) because
-## I aggregated some sites
-length(unique(x1$siteID))
-
-### FINISHED LOADING AND MERGING DATASETS ###
-
-#rm(dist, pop, sitesjoin)
-
-### CALCULATE TRAVEL COST ####
-
-x1$cost <- 0
-x1$duration[ x1$siteID == 351] <- x1$duration[ x1$siteID == 351] + 40		## this sites needs 40min walking to be reached
-## Need to also do this for Hawaii
-### Change here for different fuel cost
-x1$cost <- x1$distance.meters*0.001 * (0.20 / 1.5	)				## fuel cost 
-## assumption on fuel cost:
-#
-# 20 miles/gallon
-# $4.3/gallon
-# means $4.3 per 20 miles --> 0.215 $/mile
-# 10 km --> 6.2 miles --> $1.33 travel cost per km
-# 10km * 0.20 / 1.5 = $1.33  so the values coincide with the cost used above.
-x1$cost <- x1$cost + (x1$duration / 60)* 3/4 * 24.14 	## add the value of time (assuming a 25$ per hour average wage rate)
-x1$cost <- x1$cost * 2 							## the value for a return trip
-#### put Molokini cost equal to the one of Makena Landing Beach Park + 100$ (cost of a snorkeling tour)
-x1$cost[x1$siteID == 388] <- x1$cost[x1$siteID == 359] + 100
 
 
 
@@ -138,7 +103,7 @@ library(dplyr)
 library(tidyr)
 
 ###This grabs Atlantis and gets it into the write steps
-SSP3_loPPkF <- readRDS("~/codedata/SSP3_control_last.rds")
+SSP3_loPPkF <- readRDS("codedata/SSP3_control_last.rds")
 biomass_spatial_stanza=SSP3_loPPkF$biomass_spatial_stanza
 ssp3_coral=subset(biomass_spatial_stanza,species=="Pocillopora" |species=="Porites branching" |species=="Porites massive"|species=="Montipora"
                   |species=="Leptoseris")
@@ -221,6 +186,48 @@ SSP2=spread(percentchangeSSP2, time, Coral_perchange)
 
 ```
 
+
+# Travel Cost
+
+The following code calculates the **travel cost** from each residential grid to each recreation site across the Hawaiian Islands. It uses economic and geographic data collected from each island, including household income, travel distance, and mode assumptions.
+
+Travel costs are estimated following the methodology of **Fezzi et al. (2023)**, who incorporate both time and monetary expenses into a unified measure of generalized cost. These estimates serve as one of the key explanatory variables in the Random Utility Model (RUM), which is used to simulate recreation site choice.
+
+
+```{r eval=FALSE}
+
+x1=merge(SSP1, x1, by.x = "polygon", by.y = "Box_ID_2", all.y = TRUE)
+
+x1 <- x1[order(x1$km2_ID,x1$siteID),]	## btw it is correct that the dim(x) is lower than dim(dist) because
+## I aggregated some sites
+length(unique(x1$siteID))
+
+### FINISHED LOADING AND MERGING DATASETS ###
+
+#rm(dist, pop, sitesjoin)
+
+### CALCULATE TRAVEL COST ####
+
+x1$cost <- 0
+x1$duration[ x1$siteID == 351] <- x1$duration[ x1$siteID == 351] + 40		## this sites needs 40min walking to be reached
+## Need to also do this for Hawaii
+### Change here for different fuel cost
+x1$cost <- x1$distance.meters*0.001 * (0.20 / 1.5	)				## fuel cost 
+## assumption on fuel cost:
+#
+# 20 miles/gallon
+# $4.3/gallon
+# means $4.3 per 20 miles --> 0.215 $/mile
+# 10 km --> 6.2 miles --> $1.33 travel cost per km
+# 10km * 0.20 / 1.5 = $1.33  so the values coincide with the cost used above.
+x1$cost <- x1$cost + (x1$duration / 60)* 3/4 * 24.14 	## add the value of time (assuming a 25$ per hour average wage rate)
+x1$cost <- x1$cost * 2 							## the value for a return trip
+#### put Molokini cost equal to the one of Makena Landing Beach Park + 100$ (cost of a snorkeling tour)
+x1$cost[x1$siteID == 388] <- x1$cost[x1$siteID == 359] + 100
+
+
+
+```
 # Prediction Model
 
 For each scenario predicted by the Atlantis ecosystem model (e.g., SSP1, SSP2, SSP3), we run a simulation loop across all time steps to estimate the welfare impacts of changing nearshore coral biomass.
@@ -260,7 +267,7 @@ Below is a loop (conceptual or in code) that:
 ```{r eval=FALSE}
 ### parameters
 
-beta <- m3$results[,1]
+beta <- m1$results[,1]
 
 
 ### Considering a transfer to Oahu:
@@ -626,7 +633,7 @@ These discounted totals provide a long-term estimate of the economic cost of env
 ```{r eval=FALSE}
 
 library(readxl)
-allssps_islands <- read_csv("~/CR/codedata/allssps_islands.csv") %>%
+allssps_islands <- read_csv("codedata/allssps_islands.csv") %>%
   select(-starts_with("..."))
                               
 allssps_islandspop <- read_excel("allssps_islands.xlsx",
@@ -702,7 +709,7 @@ This adjusted dataset is especially useful for understanding distributional impa
 ```{r eval=FALSE}
 #| eval: false
 # Define the cutpoints for 7 intervals
-all_df <- read_csv("~/CR/codedata/all_grids.csv")%>%
+all_df <- read_csv("codedata/all_grids.csv")%>%
   select(-starts_with("..."))
 all_df <- all_df %>%
   mutate(SSP1_WTP_bin = case_when(

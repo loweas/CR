@@ -15,9 +15,9 @@ website:
       - icon: github
         menu:
           - text: Source Code
-            href:  https://github.com/loweas/coral
+            href:  https://github.com/loweas/CR
           - text: Report a Bug
-            href:  https://github.com/loweas/coral/issues
+            href:  https://github.com/loweas/CR/issues
 
 format:
   html:

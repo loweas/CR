@@ -112,11 +112,10 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#coral-reef-hawaii" id="toc-coral-reef-hawaii" class="nav-link active" data-scroll-target="#coral-reef-hawaii">Coral Reef Hawaii</a></li>
-  <li><a href="#running-code" id="toc-running-code" class="nav-link" data-scroll-target="#running-code">Running Code</a>
+  <li><a href="#coral-reef-hawaii" id="toc-coral-reef-hawaii" class="nav-link active" data-scroll-target="#coral-reef-hawaii">Coral Reef Hawaii</a>
   <ul class="collapse">
+  <li><a href="#running-code" id="toc-running-code" class="nav-link" data-scroll-target="#running-code">Running Code</a></li>
   <li><a href="#merge" id="toc-merge" class="nav-link" data-scroll-target="#merge">Merge</a></li>
-  </ul></li>
   <li><a href="#atlantis-model" id="toc-atlantis-model" class="nav-link" data-scroll-target="#atlantis-model">Atlantis Model</a>
   <ul class="collapse">
   <li><a href="#base-level-coral" id="toc-base-level-coral" class="nav-link" data-scroll-target="#base-level-coral">Base level Coral</a></li>
@@ -131,6 +130,7 @@ window.Quarto = {
   </ul></li>
   <li><a href="#data-aggregation" id="toc-data-aggregation" class="nav-link" data-scroll-target="#data-aggregation">Data Aggregation</a>
   <ul class="collapse">
+  <li><a href="#across-island-aggregation" id="toc-across-island-aggregation" class="nav-link" data-scroll-target="#across-island-aggregation">Across Island aggregation</a></li>
   <li><a href="#across-island-aggregation-of-welfare-loss" id="toc-across-island-aggregation-of-welfare-loss" class="nav-link" data-scroll-target="#across-island-aggregation-of-welfare-loss">Across-Island Aggregation of Welfare Loss</a></li>
   <li><a href="#snap-shot-within-island" id="toc-snap-shot-within-island" class="nav-link" data-scroll-target="#snap-shot-within-island">Snap Shot within Island</a></li>
   </ul></li>
@@ -138,8 +138,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#ssp1" id="toc-ssp1" class="nav-link" data-scroll-target="#ssp1">SSP1</a></li>
   <li><a href="#ssp2" id="toc-ssp2" class="nav-link" data-scroll-target="#ssp2">SSP2</a></li>
-  <li><a href="#ssp3" id="toc-ssp3" class="nav-link" data-scroll-target="#ssp3">SSP3</a>
-  <ul class="collapse">
+  <li><a href="#ssp3" id="toc-ssp3" class="nav-link" data-scroll-target="#ssp3">SSP3</a></li>
   <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
   </ul></li>
   </ul></li>
@@ -184,9 +183,8 @@ window.Quarto = {
 </ol>
 <p>The graphical representation of this process is illustrated below</p>
 <p><img src="images/Figure2.png" class="img-fluid"></p>
-</section>
-<section id="running-code" class="level1">
-<h1>Running Code</h1>
+<section id="running-code" class="level2">
+<h2 class="anchored" data-anchor-id="running-code">Running Code</h2>
 <p>This section calls the necessary R packages and sources external scripts from the original study. These scripts provide the estimated coefficients from the Random Utility Model (RUM), which will be used to simulate individual preferences and estimate welfare changes under different environmental quality scenarios. These parameters reflect the marginal utility of various site attributes, including coral reef biomass, travel cost, and environmental conditions.</p>
 <div class="cell">
 <details class="code-fold">
@@ -212,6 +210,7 @@ window.Quarto = {
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>m1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
+</section>
 <section id="merge" class="level2">
 <h2 class="anchored" data-anchor-id="merge">Merge</h2>
 <p>Here we are merging data sets of distance calculation of girded travel cost to each site named site_joins.</p>
@@ -236,9 +235,8 @@ window.Quarto = {
 </details>
 </div>
 </section>
-</section>
-<section id="atlantis-model" class="level1">
-<h1>Atlantis Model</h1>
+<section id="atlantis-model" class="level2">
+<h2 class="anchored" data-anchor-id="atlantis-model">Atlantis Model</h2>
 <p>To assess environmental changes in the nearshore ecosystem, we incorporate biomass outputs from the Atlantis ecosystem model. These outputs represent projected ecological dynamics—specifically, coral reef and associated species biomass—under different management and environmental scenarios.</p>
 <p>The biomass values will be:</p>
 <ul>
@@ -246,13 +244,13 @@ window.Quarto = {
 <li><p>Processed annually to calculate percentage changes in biomass relative to the baseline year.</p></li>
 </ul>
 <p>These percentage changes provide the key environmental quality metric (e.g., reef health) that feeds into the Economic Model outlined in the previous section. Specifically, the estimated changes will modify site attributes within the Random Utility Model framework to simulate how changes in reef biomass affect recreational behavior and welfare.</p>
-<section id="base-level-coral" class="level2">
-<h2 class="anchored" data-anchor-id="base-level-coral">Base level Coral</h2>
+<section id="base-level-coral" class="level3">
+<h3 class="anchored" data-anchor-id="base-level-coral">Base level Coral</h3>
 <p>The base level of coral is the average biomass of 2015-2020 for each near polygon.</p>
 <p><img src="images/match_boxs.png" class="img-fluid"></p>
 </section>
-<section id="yearly-percent-change" class="level2">
-<h2 class="anchored" data-anchor-id="yearly-percent-change">Yearly Percent Change</h2>
+<section id="yearly-percent-change" class="level3">
+<h3 class="anchored" data-anchor-id="yearly-percent-change">Yearly Percent Change</h3>
 <p>Then for each time step out to 2100 we sum up the biomass of coral reef:</p>
 <p><span class="math inline">\(C_{pt} = \sum V_{pt} / \sum V_{pt}=0\)</span></p>
 <p>The following code does this for scenario SSP1 1-3. The file required if from the Atlantis which is to large for github so please request.</p>
@@ -346,8 +344,8 @@ window.Quarto = {
 </div>
 </section>
 </section>
-<section id="travel-cost" class="level1">
-<h1>Travel Cost</h1>
+<section id="travel-cost" class="level2">
+<h2 class="anchored" data-anchor-id="travel-cost">Travel Cost</h2>
 <p>The following code calculates the <strong>travel cost</strong> from each residential grid to each recreation site across the Hawaiian Islands. It uses economic and geographic data collected from each island, including household income, travel distance, and mode assumptions.</p>
 <p>Travel costs are estimated following the methodology of <strong>Fezzi et al.&nbsp;(2023)</strong>, who incorporate both time and monetary expenses into a unified measure of generalized cost. These estimates serve as one of the key explanatory variables in the Random Utility Model (RUM), which is used to simulate recreation site choice.</p>
 <div class="cell">
@@ -384,8 +382,8 @@ window.Quarto = {
 </details>
 </div>
 </section>
-<section id="prediction-model" class="level1">
-<h1>Prediction Model</h1>
+<section id="prediction-model" class="level2">
+<h2 class="anchored" data-anchor-id="prediction-model">Prediction Model</h2>
 <p>For each scenario predicted by the Atlantis ecosystem model (e.g., SSP1, SSP2, SSP3), we run a simulation loop across all time steps to estimate the welfare impacts of changing nearshore coral biomass.</p>
 <p>Specifically, for each year in the scenario:</p>
 <ul>
@@ -401,8 +399,8 @@ window.Quarto = {
 <li><p>Time step (e.g., yearly from 2025 to 2100)</p></li>
 <li><p>Scenario (SSP1–3)</p></li>
 </ul>
-<section id="predict-ssp1" class="level2">
-<h2 class="anchored" data-anchor-id="predict-ssp1">Predict SSP1</h2>
+<section id="predict-ssp1" class="level3">
+<h3 class="anchored" data-anchor-id="predict-ssp1">Predict SSP1</h3>
 <p>Below is a loop (conceptual or in code) that:</p>
 <ul>
 <li><p>Iterates through each time step of the SSP1 scenario</p></li>
@@ -474,8 +472,8 @@ window.Quarto = {
 </details>
 </div>
 </section>
-<section id="predict-ssp2" class="level2">
-<h2 class="anchored" data-anchor-id="predict-ssp2">Predict SSP2</h2>
+<section id="predict-ssp2" class="level3">
+<h3 class="anchored" data-anchor-id="predict-ssp2">Predict SSP2</h3>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
@@ -586,8 +584,8 @@ window.Quarto = {
 </details>
 </div>
 </section>
-<section id="predict-ssp3" class="level2">
-<h2 class="anchored" data-anchor-id="predict-ssp3">Predict SSP3</h2>
+<section id="predict-ssp3" class="level3">
+<h3 class="anchored" data-anchor-id="predict-ssp3">Predict SSP3</h3>
 <div class="cell">
 <details class="code-fold">
 <summary>Show code</summary>
@@ -699,8 +697,8 @@ window.Quarto = {
 </div>
 </section>
 </section>
-<section id="data-aggregation" class="level1">
-<h1>Data Aggregation</h1>
+<section id="data-aggregation" class="level2">
+<h2 class="anchored" data-anchor-id="data-aggregation">Data Aggregation</h2>
 <p>Two datasets were created in the prediction modeling.</p>
 <ol type="1">
 <li>Aggregated Totals by population and income weighted by Island Each Year</li>
@@ -763,8 +761,11 @@ window.Quarto = {
 <span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(df1, <span class="at">file=</span><span class="st">"allssps_islands.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<section id="across-island-aggregation-of-welfare-loss" class="level2">
-<h2 class="anchored" data-anchor-id="across-island-aggregation-of-welfare-loss">Across-Island Aggregation of Welfare Loss</h2>
+<section id="across-island-aggregation" class="level3">
+<h3 class="anchored" data-anchor-id="across-island-aggregation">Across Island aggregation</h3>
+</section>
+<section id="across-island-aggregation-of-welfare-loss" class="level3">
+<h3 class="anchored" data-anchor-id="across-island-aggregation-of-welfare-loss">Across-Island Aggregation of Welfare Loss</h3>
 <p>This code snippet produces a projected summary table of total welfare loss by island, under each scenario (SSP1–SSP3). The results are aggregated over time and space, incorporating:</p>
 <ul>
 <li><p>Annual compensating variation (CV) estimates at the grid level</p></li>
@@ -836,8 +837,8 @@ window.Quarto = {
 </details>
 </div>
 </section>
-<section id="snap-shot-within-island" class="level2">
-<h2 class="anchored" data-anchor-id="snap-shot-within-island">Snap Shot within Island</h2>
+<section id="snap-shot-within-island" class="level3">
+<h3 class="anchored" data-anchor-id="snap-shot-within-island">Snap Shot within Island</h3>
 <p>The raw welfare estimates generated in previous steps are not yet adjusted for differences in income levels or population density. The next code snippet computes total willingness to pay (WTP) by:</p>
 <ul>
 <li><p>Aggregating individual welfare estimates by income tract and grid cell</p></li>
@@ -946,8 +947,8 @@ window.Quarto = {
 </div>
 </section>
 </section>
-<section id="animation-welfare" class="level1">
-<h1>Animation Welfare</h1>
+<section id="animation-welfare" class="level2">
+<h2 class="anchored" data-anchor-id="animation-welfare">Animation Welfare</h2>
 <p>These produce animations of changes in annual welfare to the year 2100</p>
 <ul>
 <li>The code chunk runs the animation and saves the file.</li>
@@ -997,8 +998,8 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<section id="ssp1" class="level2">
-<h2 class="anchored" data-anchor-id="ssp1">SSP1</h2>
+<section id="ssp1" class="level3">
+<h3 class="anchored" data-anchor-id="ssp1">SSP1</h3>
 <p>2030&gt;&gt;&gt;&gt;2100</p>
 <p><img src="images/hawaii_wtpssp1_animation.gif" class="img-fluid"></p>
 <div class="cell">
@@ -1028,8 +1029,8 @@ window.Quarto = {
 </details>
 </div>
 </section>
-<section id="ssp2" class="level2">
-<h2 class="anchored" data-anchor-id="ssp2">SSP2</h2>
+<section id="ssp2" class="level3">
+<h3 class="anchored" data-anchor-id="ssp2">SSP2</h3>
 <p>2030&gt;&gt;&gt;&gt;2100</p>
 <p><img src="images/hawaii_wtpssp2_animation.gif" class="img-fluid"></p>
 <div class="cell">
@@ -1059,8 +1060,8 @@ window.Quarto = {
 </details>
 </div>
 </section>
-<section id="ssp3" class="level2">
-<h2 class="anchored" data-anchor-id="ssp3">SSP3</h2>
+<section id="ssp3" class="level3">
+<h3 class="anchored" data-anchor-id="ssp3">SSP3</h3>
 <p>2030&gt;&gt;&gt;&gt;2100</p>
 <p><img src="images/hawaii_wtpssp3_animation.gif" class="img-fluid"></p>
 <div class="cell">
@@ -1089,6 +1090,7 @@ window.Quarto = {
 <span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="fu">anim_save</span>(<span class="st">"hawaii_wtpssp3_animation.gif"</span>, <span class="at">animation =</span> <span class="fu">last_animation</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
+</section>
 <section id="section" class="level3">
 <h3 class="anchored" data-anchor-id="section"></h3>
 <!-- -->
@@ -1575,7 +1577,7 @@ window.Quarto = {
 <span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/Figure2.png)</span></span>
 <span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a><span class="fu"># Running Code</span></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a><span class="fu">## Running Code</span></span>
 <span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>This section calls the necessary R packages and sources external scripts from the original study. These scripts provide the estimated coefficients from the Random Utility Model (RUM), which will be used to simulate individual preferences and estimate welfare changes under different environmental quality scenarios. These parameters reflect the marginal utility of various site attributes, including coral reef biomass, travel cost, and environmental conditions.</span>
 <span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a></span>
@@ -1629,7 +1631,7 @@ window.Quarto = {
 <span id="cb15-77"><a href="#cb15-77" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-78"><a href="#cb15-78" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb15-79"><a href="#cb15-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-80"><a href="#cb15-80" aria-hidden="true" tabindex="-1"></a><span class="fu"># Atlantis Model</span></span>
+<span id="cb15-80"><a href="#cb15-80" aria-hidden="true" tabindex="-1"></a><span class="fu">## Atlantis Model</span></span>
 <span id="cb15-81"><a href="#cb15-81" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-82"><a href="#cb15-82" aria-hidden="true" tabindex="-1"></a>To assess environmental changes in the nearshore ecosystem, we incorporate biomass outputs from the Atlantis ecosystem model. These outputs represent projected ecological dynamics---specifically, coral reef and associated species biomass---under different management and environmental scenarios.</span>
 <span id="cb15-83"><a href="#cb15-83" aria-hidden="true" tabindex="-1"></a></span>
@@ -1641,13 +1643,13 @@ window.Quarto = {
 <span id="cb15-89"><a href="#cb15-89" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-90"><a href="#cb15-90" aria-hidden="true" tabindex="-1"></a>These percentage changes provide the key environmental quality metric (e.g., reef health) that feeds into the Economic Model outlined in the previous section. Specifically, the estimated changes will modify site attributes within the Random Utility Model framework to simulate how changes in reef biomass affect recreational behavior and welfare.</span>
 <span id="cb15-91"><a href="#cb15-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-92"><a href="#cb15-92" aria-hidden="true" tabindex="-1"></a><span class="fu">## Base level Coral</span></span>
+<span id="cb15-92"><a href="#cb15-92" aria-hidden="true" tabindex="-1"></a><span class="fu">### Base level Coral</span></span>
 <span id="cb15-93"><a href="#cb15-93" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-94"><a href="#cb15-94" aria-hidden="true" tabindex="-1"></a>The base level of coral is the average biomass of 2015-2020 for each near polygon.</span>
 <span id="cb15-95"><a href="#cb15-95" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-96"><a href="#cb15-96" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/match_boxs.png)</span></span>
 <span id="cb15-97"><a href="#cb15-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-98"><a href="#cb15-98" aria-hidden="true" tabindex="-1"></a><span class="fu">## Yearly Percent Change</span></span>
+<span id="cb15-98"><a href="#cb15-98" aria-hidden="true" tabindex="-1"></a><span class="fu">### Yearly Percent Change</span></span>
 <span id="cb15-99"><a href="#cb15-99" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-100"><a href="#cb15-100" aria-hidden="true" tabindex="-1"></a>Then for each time step out to 2100 we sum up the biomass of coral reef:</span>
 <span id="cb15-101"><a href="#cb15-101" aria-hidden="true" tabindex="-1"></a></span>
@@ -1744,7 +1746,7 @@ window.Quarto = {
 <span id="cb15-192"><a href="#cb15-192" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-193"><a href="#cb15-193" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb15-194"><a href="#cb15-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-195"><a href="#cb15-195" aria-hidden="true" tabindex="-1"></a><span class="fu"># Travel Cost</span></span>
+<span id="cb15-195"><a href="#cb15-195" aria-hidden="true" tabindex="-1"></a><span class="fu">## Travel Cost</span></span>
 <span id="cb15-196"><a href="#cb15-196" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-197"><a href="#cb15-197" aria-hidden="true" tabindex="-1"></a>The following code calculates the **travel cost** from each residential grid to each recreation site across the Hawaiian Islands. It uses economic and geographic data collected from each island, including household income, travel distance, and mode assumptions.</span>
 <span id="cb15-198"><a href="#cb15-198" aria-hidden="true" tabindex="-1"></a></span>
@@ -1782,7 +1784,7 @@ window.Quarto = {
 <span id="cb15-230"><a href="#cb15-230" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-231"><a href="#cb15-231" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb15-232"><a href="#cb15-232" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-233"><a href="#cb15-233" aria-hidden="true" tabindex="-1"></a><span class="fu"># Prediction Model</span></span>
+<span id="cb15-233"><a href="#cb15-233" aria-hidden="true" tabindex="-1"></a><span class="fu">## Prediction Model</span></span>
 <span id="cb15-234"><a href="#cb15-234" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-235"><a href="#cb15-235" aria-hidden="true" tabindex="-1"></a>For each scenario predicted by the Atlantis ecosystem model (e.g., SSP1, SSP2, SSP3), we run a simulation loop across all time steps to estimate the welfare impacts of changing nearshore coral biomass.</span>
 <span id="cb15-236"><a href="#cb15-236" aria-hidden="true" tabindex="-1"></a></span>
@@ -1806,7 +1808,7 @@ window.Quarto = {
 <span id="cb15-254"><a href="#cb15-254" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-255"><a href="#cb15-255" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Scenario (SSP1--3)</span>
 <span id="cb15-256"><a href="#cb15-256" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-257"><a href="#cb15-257" aria-hidden="true" tabindex="-1"></a><span class="fu">## Predict SSP1</span></span>
+<span id="cb15-257"><a href="#cb15-257" aria-hidden="true" tabindex="-1"></a><span class="fu">### Predict SSP1</span></span>
 <span id="cb15-258"><a href="#cb15-258" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-259"><a href="#cb15-259" aria-hidden="true" tabindex="-1"></a>Below is a loop (conceptual or in code) that:</span>
 <span id="cb15-260"><a href="#cb15-260" aria-hidden="true" tabindex="-1"></a></span>
@@ -1882,7 +1884,7 @@ window.Quarto = {
 <span id="cb15-330"><a href="#cb15-330" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-331"><a href="#cb15-331" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb15-332"><a href="#cb15-332" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-333"><a href="#cb15-333" aria-hidden="true" tabindex="-1"></a><span class="fu">## Predict SSP2</span></span>
+<span id="cb15-333"><a href="#cb15-333" aria-hidden="true" tabindex="-1"></a><span class="fu">### Predict SSP2</span></span>
 <span id="cb15-334"><a href="#cb15-334" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-335"><a href="#cb15-335" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=FALSE}</span></span>
 <span id="cb15-336"><a href="#cb15-336" aria-hidden="true" tabindex="-1"></a><span class="do">####This is for SSP2</span></span>
@@ -1993,7 +1995,7 @@ window.Quarto = {
 <span id="cb15-441"><a href="#cb15-441" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-442"><a href="#cb15-442" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb15-443"><a href="#cb15-443" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-444"><a href="#cb15-444" aria-hidden="true" tabindex="-1"></a><span class="fu">## Predict SSP3</span></span>
+<span id="cb15-444"><a href="#cb15-444" aria-hidden="true" tabindex="-1"></a><span class="fu">### Predict SSP3</span></span>
 <span id="cb15-445"><a href="#cb15-445" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-446"><a href="#cb15-446" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=FALSE}</span></span>
 <span id="cb15-447"><a href="#cb15-447" aria-hidden="true" tabindex="-1"></a><span class="do">####This is for SSP3</span></span>
@@ -2103,7 +2105,7 @@ window.Quarto = {
 <span id="cb15-551"><a href="#cb15-551" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-552"><a href="#cb15-552" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb15-553"><a href="#cb15-553" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-554"><a href="#cb15-554" aria-hidden="true" tabindex="-1"></a><span class="fu"># Data Aggregation</span></span>
+<span id="cb15-554"><a href="#cb15-554" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Aggregation</span></span>
 <span id="cb15-555"><a href="#cb15-555" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-556"><a href="#cb15-556" aria-hidden="true" tabindex="-1"></a>Two datasets were created in the prediction modeling.</span>
 <span id="cb15-557"><a href="#cb15-557" aria-hidden="true" tabindex="-1"></a></span>
@@ -2166,340 +2168,342 @@ window.Quarto = {
 <span id="cb15-614"><a href="#cb15-614" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-615"><a href="#cb15-615" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb15-616"><a href="#cb15-616" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-617"><a href="#cb15-617" aria-hidden="true" tabindex="-1"></a><span class="fu">## Across-Island Aggregation of Welfare Loss</span></span>
+<span id="cb15-617"><a href="#cb15-617" aria-hidden="true" tabindex="-1"></a><span class="fu">### Across Island aggregation</span></span>
 <span id="cb15-618"><a href="#cb15-618" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-619"><a href="#cb15-619" aria-hidden="true" tabindex="-1"></a>This code snippet produces a projected summary table of total welfare loss by island, under each scenario (SSP1--SSP3). The results are aggregated over time and space, incorporating:</span>
+<span id="cb15-619"><a href="#cb15-619" aria-hidden="true" tabindex="-1"></a><span class="fu">### Across-Island Aggregation of Welfare Loss</span></span>
 <span id="cb15-620"><a href="#cb15-620" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-621"><a href="#cb15-621" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Annual compensating variation (CV) estimates at the grid level</span>
+<span id="cb15-621"><a href="#cb15-621" aria-hidden="true" tabindex="-1"></a>This code snippet produces a projected summary table of total welfare loss by island, under each scenario (SSP1--SSP3). The results are aggregated over time and space, incorporating:</span>
 <span id="cb15-622"><a href="#cb15-622" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-623"><a href="#cb15-623" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Population projections for the state of Hawai'i under SSP1--SSP3, used to scale welfare impacts</span>
+<span id="cb15-623"><a href="#cb15-623" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Annual compensating variation (CV) estimates at the grid level</span>
 <span id="cb15-624"><a href="#cb15-624" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-625"><a href="#cb15-625" aria-hidden="true" tabindex="-1"></a>    Two discounting frameworks:</span>
+<span id="cb15-625"><a href="#cb15-625" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Population projections for the state of Hawai'i under SSP1--SSP3, used to scale welfare impacts</span>
 <span id="cb15-626"><a href="#cb15-626" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-627"><a href="#cb15-627" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>A standard constant discount rate (e.g., circular A-4 rate, typically 3%)</span>
+<span id="cb15-627"><a href="#cb15-627" aria-hidden="true" tabindex="-1"></a>    Two discounting frameworks:</span>
 <span id="cb15-628"><a href="#cb15-628" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-629"><a href="#cb15-629" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>A pluralistic (declining or hyperbolic) discount rate, reflecting alternative time preferences in environmental valuation</span>
+<span id="cb15-629"><a href="#cb15-629" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>A standard constant discount rate (e.g., circular A-4 rate, typically 3%)</span>
 <span id="cb15-630"><a href="#cb15-630" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-631"><a href="#cb15-631" aria-hidden="true" tabindex="-1"></a>These discounted totals provide a long-term estimate of the economic cost of environmental degradation (via coral biomass loss) under different future pathways. The final output summarizes welfare changes per island, scenario, and discounting method, supporting policy evaluation and prioritization.</span>
+<span id="cb15-631"><a href="#cb15-631" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>A pluralistic (declining or hyperbolic) discount rate, reflecting alternative time preferences in environmental valuation</span>
 <span id="cb15-632"><a href="#cb15-632" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-633"><a href="#cb15-633" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/islandgraphpluristic_new.png)</span></span>
+<span id="cb15-633"><a href="#cb15-633" aria-hidden="true" tabindex="-1"></a>These discounted totals provide a long-term estimate of the economic cost of environmental degradation (via coral biomass loss) under different future pathways. The final output summarizes welfare changes per island, scenario, and discounting method, supporting policy evaluation and prioritization.</span>
 <span id="cb15-634"><a href="#cb15-634" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-635"><a href="#cb15-635" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=FALSE}</span></span>
+<span id="cb15-635"><a href="#cb15-635" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/islandgraphpluristic_new.png)</span></span>
 <span id="cb15-636"><a href="#cb15-636" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-637"><a href="#cb15-637" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb15-638"><a href="#cb15-638" aria-hidden="true" tabindex="-1"></a>allssps_islands <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"~/CR/codedata/allssps_islands.csv"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb15-639"><a href="#cb15-639" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">starts_with</span>(<span class="st">"..."</span>))</span>
-<span id="cb15-640"><a href="#cb15-640" aria-hidden="true" tabindex="-1"></a>                              </span>
-<span id="cb15-641"><a href="#cb15-641" aria-hidden="true" tabindex="-1"></a>allssps_islandspop <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"allssps_islands.xlsx"</span>,</span>
-<span id="cb15-642"><a href="#cb15-642" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">sheet =</span> <span class="st">"pop"</span>)</span>
-<span id="cb15-643"><a href="#cb15-643" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-644"><a href="#cb15-644" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-645"><a href="#cb15-645" aria-hidden="true" tabindex="-1"></a>allssps_islandspop<span class="ot">=</span><span class="fu">gather</span>(allssps_islandspop,  condition, pop, SSP1<span class="sc">:</span>SSP3, <span class="at">factor_key=</span><span class="cn">TRUE</span>)</span>
-<span id="cb15-646"><a href="#cb15-646" aria-hidden="true" tabindex="-1"></a>allssps_islands<span class="ot">=</span><span class="fu">merge</span>(allssps_islands,allssps_islandspop)</span>
-<span id="cb15-647"><a href="#cb15-647" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-648"><a href="#cb15-648" aria-hidden="true" tabindex="-1"></a>allssps_islands<span class="sc">$</span>NPV<span class="ot">=</span><span class="dv">0</span></span>
-<span id="cb15-649"><a href="#cb15-649" aria-hidden="true" tabindex="-1"></a>allssps_islands<span class="sc">$</span>NPV[<span class="fu">which</span>(allssps_islands<span class="sc">$</span>Year<span class="sc">&gt;</span><span class="dv">2020</span>)]<span class="ot">=</span>.<span class="dv">02</span></span>
-<span id="cb15-650"><a href="#cb15-650" aria-hidden="true" tabindex="-1"></a>allssps_islands<span class="sc">$</span>NPV[<span class="fu">which</span>(allssps_islands<span class="sc">$</span>Year<span class="sc">&gt;</span><span class="dv">2079</span>)]<span class="ot">=</span>.<span class="dv">019</span></span>
-<span id="cb15-651"><a href="#cb15-651" aria-hidden="true" tabindex="-1"></a>allssps_islands<span class="sc">$</span>NPV[<span class="fu">which</span>(allssps_islands<span class="sc">$</span>Year<span class="sc">&gt;</span><span class="dv">2094</span>)]<span class="ot">=</span>.<span class="dv">018</span></span>
-<span id="cb15-652"><a href="#cb15-652" aria-hidden="true" tabindex="-1"></a>allssps_islands<span class="sc">$</span>time_step <span class="ot">&lt;-</span> allssps_islands<span class="sc">$</span>Year <span class="sc">-</span> <span class="dv">2020</span></span>
-<span id="cb15-653"><a href="#cb15-653" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-654"><a href="#cb15-654" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-655"><a href="#cb15-655" aria-hidden="true" tabindex="-1"></a>allssps_islands<span class="sc">$</span>NPV_WTP<span class="ot">=</span>allssps_islands<span class="sc">$</span>wtp<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span>allssps_islands<span class="sc">$</span>NPV)<span class="sc">^</span>allssps_islands<span class="sc">$</span>time_step</span>
-<span id="cb15-656"><a href="#cb15-656" aria-hidden="true" tabindex="-1"></a>allssps_islands<span class="sc">$</span>NPV_WTP_Pop<span class="ot">=</span>(allssps_islands<span class="sc">$</span>wtp<span class="sc">*</span>allssps_islands<span class="sc">$</span>pop)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span>allssps_islands<span class="sc">$</span>NPV)<span class="sc">^</span>allssps_islands<span class="sc">$</span>time_step</span>
-<span id="cb15-657"><a href="#cb15-657" aria-hidden="true" tabindex="-1"></a>allssps_islands<span class="sc">$</span>NPV_WTP_pluristic<span class="ot">=</span>(allssps_islands<span class="sc">$</span>wtp<span class="sc">*</span>allssps_islands<span class="sc">$</span>pop<span class="sc">*</span>.<span class="dv">4</span>)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="dv">0</span>)<span class="sc">^</span>allssps_islands<span class="sc">$</span>time_step<span class="sc">+</span>(allssps_islands<span class="sc">$</span>wtp<span class="sc">*</span>allssps_islands<span class="sc">$</span>pop<span class="sc">*</span>.<span class="dv">1</span>)<span class="sc">/</span>(<span class="dv">1</span>)<span class="sc">^</span>allssps_islands<span class="sc">$</span>time_step<span class="sc">+</span>(allssps_islands<span class="sc">$</span>wtp<span class="sc">*</span>allssps_islands<span class="sc">$</span>pop<span class="sc">*</span>.<span class="dv">3</span>)<span class="sc">/</span>(<span class="dv">1</span><span class="fl">+.03</span>)<span class="sc">^</span>allssps_islands<span class="sc">$</span>time_step<span class="sc">+</span>(allssps_islands<span class="sc">$</span>wtp<span class="sc">*</span>allssps_islands<span class="sc">$</span>pop<span class="sc">*</span>.<span class="dv">2</span>)<span class="sc">/</span>(<span class="dv">1</span><span class="fl">+.1</span>)<span class="sc">^</span>allssps_islands<span class="sc">$</span>time_step</span>
-<span id="cb15-658"><a href="#cb15-658" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-659"><a href="#cb15-659" aria-hidden="true" tabindex="-1"></a>allssps_islands<span class="sc">$</span>NPV_WTP_pluristic2<span class="ot">=</span>(allssps_islands<span class="sc">$</span>wtp<span class="sc">*</span>allssps_islands<span class="sc">$</span>pop<span class="sc">*</span>.<span class="dv">4</span>)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+-</span>.<span class="dv">01</span>)<span class="sc">^</span>allssps_islands<span class="sc">$</span>time_step<span class="sc">+</span>(allssps_islands<span class="sc">$</span>wtp<span class="sc">*</span>allssps_islands<span class="sc">$</span>pop<span class="sc">*</span>.<span class="dv">1</span>)<span class="sc">/</span>(<span class="dv">1</span>)<span class="sc">^</span>allssps_islands<span class="sc">$</span>time_step<span class="sc">+</span>(allssps_islands<span class="sc">$</span>wtp<span class="sc">*</span>allssps_islands<span class="sc">$</span>pop<span class="sc">*</span>.<span class="dv">3</span>)<span class="sc">/</span>(<span class="dv">1</span><span class="fl">+.01</span>)<span class="sc">^</span>allssps_islands<span class="sc">$</span>time_step<span class="sc">+</span>(allssps_islands<span class="sc">$</span>wtp<span class="sc">*</span>allssps_islands<span class="sc">$</span>pop<span class="sc">*</span>.<span class="dv">2</span>)<span class="sc">/</span>(<span class="dv">1</span><span class="fl">+.5</span>)<span class="sc">^</span>allssps_islands<span class="sc">$</span>time_step</span>
+<span id="cb15-637"><a href="#cb15-637" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=FALSE}</span></span>
+<span id="cb15-638"><a href="#cb15-638" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-639"><a href="#cb15-639" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb15-640"><a href="#cb15-640" aria-hidden="true" tabindex="-1"></a>allssps_islands <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"~/CR/codedata/allssps_islands.csv"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb15-641"><a href="#cb15-641" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">starts_with</span>(<span class="st">"..."</span>))</span>
+<span id="cb15-642"><a href="#cb15-642" aria-hidden="true" tabindex="-1"></a>                              </span>
+<span id="cb15-643"><a href="#cb15-643" aria-hidden="true" tabindex="-1"></a>allssps_islandspop <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"allssps_islands.xlsx"</span>,</span>
+<span id="cb15-644"><a href="#cb15-644" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">sheet =</span> <span class="st">"pop"</span>)</span>
+<span id="cb15-645"><a href="#cb15-645" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-646"><a href="#cb15-646" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-647"><a href="#cb15-647" aria-hidden="true" tabindex="-1"></a>allssps_islandspop<span class="ot">=</span><span class="fu">gather</span>(allssps_islandspop,  condition, pop, SSP1<span class="sc">:</span>SSP3, <span class="at">factor_key=</span><span class="cn">TRUE</span>)</span>
+<span id="cb15-648"><a href="#cb15-648" aria-hidden="true" tabindex="-1"></a>allssps_islands<span class="ot">=</span><span class="fu">merge</span>(allssps_islands,allssps_islandspop)</span>
+<span id="cb15-649"><a href="#cb15-649" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-650"><a href="#cb15-650" aria-hidden="true" tabindex="-1"></a>allssps_islands<span class="sc">$</span>NPV<span class="ot">=</span><span class="dv">0</span></span>
+<span id="cb15-651"><a href="#cb15-651" aria-hidden="true" tabindex="-1"></a>allssps_islands<span class="sc">$</span>NPV[<span class="fu">which</span>(allssps_islands<span class="sc">$</span>Year<span class="sc">&gt;</span><span class="dv">2020</span>)]<span class="ot">=</span>.<span class="dv">02</span></span>
+<span id="cb15-652"><a href="#cb15-652" aria-hidden="true" tabindex="-1"></a>allssps_islands<span class="sc">$</span>NPV[<span class="fu">which</span>(allssps_islands<span class="sc">$</span>Year<span class="sc">&gt;</span><span class="dv">2079</span>)]<span class="ot">=</span>.<span class="dv">019</span></span>
+<span id="cb15-653"><a href="#cb15-653" aria-hidden="true" tabindex="-1"></a>allssps_islands<span class="sc">$</span>NPV[<span class="fu">which</span>(allssps_islands<span class="sc">$</span>Year<span class="sc">&gt;</span><span class="dv">2094</span>)]<span class="ot">=</span>.<span class="dv">018</span></span>
+<span id="cb15-654"><a href="#cb15-654" aria-hidden="true" tabindex="-1"></a>allssps_islands<span class="sc">$</span>time_step <span class="ot">&lt;-</span> allssps_islands<span class="sc">$</span>Year <span class="sc">-</span> <span class="dv">2020</span></span>
+<span id="cb15-655"><a href="#cb15-655" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-656"><a href="#cb15-656" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-657"><a href="#cb15-657" aria-hidden="true" tabindex="-1"></a>allssps_islands<span class="sc">$</span>NPV_WTP<span class="ot">=</span>allssps_islands<span class="sc">$</span>wtp<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span>allssps_islands<span class="sc">$</span>NPV)<span class="sc">^</span>allssps_islands<span class="sc">$</span>time_step</span>
+<span id="cb15-658"><a href="#cb15-658" aria-hidden="true" tabindex="-1"></a>allssps_islands<span class="sc">$</span>NPV_WTP_Pop<span class="ot">=</span>(allssps_islands<span class="sc">$</span>wtp<span class="sc">*</span>allssps_islands<span class="sc">$</span>pop)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span>allssps_islands<span class="sc">$</span>NPV)<span class="sc">^</span>allssps_islands<span class="sc">$</span>time_step</span>
+<span id="cb15-659"><a href="#cb15-659" aria-hidden="true" tabindex="-1"></a>allssps_islands<span class="sc">$</span>NPV_WTP_pluristic<span class="ot">=</span>(allssps_islands<span class="sc">$</span>wtp<span class="sc">*</span>allssps_islands<span class="sc">$</span>pop<span class="sc">*</span>.<span class="dv">4</span>)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span><span class="dv">0</span>)<span class="sc">^</span>allssps_islands<span class="sc">$</span>time_step<span class="sc">+</span>(allssps_islands<span class="sc">$</span>wtp<span class="sc">*</span>allssps_islands<span class="sc">$</span>pop<span class="sc">*</span>.<span class="dv">1</span>)<span class="sc">/</span>(<span class="dv">1</span>)<span class="sc">^</span>allssps_islands<span class="sc">$</span>time_step<span class="sc">+</span>(allssps_islands<span class="sc">$</span>wtp<span class="sc">*</span>allssps_islands<span class="sc">$</span>pop<span class="sc">*</span>.<span class="dv">3</span>)<span class="sc">/</span>(<span class="dv">1</span><span class="fl">+.03</span>)<span class="sc">^</span>allssps_islands<span class="sc">$</span>time_step<span class="sc">+</span>(allssps_islands<span class="sc">$</span>wtp<span class="sc">*</span>allssps_islands<span class="sc">$</span>pop<span class="sc">*</span>.<span class="dv">2</span>)<span class="sc">/</span>(<span class="dv">1</span><span class="fl">+.1</span>)<span class="sc">^</span>allssps_islands<span class="sc">$</span>time_step</span>
 <span id="cb15-660"><a href="#cb15-660" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-661"><a href="#cb15-661" aria-hidden="true" tabindex="-1"></a>allssps_islands<span class="sc">$</span>NPV_WTP_Lane<span class="ot">=</span>(allssps_islands<span class="sc">$</span>wtp<span class="sc">*</span>allssps_islands<span class="sc">$</span>pop)<span class="sc">/</span>(<span class="dv">1</span><span class="fl">+.03</span>)<span class="sc">^</span>allssps_islands<span class="sc">$</span>time_step</span>
+<span id="cb15-661"><a href="#cb15-661" aria-hidden="true" tabindex="-1"></a>allssps_islands<span class="sc">$</span>NPV_WTP_pluristic2<span class="ot">=</span>(allssps_islands<span class="sc">$</span>wtp<span class="sc">*</span>allssps_islands<span class="sc">$</span>pop<span class="sc">*</span>.<span class="dv">4</span>)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+-</span>.<span class="dv">01</span>)<span class="sc">^</span>allssps_islands<span class="sc">$</span>time_step<span class="sc">+</span>(allssps_islands<span class="sc">$</span>wtp<span class="sc">*</span>allssps_islands<span class="sc">$</span>pop<span class="sc">*</span>.<span class="dv">1</span>)<span class="sc">/</span>(<span class="dv">1</span>)<span class="sc">^</span>allssps_islands<span class="sc">$</span>time_step<span class="sc">+</span>(allssps_islands<span class="sc">$</span>wtp<span class="sc">*</span>allssps_islands<span class="sc">$</span>pop<span class="sc">*</span>.<span class="dv">3</span>)<span class="sc">/</span>(<span class="dv">1</span><span class="fl">+.01</span>)<span class="sc">^</span>allssps_islands<span class="sc">$</span>time_step<span class="sc">+</span>(allssps_islands<span class="sc">$</span>wtp<span class="sc">*</span>allssps_islands<span class="sc">$</span>pop<span class="sc">*</span>.<span class="dv">2</span>)<span class="sc">/</span>(<span class="dv">1</span><span class="fl">+.5</span>)<span class="sc">^</span>allssps_islands<span class="sc">$</span>time_step</span>
 <span id="cb15-662"><a href="#cb15-662" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-663"><a href="#cb15-663" aria-hidden="true" tabindex="-1"></a>allssps_islands<span class="sc">$</span>NPV_WTP_pluristic2<span class="ot">=</span>allssps_islands<span class="sc">$</span>NPV_WTP_pluristic2<span class="sc">/</span><span class="dv">1000</span></span>
-<span id="cb15-664"><a href="#cb15-664" aria-hidden="true" tabindex="-1"></a>allssps_islands<span class="sc">$</span>NPV_WTP_Lane<span class="ot">=</span>allssps_islands<span class="sc">$</span>NPV_WTP_Lane<span class="sc">/</span><span class="dv">1000</span></span>
-<span id="cb15-665"><a href="#cb15-665" aria-hidden="true" tabindex="-1"></a>allssps_islands<span class="sc">$</span>NPV_WTP_pluristic<span class="ot">=</span>allssps_islands<span class="sc">$</span>NPV_WTP_pluristic<span class="sc">/</span><span class="dv">1000</span></span>
-<span id="cb15-666"><a href="#cb15-666" aria-hidden="true" tabindex="-1"></a>allssps_islands<span class="sc">$</span>NPV_WTP<span class="ot">=</span>allssps_islands<span class="sc">$</span>NPV_WTP<span class="sc">/</span><span class="dv">1000</span></span>
-<span id="cb15-667"><a href="#cb15-667" aria-hidden="true" tabindex="-1"></a>allssps_islands<span class="sc">$</span>NPV_WTP_Pop<span class="ot">=</span>allssps_islands<span class="sc">$</span>NPV_WTP_Pop<span class="sc">/</span><span class="dv">1000</span></span>
-<span id="cb15-668"><a href="#cb15-668" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(allssps_islands)[<span class="dv">3</span>]<span class="ot">=</span><span class="st">"SSP Scenario"</span></span>
-<span id="cb15-669"><a href="#cb15-669" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-670"><a href="#cb15-670" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-671"><a href="#cb15-671" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(allssps_islands, <span class="fu">aes</span>(<span class="at">x =</span> Year)) <span class="sc">+</span></span>
-<span id="cb15-672"><a href="#cb15-672" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> NPV_WTP_Pop, <span class="at">color =</span> <span class="st">`</span><span class="at">SSP Scenario</span><span class="st">`</span>, <span class="at">group =</span> <span class="st">`</span><span class="at">SSP Scenario</span><span class="st">`</span>)) <span class="sc">+</span></span>
-<span id="cb15-673"><a href="#cb15-673" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> NPV_WTP_pluristic, <span class="at">color =</span> <span class="st">`</span><span class="at">SSP Scenario</span><span class="st">`</span>, <span class="at">group =</span> <span class="st">`</span><span class="at">SSP Scenario</span><span class="st">`</span>)) <span class="sc">+</span></span>
-<span id="cb15-674"><a href="#cb15-674" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(</span>
-<span id="cb15-675"><a href="#cb15-675" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">ymin =</span> NPV_WTP_pluristic, <span class="at">ymax =</span> NPV_WTP_Pop, <span class="at">fill =</span> <span class="st">`</span><span class="at">SSP Scenario</span><span class="st">`</span>, <span class="at">group =</span> <span class="st">`</span><span class="at">SSP Scenario</span><span class="st">`</span>),</span>
-<span id="cb15-676"><a href="#cb15-676" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">linetype =</span> <span class="dv">0</span></span>
-<span id="cb15-677"><a href="#cb15-677" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb15-678"><a href="#cb15-678" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> group.colors) <span class="sc">+</span></span>
-<span id="cb15-679"><a href="#cb15-679" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> group.colors) <span class="sc">+</span></span>
-<span id="cb15-680"><a href="#cb15-680" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb15-681"><a href="#cb15-681" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb15-682"><a href="#cb15-682" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Times New Roman"</span>),</span>
-<span id="cb15-683"><a href="#cb15-683" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb15-684"><a href="#cb15-684" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
-<span id="cb15-685"><a href="#cb15-685" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"white"</span>)</span>
-<span id="cb15-686"><a href="#cb15-686" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb15-687"><a href="#cb15-687" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Year"</span>) <span class="sc">+</span></span>
-<span id="cb15-688"><a href="#cb15-688" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Thousands Dollars"</span>) <span class="sc">+</span></span>
-<span id="cb15-689"><a href="#cb15-689" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Projected Annual Welfare Impacts (in Thousands Dollars)"</span>) <span class="sc">+</span></span>
-<span id="cb15-690"><a href="#cb15-690" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> <span class="fu">factor</span>(island, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Lānaʻi"</span>, <span class="st">"Molokaʻi"</span>, <span class="st">"Kauaʻi"</span>, <span class="st">"Hawaiʻi"</span>, <span class="st">"Maui"</span>, <span class="st">"Oʻahu"</span>)),</span>
-<span id="cb15-691"><a href="#cb15-691" aria-hidden="true" tabindex="-1"></a>             <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">scales =</span> <span class="st">"free"</span>)</span>
-<span id="cb15-692"><a href="#cb15-692" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-693"><a href="#cb15-693" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-663"><a href="#cb15-663" aria-hidden="true" tabindex="-1"></a>allssps_islands<span class="sc">$</span>NPV_WTP_Lane<span class="ot">=</span>(allssps_islands<span class="sc">$</span>wtp<span class="sc">*</span>allssps_islands<span class="sc">$</span>pop)<span class="sc">/</span>(<span class="dv">1</span><span class="fl">+.03</span>)<span class="sc">^</span>allssps_islands<span class="sc">$</span>time_step</span>
+<span id="cb15-664"><a href="#cb15-664" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-665"><a href="#cb15-665" aria-hidden="true" tabindex="-1"></a>allssps_islands<span class="sc">$</span>NPV_WTP_pluristic2<span class="ot">=</span>allssps_islands<span class="sc">$</span>NPV_WTP_pluristic2<span class="sc">/</span><span class="dv">1000</span></span>
+<span id="cb15-666"><a href="#cb15-666" aria-hidden="true" tabindex="-1"></a>allssps_islands<span class="sc">$</span>NPV_WTP_Lane<span class="ot">=</span>allssps_islands<span class="sc">$</span>NPV_WTP_Lane<span class="sc">/</span><span class="dv">1000</span></span>
+<span id="cb15-667"><a href="#cb15-667" aria-hidden="true" tabindex="-1"></a>allssps_islands<span class="sc">$</span>NPV_WTP_pluristic<span class="ot">=</span>allssps_islands<span class="sc">$</span>NPV_WTP_pluristic<span class="sc">/</span><span class="dv">1000</span></span>
+<span id="cb15-668"><a href="#cb15-668" aria-hidden="true" tabindex="-1"></a>allssps_islands<span class="sc">$</span>NPV_WTP<span class="ot">=</span>allssps_islands<span class="sc">$</span>NPV_WTP<span class="sc">/</span><span class="dv">1000</span></span>
+<span id="cb15-669"><a href="#cb15-669" aria-hidden="true" tabindex="-1"></a>allssps_islands<span class="sc">$</span>NPV_WTP_Pop<span class="ot">=</span>allssps_islands<span class="sc">$</span>NPV_WTP_Pop<span class="sc">/</span><span class="dv">1000</span></span>
+<span id="cb15-670"><a href="#cb15-670" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(allssps_islands)[<span class="dv">3</span>]<span class="ot">=</span><span class="st">"SSP Scenario"</span></span>
+<span id="cb15-671"><a href="#cb15-671" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-672"><a href="#cb15-672" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-673"><a href="#cb15-673" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(allssps_islands, <span class="fu">aes</span>(<span class="at">x =</span> Year)) <span class="sc">+</span></span>
+<span id="cb15-674"><a href="#cb15-674" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> NPV_WTP_Pop, <span class="at">color =</span> <span class="st">`</span><span class="at">SSP Scenario</span><span class="st">`</span>, <span class="at">group =</span> <span class="st">`</span><span class="at">SSP Scenario</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb15-675"><a href="#cb15-675" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> NPV_WTP_pluristic, <span class="at">color =</span> <span class="st">`</span><span class="at">SSP Scenario</span><span class="st">`</span>, <span class="at">group =</span> <span class="st">`</span><span class="at">SSP Scenario</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb15-676"><a href="#cb15-676" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(</span>
+<span id="cb15-677"><a href="#cb15-677" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">ymin =</span> NPV_WTP_pluristic, <span class="at">ymax =</span> NPV_WTP_Pop, <span class="at">fill =</span> <span class="st">`</span><span class="at">SSP Scenario</span><span class="st">`</span>, <span class="at">group =</span> <span class="st">`</span><span class="at">SSP Scenario</span><span class="st">`</span>),</span>
+<span id="cb15-678"><a href="#cb15-678" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">linetype =</span> <span class="dv">0</span></span>
+<span id="cb15-679"><a href="#cb15-679" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb15-680"><a href="#cb15-680" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> group.colors) <span class="sc">+</span></span>
+<span id="cb15-681"><a href="#cb15-681" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> group.colors) <span class="sc">+</span></span>
+<span id="cb15-682"><a href="#cb15-682" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb15-683"><a href="#cb15-683" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb15-684"><a href="#cb15-684" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Times New Roman"</span>),</span>
+<span id="cb15-685"><a href="#cb15-685" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb15-686"><a href="#cb15-686" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
+<span id="cb15-687"><a href="#cb15-687" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"white"</span>)</span>
+<span id="cb15-688"><a href="#cb15-688" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb15-689"><a href="#cb15-689" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Year"</span>) <span class="sc">+</span></span>
+<span id="cb15-690"><a href="#cb15-690" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Thousands Dollars"</span>) <span class="sc">+</span></span>
+<span id="cb15-691"><a href="#cb15-691" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Projected Annual Welfare Impacts (in Thousands Dollars)"</span>) <span class="sc">+</span></span>
+<span id="cb15-692"><a href="#cb15-692" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> <span class="fu">factor</span>(island, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Lānaʻi"</span>, <span class="st">"Molokaʻi"</span>, <span class="st">"Kauaʻi"</span>, <span class="st">"Hawaiʻi"</span>, <span class="st">"Maui"</span>, <span class="st">"Oʻahu"</span>)),</span>
+<span id="cb15-693"><a href="#cb15-693" aria-hidden="true" tabindex="-1"></a>             <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">scales =</span> <span class="st">"free"</span>)</span>
 <span id="cb15-694"><a href="#cb15-694" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-695"><a href="#cb15-695" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-695"><a href="#cb15-695" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-696"><a href="#cb15-696" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-697"><a href="#cb15-697" aria-hidden="true" tabindex="-1"></a><span class="fu">## Snap Shot within Island</span></span>
+<span id="cb15-697"><a href="#cb15-697" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb15-698"><a href="#cb15-698" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-699"><a href="#cb15-699" aria-hidden="true" tabindex="-1"></a>The raw welfare estimates generated in previous steps are not yet adjusted for differences in income levels or population density. The next code snippet computes total willingness to pay (WTP) by:</span>
+<span id="cb15-699"><a href="#cb15-699" aria-hidden="true" tabindex="-1"></a><span class="fu">### Snap Shot within Island</span></span>
 <span id="cb15-700"><a href="#cb15-700" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-701"><a href="#cb15-701" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Aggregating individual welfare estimates by income tract and grid cell</span>
+<span id="cb15-701"><a href="#cb15-701" aria-hidden="true" tabindex="-1"></a>The raw welfare estimates generated in previous steps are not yet adjusted for differences in income levels or population density. The next code snippet computes total willingness to pay (WTP) by:</span>
 <span id="cb15-702"><a href="#cb15-702" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-703"><a href="#cb15-703" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Weighting by local population to reflect the total affected individuals</span>
+<span id="cb15-703"><a href="#cb15-703" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Aggregating individual welfare estimates by income tract and grid cell</span>
 <span id="cb15-704"><a href="#cb15-704" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-705"><a href="#cb15-705" aria-hidden="true" tabindex="-1"></a>This adjusted dataset is especially useful for understanding distributional impacts of environmental change and for producing spatially explicit visualizations of welfare loss.</span>
+<span id="cb15-705"><a href="#cb15-705" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Weighting by local population to reflect the total affected individuals</span>
 <span id="cb15-706"><a href="#cb15-706" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-707"><a href="#cb15-707" aria-hidden="true" tabindex="-1"></a>**In the paper we present 2030, 2050, 2100 but here we have also 2075**</span>
+<span id="cb15-707"><a href="#cb15-707" aria-hidden="true" tabindex="-1"></a>This adjusted dataset is especially useful for understanding distributional impacts of environmental change and for producing spatially explicit visualizations of welfare loss.</span>
 <span id="cb15-708"><a href="#cb15-708" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-709"><a href="#cb15-709" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/maps.png)</span></span>
+<span id="cb15-709"><a href="#cb15-709" aria-hidden="true" tabindex="-1"></a>**In the paper we present 2030, 2050, 2100 but here we have also 2075**</span>
 <span id="cb15-710"><a href="#cb15-710" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-711"><a href="#cb15-711" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=FALSE}</span></span>
-<span id="cb15-712"><a href="#cb15-712" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb15-713"><a href="#cb15-713" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the cutpoints for 7 intervals</span></span>
-<span id="cb15-714"><a href="#cb15-714" aria-hidden="true" tabindex="-1"></a>all_df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"~/CR/codedata/all_grids.csv"</span>)<span class="sc">%&gt;%</span></span>
-<span id="cb15-715"><a href="#cb15-715" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">starts_with</span>(<span class="st">"..."</span>))</span>
-<span id="cb15-716"><a href="#cb15-716" aria-hidden="true" tabindex="-1"></a>all_df <span class="ot">&lt;-</span> all_df <span class="sc">%&gt;%</span></span>
-<span id="cb15-717"><a href="#cb15-717" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SSP1_WTP_bin =</span> <span class="fu">case_when</span>(</span>
-<span id="cb15-718"><a href="#cb15-718" aria-hidden="true" tabindex="-1"></a>    SSP1_TotalWTP <span class="sc">&lt;=</span> <span class="sc">-</span><span class="fl">1e6</span>         <span class="sc">~</span> <span class="st">"≤ -1M"</span>,</span>
-<span id="cb15-719"><a href="#cb15-719" aria-hidden="true" tabindex="-1"></a>    SSP1_TotalWTP <span class="sc">&lt;=</span> <span class="sc">-</span><span class="fl">1e5</span>         <span class="sc">~</span> <span class="st">"-1M to -100K"</span>,</span>
-<span id="cb15-720"><a href="#cb15-720" aria-hidden="true" tabindex="-1"></a>    SSP1_TotalWTP <span class="sc">&lt;=</span> <span class="sc">-</span><span class="fl">1e3</span>         <span class="sc">~</span> <span class="st">"-100K to -1K"</span>,</span>
-<span id="cb15-721"><a href="#cb15-721" aria-hidden="true" tabindex="-1"></a>    SSP1_TotalWTP <span class="sc">&lt;=</span> <span class="sc">-</span><span class="dv">100</span>         <span class="sc">~</span> <span class="st">"-1K to -100"</span>,</span>
-<span id="cb15-722"><a href="#cb15-722" aria-hidden="true" tabindex="-1"></a>    SSP1_TotalWTP <span class="sc">&lt;</span> <span class="dv">0</span>             <span class="sc">~</span> <span class="st">"-100 to 0"</span>,</span>
-<span id="cb15-723"><a href="#cb15-723" aria-hidden="true" tabindex="-1"></a>    SSP1_TotalWTP <span class="sc">==</span> <span class="dv">0</span>            <span class="sc">~</span> <span class="st">"0"</span>,</span>
-<span id="cb15-724"><a href="#cb15-724" aria-hidden="true" tabindex="-1"></a>    SSP1_TotalWTP <span class="sc">&lt;=</span> <span class="dv">100</span>          <span class="sc">~</span> <span class="st">"0 to 100"</span>,</span>
-<span id="cb15-725"><a href="#cb15-725" aria-hidden="true" tabindex="-1"></a>    SSP1_TotalWTP <span class="sc">&lt;=</span> <span class="fl">1e3</span>          <span class="sc">~</span> <span class="st">"100 to 1K"</span>,</span>
-<span id="cb15-726"><a href="#cb15-726" aria-hidden="true" tabindex="-1"></a>    SSP1_TotalWTP <span class="sc">&lt;=</span> <span class="fl">1e4</span>          <span class="sc">~</span> <span class="st">"1K to 10K"</span>,</span>
-<span id="cb15-727"><a href="#cb15-727" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span>                          <span class="sc">~</span> <span class="st">"&gt; 10K"</span></span>
-<span id="cb15-728"><a href="#cb15-728" aria-hidden="true" tabindex="-1"></a>  ))</span>
-<span id="cb15-729"><a href="#cb15-729" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-730"><a href="#cb15-730" aria-hidden="true" tabindex="-1"></a>all_df <span class="ot">&lt;-</span> all_df <span class="sc">%&gt;%</span></span>
-<span id="cb15-731"><a href="#cb15-731" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SSP2_WTP_bin =</span> <span class="fu">case_when</span>(</span>
-<span id="cb15-732"><a href="#cb15-732" aria-hidden="true" tabindex="-1"></a>    SSP2_TotalWTP <span class="sc">&lt;=</span> <span class="sc">-</span><span class="fl">1e6</span>         <span class="sc">~</span> <span class="st">"≤ -1M"</span>,</span>
-<span id="cb15-733"><a href="#cb15-733" aria-hidden="true" tabindex="-1"></a>    SSP2_TotalWTP <span class="sc">&lt;=</span> <span class="sc">-</span><span class="fl">1e5</span>         <span class="sc">~</span> <span class="st">"-1M to -100K"</span>,</span>
-<span id="cb15-734"><a href="#cb15-734" aria-hidden="true" tabindex="-1"></a>    SSP2_TotalWTP <span class="sc">&lt;=</span> <span class="sc">-</span><span class="fl">1e3</span>         <span class="sc">~</span> <span class="st">"-100K to -1K"</span>,</span>
-<span id="cb15-735"><a href="#cb15-735" aria-hidden="true" tabindex="-1"></a>    SSP2_TotalWTP <span class="sc">&lt;=</span> <span class="sc">-</span><span class="dv">100</span>         <span class="sc">~</span> <span class="st">"-1K to -100"</span>,</span>
-<span id="cb15-736"><a href="#cb15-736" aria-hidden="true" tabindex="-1"></a>    SSP2_TotalWTP <span class="sc">&lt;</span> <span class="dv">0</span>             <span class="sc">~</span> <span class="st">"-100 to 0"</span>,</span>
-<span id="cb15-737"><a href="#cb15-737" aria-hidden="true" tabindex="-1"></a>    SSP2_TotalWTP <span class="sc">==</span> <span class="dv">0</span>            <span class="sc">~</span> <span class="st">"0"</span>,</span>
-<span id="cb15-738"><a href="#cb15-738" aria-hidden="true" tabindex="-1"></a>    SSP2_TotalWTP <span class="sc">&lt;=</span> <span class="dv">100</span>          <span class="sc">~</span> <span class="st">"0 to 100"</span>,</span>
-<span id="cb15-739"><a href="#cb15-739" aria-hidden="true" tabindex="-1"></a>    SSP2_TotalWTP <span class="sc">&lt;=</span> <span class="fl">1e3</span>          <span class="sc">~</span> <span class="st">"100 to 1K"</span>,</span>
-<span id="cb15-740"><a href="#cb15-740" aria-hidden="true" tabindex="-1"></a>    SSP2_TotalWTP <span class="sc">&lt;=</span> <span class="fl">1e4</span>          <span class="sc">~</span> <span class="st">"1K to 10K"</span>,</span>
-<span id="cb15-741"><a href="#cb15-741" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span>                          <span class="sc">~</span> <span class="st">"&gt; 10K"</span></span>
-<span id="cb15-742"><a href="#cb15-742" aria-hidden="true" tabindex="-1"></a>  ))</span>
-<span id="cb15-743"><a href="#cb15-743" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-744"><a href="#cb15-744" aria-hidden="true" tabindex="-1"></a>all_df <span class="ot">&lt;-</span> all_df <span class="sc">%&gt;%</span></span>
-<span id="cb15-745"><a href="#cb15-745" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SSP3_WTP_bin =</span> <span class="fu">case_when</span>(</span>
-<span id="cb15-746"><a href="#cb15-746" aria-hidden="true" tabindex="-1"></a>    SSP3_TotalWTP <span class="sc">&lt;=</span> <span class="sc">-</span><span class="fl">1e6</span>         <span class="sc">~</span> <span class="st">"≤ -1M"</span>,</span>
-<span id="cb15-747"><a href="#cb15-747" aria-hidden="true" tabindex="-1"></a>    SSP3_TotalWTP <span class="sc">&lt;=</span> <span class="sc">-</span><span class="fl">1e5</span>         <span class="sc">~</span> <span class="st">"-1M to -100K"</span>,</span>
-<span id="cb15-748"><a href="#cb15-748" aria-hidden="true" tabindex="-1"></a>    SSP3_TotalWTP <span class="sc">&lt;=</span> <span class="sc">-</span><span class="fl">1e3</span>         <span class="sc">~</span> <span class="st">"-100K to -1K"</span>,</span>
-<span id="cb15-749"><a href="#cb15-749" aria-hidden="true" tabindex="-1"></a>    SSP3_TotalWTP <span class="sc">&lt;=</span> <span class="sc">-</span><span class="dv">100</span>         <span class="sc">~</span> <span class="st">"-1K to -100"</span>,</span>
-<span id="cb15-750"><a href="#cb15-750" aria-hidden="true" tabindex="-1"></a>    SSP3_TotalWTP <span class="sc">&lt;</span> <span class="dv">0</span>             <span class="sc">~</span> <span class="st">"-100 to 0"</span>,</span>
-<span id="cb15-751"><a href="#cb15-751" aria-hidden="true" tabindex="-1"></a>    SSP3_TotalWTP <span class="sc">==</span> <span class="dv">0</span>            <span class="sc">~</span> <span class="st">"0"</span>,</span>
-<span id="cb15-752"><a href="#cb15-752" aria-hidden="true" tabindex="-1"></a>    SSP3_TotalWTP <span class="sc">&lt;=</span> <span class="dv">100</span>          <span class="sc">~</span> <span class="st">"0 to 100"</span>,</span>
-<span id="cb15-753"><a href="#cb15-753" aria-hidden="true" tabindex="-1"></a>    SSP3_TotalWTP <span class="sc">&lt;=</span> <span class="fl">1e3</span>          <span class="sc">~</span> <span class="st">"100 to 1K"</span>,</span>
-<span id="cb15-754"><a href="#cb15-754" aria-hidden="true" tabindex="-1"></a>    SSP3_TotalWTP <span class="sc">&lt;=</span> <span class="fl">1e4</span>          <span class="sc">~</span> <span class="st">"1K to 10K"</span>,</span>
-<span id="cb15-755"><a href="#cb15-755" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span>                          <span class="sc">~</span> <span class="st">"&gt; 10K"</span></span>
-<span id="cb15-756"><a href="#cb15-756" aria-hidden="true" tabindex="-1"></a>  ))</span>
-<span id="cb15-757"><a href="#cb15-757" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-758"><a href="#cb15-758" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-711"><a href="#cb15-711" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/maps.png)</span></span>
+<span id="cb15-712"><a href="#cb15-712" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-713"><a href="#cb15-713" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=FALSE}</span></span>
+<span id="cb15-714"><a href="#cb15-714" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb15-715"><a href="#cb15-715" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the cutpoints for 7 intervals</span></span>
+<span id="cb15-716"><a href="#cb15-716" aria-hidden="true" tabindex="-1"></a>all_df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"~/CR/codedata/all_grids.csv"</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb15-717"><a href="#cb15-717" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">starts_with</span>(<span class="st">"..."</span>))</span>
+<span id="cb15-718"><a href="#cb15-718" aria-hidden="true" tabindex="-1"></a>all_df <span class="ot">&lt;-</span> all_df <span class="sc">%&gt;%</span></span>
+<span id="cb15-719"><a href="#cb15-719" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SSP1_WTP_bin =</span> <span class="fu">case_when</span>(</span>
+<span id="cb15-720"><a href="#cb15-720" aria-hidden="true" tabindex="-1"></a>    SSP1_TotalWTP <span class="sc">&lt;=</span> <span class="sc">-</span><span class="fl">1e6</span>         <span class="sc">~</span> <span class="st">"≤ -1M"</span>,</span>
+<span id="cb15-721"><a href="#cb15-721" aria-hidden="true" tabindex="-1"></a>    SSP1_TotalWTP <span class="sc">&lt;=</span> <span class="sc">-</span><span class="fl">1e5</span>         <span class="sc">~</span> <span class="st">"-1M to -100K"</span>,</span>
+<span id="cb15-722"><a href="#cb15-722" aria-hidden="true" tabindex="-1"></a>    SSP1_TotalWTP <span class="sc">&lt;=</span> <span class="sc">-</span><span class="fl">1e3</span>         <span class="sc">~</span> <span class="st">"-100K to -1K"</span>,</span>
+<span id="cb15-723"><a href="#cb15-723" aria-hidden="true" tabindex="-1"></a>    SSP1_TotalWTP <span class="sc">&lt;=</span> <span class="sc">-</span><span class="dv">100</span>         <span class="sc">~</span> <span class="st">"-1K to -100"</span>,</span>
+<span id="cb15-724"><a href="#cb15-724" aria-hidden="true" tabindex="-1"></a>    SSP1_TotalWTP <span class="sc">&lt;</span> <span class="dv">0</span>             <span class="sc">~</span> <span class="st">"-100 to 0"</span>,</span>
+<span id="cb15-725"><a href="#cb15-725" aria-hidden="true" tabindex="-1"></a>    SSP1_TotalWTP <span class="sc">==</span> <span class="dv">0</span>            <span class="sc">~</span> <span class="st">"0"</span>,</span>
+<span id="cb15-726"><a href="#cb15-726" aria-hidden="true" tabindex="-1"></a>    SSP1_TotalWTP <span class="sc">&lt;=</span> <span class="dv">100</span>          <span class="sc">~</span> <span class="st">"0 to 100"</span>,</span>
+<span id="cb15-727"><a href="#cb15-727" aria-hidden="true" tabindex="-1"></a>    SSP1_TotalWTP <span class="sc">&lt;=</span> <span class="fl">1e3</span>          <span class="sc">~</span> <span class="st">"100 to 1K"</span>,</span>
+<span id="cb15-728"><a href="#cb15-728" aria-hidden="true" tabindex="-1"></a>    SSP1_TotalWTP <span class="sc">&lt;=</span> <span class="fl">1e4</span>          <span class="sc">~</span> <span class="st">"1K to 10K"</span>,</span>
+<span id="cb15-729"><a href="#cb15-729" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span>                          <span class="sc">~</span> <span class="st">"&gt; 10K"</span></span>
+<span id="cb15-730"><a href="#cb15-730" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb15-731"><a href="#cb15-731" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-732"><a href="#cb15-732" aria-hidden="true" tabindex="-1"></a>all_df <span class="ot">&lt;-</span> all_df <span class="sc">%&gt;%</span></span>
+<span id="cb15-733"><a href="#cb15-733" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SSP2_WTP_bin =</span> <span class="fu">case_when</span>(</span>
+<span id="cb15-734"><a href="#cb15-734" aria-hidden="true" tabindex="-1"></a>    SSP2_TotalWTP <span class="sc">&lt;=</span> <span class="sc">-</span><span class="fl">1e6</span>         <span class="sc">~</span> <span class="st">"≤ -1M"</span>,</span>
+<span id="cb15-735"><a href="#cb15-735" aria-hidden="true" tabindex="-1"></a>    SSP2_TotalWTP <span class="sc">&lt;=</span> <span class="sc">-</span><span class="fl">1e5</span>         <span class="sc">~</span> <span class="st">"-1M to -100K"</span>,</span>
+<span id="cb15-736"><a href="#cb15-736" aria-hidden="true" tabindex="-1"></a>    SSP2_TotalWTP <span class="sc">&lt;=</span> <span class="sc">-</span><span class="fl">1e3</span>         <span class="sc">~</span> <span class="st">"-100K to -1K"</span>,</span>
+<span id="cb15-737"><a href="#cb15-737" aria-hidden="true" tabindex="-1"></a>    SSP2_TotalWTP <span class="sc">&lt;=</span> <span class="sc">-</span><span class="dv">100</span>         <span class="sc">~</span> <span class="st">"-1K to -100"</span>,</span>
+<span id="cb15-738"><a href="#cb15-738" aria-hidden="true" tabindex="-1"></a>    SSP2_TotalWTP <span class="sc">&lt;</span> <span class="dv">0</span>             <span class="sc">~</span> <span class="st">"-100 to 0"</span>,</span>
+<span id="cb15-739"><a href="#cb15-739" aria-hidden="true" tabindex="-1"></a>    SSP2_TotalWTP <span class="sc">==</span> <span class="dv">0</span>            <span class="sc">~</span> <span class="st">"0"</span>,</span>
+<span id="cb15-740"><a href="#cb15-740" aria-hidden="true" tabindex="-1"></a>    SSP2_TotalWTP <span class="sc">&lt;=</span> <span class="dv">100</span>          <span class="sc">~</span> <span class="st">"0 to 100"</span>,</span>
+<span id="cb15-741"><a href="#cb15-741" aria-hidden="true" tabindex="-1"></a>    SSP2_TotalWTP <span class="sc">&lt;=</span> <span class="fl">1e3</span>          <span class="sc">~</span> <span class="st">"100 to 1K"</span>,</span>
+<span id="cb15-742"><a href="#cb15-742" aria-hidden="true" tabindex="-1"></a>    SSP2_TotalWTP <span class="sc">&lt;=</span> <span class="fl">1e4</span>          <span class="sc">~</span> <span class="st">"1K to 10K"</span>,</span>
+<span id="cb15-743"><a href="#cb15-743" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span>                          <span class="sc">~</span> <span class="st">"&gt; 10K"</span></span>
+<span id="cb15-744"><a href="#cb15-744" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb15-745"><a href="#cb15-745" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-746"><a href="#cb15-746" aria-hidden="true" tabindex="-1"></a>all_df <span class="ot">&lt;-</span> all_df <span class="sc">%&gt;%</span></span>
+<span id="cb15-747"><a href="#cb15-747" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SSP3_WTP_bin =</span> <span class="fu">case_when</span>(</span>
+<span id="cb15-748"><a href="#cb15-748" aria-hidden="true" tabindex="-1"></a>    SSP3_TotalWTP <span class="sc">&lt;=</span> <span class="sc">-</span><span class="fl">1e6</span>         <span class="sc">~</span> <span class="st">"≤ -1M"</span>,</span>
+<span id="cb15-749"><a href="#cb15-749" aria-hidden="true" tabindex="-1"></a>    SSP3_TotalWTP <span class="sc">&lt;=</span> <span class="sc">-</span><span class="fl">1e5</span>         <span class="sc">~</span> <span class="st">"-1M to -100K"</span>,</span>
+<span id="cb15-750"><a href="#cb15-750" aria-hidden="true" tabindex="-1"></a>    SSP3_TotalWTP <span class="sc">&lt;=</span> <span class="sc">-</span><span class="fl">1e3</span>         <span class="sc">~</span> <span class="st">"-100K to -1K"</span>,</span>
+<span id="cb15-751"><a href="#cb15-751" aria-hidden="true" tabindex="-1"></a>    SSP3_TotalWTP <span class="sc">&lt;=</span> <span class="sc">-</span><span class="dv">100</span>         <span class="sc">~</span> <span class="st">"-1K to -100"</span>,</span>
+<span id="cb15-752"><a href="#cb15-752" aria-hidden="true" tabindex="-1"></a>    SSP3_TotalWTP <span class="sc">&lt;</span> <span class="dv">0</span>             <span class="sc">~</span> <span class="st">"-100 to 0"</span>,</span>
+<span id="cb15-753"><a href="#cb15-753" aria-hidden="true" tabindex="-1"></a>    SSP3_TotalWTP <span class="sc">==</span> <span class="dv">0</span>            <span class="sc">~</span> <span class="st">"0"</span>,</span>
+<span id="cb15-754"><a href="#cb15-754" aria-hidden="true" tabindex="-1"></a>    SSP3_TotalWTP <span class="sc">&lt;=</span> <span class="dv">100</span>          <span class="sc">~</span> <span class="st">"0 to 100"</span>,</span>
+<span id="cb15-755"><a href="#cb15-755" aria-hidden="true" tabindex="-1"></a>    SSP3_TotalWTP <span class="sc">&lt;=</span> <span class="fl">1e3</span>          <span class="sc">~</span> <span class="st">"100 to 1K"</span>,</span>
+<span id="cb15-756"><a href="#cb15-756" aria-hidden="true" tabindex="-1"></a>    SSP3_TotalWTP <span class="sc">&lt;=</span> <span class="fl">1e4</span>          <span class="sc">~</span> <span class="st">"1K to 10K"</span>,</span>
+<span id="cb15-757"><a href="#cb15-757" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span>                          <span class="sc">~</span> <span class="st">"&gt; 10K"</span></span>
+<span id="cb15-758"><a href="#cb15-758" aria-hidden="true" tabindex="-1"></a>  ))</span>
 <span id="cb15-759"><a href="#cb15-759" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-760"><a href="#cb15-760" aria-hidden="true" tabindex="-1"></a>color_palette <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb15-761"><a href="#cb15-761" aria-hidden="true" tabindex="-1"></a>  <span class="st">"≤ -1M"</span>         <span class="ot">=</span> <span class="st">"darkred"</span>,</span>
-<span id="cb15-762"><a href="#cb15-762" aria-hidden="true" tabindex="-1"></a>  <span class="st">"-1M to -100K"</span>  <span class="ot">=</span> <span class="st">"brown"</span>,</span>
-<span id="cb15-763"><a href="#cb15-763" aria-hidden="true" tabindex="-1"></a>  <span class="st">"-100K to -1K"</span>  <span class="ot">=</span> <span class="st">"lightcoral"</span>,</span>
-<span id="cb15-764"><a href="#cb15-764" aria-hidden="true" tabindex="-1"></a>  <span class="st">"-1K to -100"</span>   <span class="ot">=</span> <span class="st">"pink"</span>,</span>
-<span id="cb15-765"><a href="#cb15-765" aria-hidden="true" tabindex="-1"></a>  <span class="st">"-100 to 0"</span>     <span class="ot">=</span> <span class="st">"mistyrose"</span>,</span>
-<span id="cb15-766"><a href="#cb15-766" aria-hidden="true" tabindex="-1"></a>  <span class="st">"0"</span>             <span class="ot">=</span> <span class="st">"white"</span>,</span>
-<span id="cb15-767"><a href="#cb15-767" aria-hidden="true" tabindex="-1"></a>  <span class="st">"0 to 100"</span>      <span class="ot">=</span> <span class="st">"greenyellow"</span>,</span>
-<span id="cb15-768"><a href="#cb15-768" aria-hidden="true" tabindex="-1"></a>  <span class="st">"100 to 1K"</span>     <span class="ot">=</span> <span class="st">"limegreen"</span>,</span>
-<span id="cb15-769"><a href="#cb15-769" aria-hidden="true" tabindex="-1"></a>  <span class="st">"&gt; 10K"</span>         <span class="ot">=</span> <span class="st">"darkgreen"</span></span>
-<span id="cb15-770"><a href="#cb15-770" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb15-771"><a href="#cb15-771" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-772"><a href="#cb15-772" aria-hidden="true" tabindex="-1"></a>all_df<span class="sc">$</span>SSP1_WTP_bin <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
-<span id="cb15-773"><a href="#cb15-773" aria-hidden="true" tabindex="-1"></a>  all_df<span class="sc">$</span>SSP1_WTP_bin,</span>
-<span id="cb15-774"><a href="#cb15-774" aria-hidden="true" tabindex="-1"></a>  <span class="at">levels =</span> <span class="fu">names</span>(color_palette)</span>
-<span id="cb15-775"><a href="#cb15-775" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb15-776"><a href="#cb15-776" aria-hidden="true" tabindex="-1"></a>all_df<span class="sc">$</span>SSP2_WTP_bin <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
-<span id="cb15-777"><a href="#cb15-777" aria-hidden="true" tabindex="-1"></a>  all_df<span class="sc">$</span>SSP2_WTP_bin,</span>
-<span id="cb15-778"><a href="#cb15-778" aria-hidden="true" tabindex="-1"></a>  <span class="at">levels =</span> <span class="fu">names</span>(color_palette)</span>
-<span id="cb15-779"><a href="#cb15-779" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb15-780"><a href="#cb15-780" aria-hidden="true" tabindex="-1"></a>all_df<span class="sc">$</span>SSP2_WTP_bin <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
-<span id="cb15-781"><a href="#cb15-781" aria-hidden="true" tabindex="-1"></a>  all_df<span class="sc">$</span>SSP2_WTP_bin,</span>
-<span id="cb15-782"><a href="#cb15-782" aria-hidden="true" tabindex="-1"></a>  <span class="at">levels =</span> <span class="fu">names</span>(color_palette)</span>
-<span id="cb15-783"><a href="#cb15-783" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb15-784"><a href="#cb15-784" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-785"><a href="#cb15-785" aria-hidden="true" tabindex="-1"></a><span class="co"># Then plot:</span></span>
-<span id="cb15-786"><a href="#cb15-786" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(all_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">2020</span>, <span class="dv">2050</span>, <span class="dv">2075</span>, <span class="dv">2100</span>)),</span>
-<span id="cb15-787"><a href="#cb15-787" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> longitude, <span class="at">y =</span> latitude, <span class="at">color =</span> SSP1_WTP_bin)</span>
-<span id="cb15-788"><a href="#cb15-788" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
-<span id="cb15-789"><a href="#cb15-789" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">alpha =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb15-790"><a href="#cb15-790" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf</span>(</span>
-<span id="cb15-791"><a href="#cb15-791" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> hawaii_counties,</span>
-<span id="cb15-792"><a href="#cb15-792" aria-hidden="true" tabindex="-1"></a>        <span class="at">fill =</span> <span class="cn">NA</span>,</span>
-<span id="cb15-793"><a href="#cb15-793" aria-hidden="true" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">"black"</span>,</span>
-<span id="cb15-794"><a href="#cb15-794" aria-hidden="true" tabindex="-1"></a>        <span class="at">size =</span> <span class="fl">0.4</span>,</span>
-<span id="cb15-795"><a href="#cb15-795" aria-hidden="true" tabindex="-1"></a>        <span class="at">inherit.aes =</span> <span class="cn">FALSE</span></span>
-<span id="cb15-796"><a href="#cb15-796" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb15-797"><a href="#cb15-797" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">161</span>, <span class="sc">-</span><span class="dv">154</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">18.5</span>, <span class="fl">22.5</span>)) <span class="sc">+</span></span>
-<span id="cb15-798"><a href="#cb15-798" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(</span>
-<span id="cb15-799"><a href="#cb15-799" aria-hidden="true" tabindex="-1"></a>        <span class="at">values =</span> color_palette,</span>
-<span id="cb15-800"><a href="#cb15-800" aria-hidden="true" tabindex="-1"></a>        <span class="at">name =</span> <span class="st">"Total WTP"</span>,</span>
-<span id="cb15-801"><a href="#cb15-801" aria-hidden="true" tabindex="-1"></a>        <span class="at">drop =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb15-802"><a href="#cb15-802" aria-hidden="true" tabindex="-1"></a>        <span class="at">limits =</span> <span class="fu">names</span>(color_palette)</span>
-<span id="cb15-803"><a href="#cb15-803" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb15-804"><a href="#cb15-804" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(Year), <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb15-805"><a href="#cb15-805" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>()</span>
-<span id="cb15-806"><a href="#cb15-806" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-807"><a href="#cb15-807" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-808"><a href="#cb15-808" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-760"><a href="#cb15-760" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-761"><a href="#cb15-761" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-762"><a href="#cb15-762" aria-hidden="true" tabindex="-1"></a>color_palette <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb15-763"><a href="#cb15-763" aria-hidden="true" tabindex="-1"></a>  <span class="st">"≤ -1M"</span>         <span class="ot">=</span> <span class="st">"darkred"</span>,</span>
+<span id="cb15-764"><a href="#cb15-764" aria-hidden="true" tabindex="-1"></a>  <span class="st">"-1M to -100K"</span>  <span class="ot">=</span> <span class="st">"brown"</span>,</span>
+<span id="cb15-765"><a href="#cb15-765" aria-hidden="true" tabindex="-1"></a>  <span class="st">"-100K to -1K"</span>  <span class="ot">=</span> <span class="st">"lightcoral"</span>,</span>
+<span id="cb15-766"><a href="#cb15-766" aria-hidden="true" tabindex="-1"></a>  <span class="st">"-1K to -100"</span>   <span class="ot">=</span> <span class="st">"pink"</span>,</span>
+<span id="cb15-767"><a href="#cb15-767" aria-hidden="true" tabindex="-1"></a>  <span class="st">"-100 to 0"</span>     <span class="ot">=</span> <span class="st">"mistyrose"</span>,</span>
+<span id="cb15-768"><a href="#cb15-768" aria-hidden="true" tabindex="-1"></a>  <span class="st">"0"</span>             <span class="ot">=</span> <span class="st">"white"</span>,</span>
+<span id="cb15-769"><a href="#cb15-769" aria-hidden="true" tabindex="-1"></a>  <span class="st">"0 to 100"</span>      <span class="ot">=</span> <span class="st">"greenyellow"</span>,</span>
+<span id="cb15-770"><a href="#cb15-770" aria-hidden="true" tabindex="-1"></a>  <span class="st">"100 to 1K"</span>     <span class="ot">=</span> <span class="st">"limegreen"</span>,</span>
+<span id="cb15-771"><a href="#cb15-771" aria-hidden="true" tabindex="-1"></a>  <span class="st">"&gt; 10K"</span>         <span class="ot">=</span> <span class="st">"darkgreen"</span></span>
+<span id="cb15-772"><a href="#cb15-772" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-773"><a href="#cb15-773" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-774"><a href="#cb15-774" aria-hidden="true" tabindex="-1"></a>all_df<span class="sc">$</span>SSP1_WTP_bin <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
+<span id="cb15-775"><a href="#cb15-775" aria-hidden="true" tabindex="-1"></a>  all_df<span class="sc">$</span>SSP1_WTP_bin,</span>
+<span id="cb15-776"><a href="#cb15-776" aria-hidden="true" tabindex="-1"></a>  <span class="at">levels =</span> <span class="fu">names</span>(color_palette)</span>
+<span id="cb15-777"><a href="#cb15-777" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-778"><a href="#cb15-778" aria-hidden="true" tabindex="-1"></a>all_df<span class="sc">$</span>SSP2_WTP_bin <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
+<span id="cb15-779"><a href="#cb15-779" aria-hidden="true" tabindex="-1"></a>  all_df<span class="sc">$</span>SSP2_WTP_bin,</span>
+<span id="cb15-780"><a href="#cb15-780" aria-hidden="true" tabindex="-1"></a>  <span class="at">levels =</span> <span class="fu">names</span>(color_palette)</span>
+<span id="cb15-781"><a href="#cb15-781" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-782"><a href="#cb15-782" aria-hidden="true" tabindex="-1"></a>all_df<span class="sc">$</span>SSP2_WTP_bin <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
+<span id="cb15-783"><a href="#cb15-783" aria-hidden="true" tabindex="-1"></a>  all_df<span class="sc">$</span>SSP2_WTP_bin,</span>
+<span id="cb15-784"><a href="#cb15-784" aria-hidden="true" tabindex="-1"></a>  <span class="at">levels =</span> <span class="fu">names</span>(color_palette)</span>
+<span id="cb15-785"><a href="#cb15-785" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-786"><a href="#cb15-786" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-787"><a href="#cb15-787" aria-hidden="true" tabindex="-1"></a><span class="co"># Then plot:</span></span>
+<span id="cb15-788"><a href="#cb15-788" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(all_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">2020</span>, <span class="dv">2050</span>, <span class="dv">2075</span>, <span class="dv">2100</span>)),</span>
+<span id="cb15-789"><a href="#cb15-789" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> longitude, <span class="at">y =</span> latitude, <span class="at">color =</span> SSP1_WTP_bin)</span>
+<span id="cb15-790"><a href="#cb15-790" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb15-791"><a href="#cb15-791" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">alpha =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb15-792"><a href="#cb15-792" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf</span>(</span>
+<span id="cb15-793"><a href="#cb15-793" aria-hidden="true" tabindex="-1"></a>        <span class="at">data =</span> hawaii_counties,</span>
+<span id="cb15-794"><a href="#cb15-794" aria-hidden="true" tabindex="-1"></a>        <span class="at">fill =</span> <span class="cn">NA</span>,</span>
+<span id="cb15-795"><a href="#cb15-795" aria-hidden="true" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">"black"</span>,</span>
+<span id="cb15-796"><a href="#cb15-796" aria-hidden="true" tabindex="-1"></a>        <span class="at">size =</span> <span class="fl">0.4</span>,</span>
+<span id="cb15-797"><a href="#cb15-797" aria-hidden="true" tabindex="-1"></a>        <span class="at">inherit.aes =</span> <span class="cn">FALSE</span></span>
+<span id="cb15-798"><a href="#cb15-798" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb15-799"><a href="#cb15-799" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">161</span>, <span class="sc">-</span><span class="dv">154</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">18.5</span>, <span class="fl">22.5</span>)) <span class="sc">+</span></span>
+<span id="cb15-800"><a href="#cb15-800" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(</span>
+<span id="cb15-801"><a href="#cb15-801" aria-hidden="true" tabindex="-1"></a>        <span class="at">values =</span> color_palette,</span>
+<span id="cb15-802"><a href="#cb15-802" aria-hidden="true" tabindex="-1"></a>        <span class="at">name =</span> <span class="st">"Total WTP"</span>,</span>
+<span id="cb15-803"><a href="#cb15-803" aria-hidden="true" tabindex="-1"></a>        <span class="at">drop =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb15-804"><a href="#cb15-804" aria-hidden="true" tabindex="-1"></a>        <span class="at">limits =</span> <span class="fu">names</span>(color_palette)</span>
+<span id="cb15-805"><a href="#cb15-805" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb15-806"><a href="#cb15-806" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(Year), <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb15-807"><a href="#cb15-807" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>()</span>
+<span id="cb15-808"><a href="#cb15-808" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-809"><a href="#cb15-809" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-810"><a href="#cb15-810" aria-hidden="true" tabindex="-1"></a><span class="fu"># Animation Welfare</span></span>
+<span id="cb15-810"><a href="#cb15-810" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb15-811"><a href="#cb15-811" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-812"><a href="#cb15-812" aria-hidden="true" tabindex="-1"></a>These produce animations of changes in annual welfare to the year 2100</span>
+<span id="cb15-812"><a href="#cb15-812" aria-hidden="true" tabindex="-1"></a><span class="fu">## Animation Welfare</span></span>
 <span id="cb15-813"><a href="#cb15-813" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-814"><a href="#cb15-814" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The code chunk runs the animation and saves the file.</span>
-<span id="cb15-815"><a href="#cb15-815" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The Markdown line right after brings the GIF into the rendered output.</span>
-<span id="cb15-816"><a href="#cb15-816" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Make sure the GIF file path is correct relative to the document, or specify the path if needed.</span>
-<span id="cb15-817"><a href="#cb15-817" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-818"><a href="#cb15-818" aria-hidden="true" tabindex="-1"></a>Legend for the following animations</span>
+<span id="cb15-814"><a href="#cb15-814" aria-hidden="true" tabindex="-1"></a>These produce animations of changes in annual welfare to the year 2100</span>
+<span id="cb15-815"><a href="#cb15-815" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-816"><a href="#cb15-816" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The code chunk runs the animation and saves the file.</span>
+<span id="cb15-817"><a href="#cb15-817" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The Markdown line right after brings the GIF into the rendered output.</span>
+<span id="cb15-818"><a href="#cb15-818" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Make sure the GIF file path is correct relative to the document, or specify the path if needed.</span>
 <span id="cb15-819"><a href="#cb15-819" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-822"><a href="#cb15-822" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb15-823"><a href="#cb15-823" aria-hidden="true" tabindex="-1"></a>color_palette <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb15-824"><a href="#cb15-824" aria-hidden="true" tabindex="-1"></a>  <span class="st">"≤ -1M"</span>        <span class="ot">=</span> <span class="st">"darkred"</span>,</span>
-<span id="cb15-825"><a href="#cb15-825" aria-hidden="true" tabindex="-1"></a>  <span class="st">"-1M to -100K"</span> <span class="ot">=</span> <span class="st">"brown"</span>,</span>
-<span id="cb15-826"><a href="#cb15-826" aria-hidden="true" tabindex="-1"></a>  <span class="st">"-100K to -1K"</span> <span class="ot">=</span> <span class="st">"lightcoral"</span>,</span>
-<span id="cb15-827"><a href="#cb15-827" aria-hidden="true" tabindex="-1"></a>  <span class="st">"-1K to -100"</span>  <span class="ot">=</span> <span class="st">"pink"</span>,</span>
-<span id="cb15-828"><a href="#cb15-828" aria-hidden="true" tabindex="-1"></a>  <span class="st">"-100 to 0"</span>    <span class="ot">=</span> <span class="st">"mistyrose"</span>,</span>
-<span id="cb15-829"><a href="#cb15-829" aria-hidden="true" tabindex="-1"></a>  <span class="st">"0"</span>            <span class="ot">=</span> <span class="st">"white"</span>,</span>
-<span id="cb15-830"><a href="#cb15-830" aria-hidden="true" tabindex="-1"></a>  <span class="st">"0 to 100"</span>     <span class="ot">=</span> <span class="st">"greenyellow"</span>,</span>
-<span id="cb15-831"><a href="#cb15-831" aria-hidden="true" tabindex="-1"></a>  <span class="st">"100 to 1K"</span>    <span class="ot">=</span> <span class="st">"limegreen"</span>,</span>
-<span id="cb15-832"><a href="#cb15-832" aria-hidden="true" tabindex="-1"></a>  <span class="st">"&gt; 10K"</span>        <span class="ot">=</span> <span class="st">"darkgreen"</span></span>
-<span id="cb15-833"><a href="#cb15-833" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb15-834"><a href="#cb15-834" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-835"><a href="#cb15-835" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a blank plot canvas</span></span>
-<span id="cb15-836"><a href="#cb15-836" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
-<span id="cb15-837"><a href="#cb15-837" aria-hidden="true" tabindex="-1"></a>  <span class="cn">NULL</span>, <span class="at">xaxt =</span> <span class="st">"n"</span>, <span class="at">yaxt =</span> <span class="st">"n"</span>, <span class="at">bty =</span> <span class="st">"n"</span>,</span>
-<span id="cb15-838"><a href="#cb15-838" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb15-839"><a href="#cb15-839" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb15-840"><a href="#cb15-840" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-841"><a href="#cb15-841" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw the standalone legend</span></span>
-<span id="cb15-842"><a href="#cb15-842" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(</span>
-<span id="cb15-843"><a href="#cb15-843" aria-hidden="true" tabindex="-1"></a>  <span class="st">"center"</span>,</span>
-<span id="cb15-844"><a href="#cb15-844" aria-hidden="true" tabindex="-1"></a>  <span class="at">legend =</span> <span class="fu">names</span>(color_palette),</span>
-<span id="cb15-845"><a href="#cb15-845" aria-hidden="true" tabindex="-1"></a>  <span class="at">fill   =</span> <span class="fu">unname</span>(color_palette),</span>
-<span id="cb15-846"><a href="#cb15-846" aria-hidden="true" tabindex="-1"></a>  <span class="at">bty    =</span> <span class="st">"o"</span>,           <span class="co"># border around legend</span></span>
-<span id="cb15-847"><a href="#cb15-847" aria-hidden="true" tabindex="-1"></a>  <span class="at">cex    =</span> <span class="fl">1.0</span>,           <span class="co"># text size</span></span>
-<span id="cb15-848"><a href="#cb15-848" aria-hidden="true" tabindex="-1"></a>  <span class="at">title  =</span> <span class="st">"Total WTP"</span>,</span>
-<span id="cb15-849"><a href="#cb15-849" aria-hidden="true" tabindex="-1"></a>  <span class="at">title.cex =</span> <span class="fl">1.2</span>,        <span class="co"># title size</span></span>
-<span id="cb15-850"><a href="#cb15-850" aria-hidden="true" tabindex="-1"></a>  <span class="at">ncol   =</span> <span class="dv">1</span>,</span>
-<span id="cb15-851"><a href="#cb15-851" aria-hidden="true" tabindex="-1"></a>  <span class="at">xpd    =</span> <span class="cn">TRUE</span></span>
-<span id="cb15-852"><a href="#cb15-852" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb15-853"><a href="#cb15-853" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-854"><a href="#cb15-854" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-820"><a href="#cb15-820" aria-hidden="true" tabindex="-1"></a>Legend for the following animations</span>
+<span id="cb15-821"><a href="#cb15-821" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-824"><a href="#cb15-824" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-825"><a href="#cb15-825" aria-hidden="true" tabindex="-1"></a>color_palette <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb15-826"><a href="#cb15-826" aria-hidden="true" tabindex="-1"></a>  <span class="st">"≤ -1M"</span>        <span class="ot">=</span> <span class="st">"darkred"</span>,</span>
+<span id="cb15-827"><a href="#cb15-827" aria-hidden="true" tabindex="-1"></a>  <span class="st">"-1M to -100K"</span> <span class="ot">=</span> <span class="st">"brown"</span>,</span>
+<span id="cb15-828"><a href="#cb15-828" aria-hidden="true" tabindex="-1"></a>  <span class="st">"-100K to -1K"</span> <span class="ot">=</span> <span class="st">"lightcoral"</span>,</span>
+<span id="cb15-829"><a href="#cb15-829" aria-hidden="true" tabindex="-1"></a>  <span class="st">"-1K to -100"</span>  <span class="ot">=</span> <span class="st">"pink"</span>,</span>
+<span id="cb15-830"><a href="#cb15-830" aria-hidden="true" tabindex="-1"></a>  <span class="st">"-100 to 0"</span>    <span class="ot">=</span> <span class="st">"mistyrose"</span>,</span>
+<span id="cb15-831"><a href="#cb15-831" aria-hidden="true" tabindex="-1"></a>  <span class="st">"0"</span>            <span class="ot">=</span> <span class="st">"white"</span>,</span>
+<span id="cb15-832"><a href="#cb15-832" aria-hidden="true" tabindex="-1"></a>  <span class="st">"0 to 100"</span>     <span class="ot">=</span> <span class="st">"greenyellow"</span>,</span>
+<span id="cb15-833"><a href="#cb15-833" aria-hidden="true" tabindex="-1"></a>  <span class="st">"100 to 1K"</span>    <span class="ot">=</span> <span class="st">"limegreen"</span>,</span>
+<span id="cb15-834"><a href="#cb15-834" aria-hidden="true" tabindex="-1"></a>  <span class="st">"&gt; 10K"</span>        <span class="ot">=</span> <span class="st">"darkgreen"</span></span>
+<span id="cb15-835"><a href="#cb15-835" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-836"><a href="#cb15-836" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-837"><a href="#cb15-837" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a blank plot canvas</span></span>
+<span id="cb15-838"><a href="#cb15-838" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
+<span id="cb15-839"><a href="#cb15-839" aria-hidden="true" tabindex="-1"></a>  <span class="cn">NULL</span>, <span class="at">xaxt =</span> <span class="st">"n"</span>, <span class="at">yaxt =</span> <span class="st">"n"</span>, <span class="at">bty =</span> <span class="st">"n"</span>,</span>
+<span id="cb15-840"><a href="#cb15-840" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb15-841"><a href="#cb15-841" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb15-842"><a href="#cb15-842" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-843"><a href="#cb15-843" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw the standalone legend</span></span>
+<span id="cb15-844"><a href="#cb15-844" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(</span>
+<span id="cb15-845"><a href="#cb15-845" aria-hidden="true" tabindex="-1"></a>  <span class="st">"center"</span>,</span>
+<span id="cb15-846"><a href="#cb15-846" aria-hidden="true" tabindex="-1"></a>  <span class="at">legend =</span> <span class="fu">names</span>(color_palette),</span>
+<span id="cb15-847"><a href="#cb15-847" aria-hidden="true" tabindex="-1"></a>  <span class="at">fill   =</span> <span class="fu">unname</span>(color_palette),</span>
+<span id="cb15-848"><a href="#cb15-848" aria-hidden="true" tabindex="-1"></a>  <span class="at">bty    =</span> <span class="st">"o"</span>,           <span class="co"># border around legend</span></span>
+<span id="cb15-849"><a href="#cb15-849" aria-hidden="true" tabindex="-1"></a>  <span class="at">cex    =</span> <span class="fl">1.0</span>,           <span class="co"># text size</span></span>
+<span id="cb15-850"><a href="#cb15-850" aria-hidden="true" tabindex="-1"></a>  <span class="at">title  =</span> <span class="st">"Total WTP"</span>,</span>
+<span id="cb15-851"><a href="#cb15-851" aria-hidden="true" tabindex="-1"></a>  <span class="at">title.cex =</span> <span class="fl">1.2</span>,        <span class="co"># title size</span></span>
+<span id="cb15-852"><a href="#cb15-852" aria-hidden="true" tabindex="-1"></a>  <span class="at">ncol   =</span> <span class="dv">1</span>,</span>
+<span id="cb15-853"><a href="#cb15-853" aria-hidden="true" tabindex="-1"></a>  <span class="at">xpd    =</span> <span class="cn">TRUE</span></span>
+<span id="cb15-854"><a href="#cb15-854" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb15-855"><a href="#cb15-855" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-856"><a href="#cb15-856" aria-hidden="true" tabindex="-1"></a><span class="fu">## SSP1</span></span>
+<span id="cb15-856"><a href="#cb15-856" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb15-857"><a href="#cb15-857" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-858"><a href="#cb15-858" aria-hidden="true" tabindex="-1"></a>2030<span class="sc">\&gt;\&gt;\&gt;\&gt;</span>2100</span>
+<span id="cb15-858"><a href="#cb15-858" aria-hidden="true" tabindex="-1"></a><span class="fu">### SSP1</span></span>
 <span id="cb15-859"><a href="#cb15-859" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-860"><a href="#cb15-860" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/hawaii_wtpssp1_animation.gif)</span></span>
+<span id="cb15-860"><a href="#cb15-860" aria-hidden="true" tabindex="-1"></a>2030<span class="sc">\&gt;\&gt;\&gt;\&gt;</span>2100</span>
 <span id="cb15-861"><a href="#cb15-861" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-862"><a href="#cb15-862" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=FALSE}</span></span>
-<span id="cb15-863"><a href="#cb15-863" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb15-864"><a href="#cb15-864" aria-hidden="true" tabindex="-1"></a>base_map <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(all_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">&gt;=</span> <span class="dv">2020</span> <span class="sc">&amp;</span> Year <span class="sc">&lt;=</span> <span class="dv">2100</span>)) <span class="sc">+</span></span>
-<span id="cb15-865"><a href="#cb15-865" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-866"><a href="#cb15-866" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> longitude, <span class="at">y =</span> latitude, <span class="at">color =</span> SSP1_WTP_bin),</span>
-<span id="cb15-867"><a href="#cb15-867" aria-hidden="true" tabindex="-1"></a>               <span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">alpha =</span> <span class="dv">1</span>) <span class="sc">+</span>    <span class="fu">geom_sf</span>(<span class="at">data =</span> hawaii_counties, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb15-868"><a href="#cb15-868" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">161</span>, <span class="sc">-</span><span class="dv">154</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">18.5</span>, <span class="fl">22.5</span>)) <span class="sc">+</span></span>
-<span id="cb15-869"><a href="#cb15-869" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(</span>
-<span id="cb15-870"><a href="#cb15-870" aria-hidden="true" tabindex="-1"></a>        <span class="at">values =</span> color_palette,</span>
-<span id="cb15-871"><a href="#cb15-871" aria-hidden="true" tabindex="-1"></a>        <span class="at">name =</span> <span class="st">"Total WTP"</span>,</span>
-<span id="cb15-872"><a href="#cb15-872" aria-hidden="true" tabindex="-1"></a>        <span class="at">drop =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb15-873"><a href="#cb15-873" aria-hidden="true" tabindex="-1"></a>        <span class="at">limits =</span> <span class="fu">names</span>(color_palette)</span>
-<span id="cb15-874"><a href="#cb15-874" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb15-875"><a href="#cb15-875" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
-<span id="cb15-876"><a href="#cb15-876" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'SSP1 Year: {closest_state}'</span>)</span>
-<span id="cb15-877"><a href="#cb15-877" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-878"><a href="#cb15-878" aria-hidden="true" tabindex="-1"></a>anim <span class="ot">&lt;-</span> base_map <span class="sc">+</span></span>
-<span id="cb15-879"><a href="#cb15-879" aria-hidden="true" tabindex="-1"></a>    <span class="fu">transition_states</span>(Year, <span class="at">transition_length =</span> <span class="dv">1</span>, <span class="at">state_length =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb15-880"><a href="#cb15-880" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ease_aes</span>(<span class="st">'cubic-in-out'</span>) <span class="sc">+</span></span>
-<span id="cb15-881"><a href="#cb15-881" aria-hidden="true" tabindex="-1"></a>    <span class="fu">shadow_wake</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">wake_length =</span> <span class="fl">0.2</span>)</span>
-<span id="cb15-882"><a href="#cb15-882" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-883"><a href="#cb15-883" aria-hidden="true" tabindex="-1"></a><span class="fu">animate</span>(anim, <span class="at">nframes =</span> <span class="dv">81</span>, <span class="at">fps =</span> <span class="dv">10</span>, <span class="at">width =</span> <span class="dv">800</span>, <span class="at">height =</span> <span class="dv">600</span>, <span class="at">renderer =</span> <span class="fu">gifski_renderer</span>())</span>
-<span id="cb15-884"><a href="#cb15-884" aria-hidden="true" tabindex="-1"></a><span class="fu">anim_save</span>(<span class="st">"hawaii_wtpssp1_animation.gif"</span>, <span class="at">animation =</span> <span class="fu">last_animation</span>())</span>
-<span id="cb15-885"><a href="#cb15-885" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-886"><a href="#cb15-886" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-862"><a href="#cb15-862" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/hawaii_wtpssp1_animation.gif)</span></span>
+<span id="cb15-863"><a href="#cb15-863" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-864"><a href="#cb15-864" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=FALSE}</span></span>
+<span id="cb15-865"><a href="#cb15-865" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb15-866"><a href="#cb15-866" aria-hidden="true" tabindex="-1"></a>base_map <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(all_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">&gt;=</span> <span class="dv">2020</span> <span class="sc">&amp;</span> Year <span class="sc">&lt;=</span> <span class="dv">2100</span>)) <span class="sc">+</span></span>
+<span id="cb15-867"><a href="#cb15-867" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-868"><a href="#cb15-868" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> longitude, <span class="at">y =</span> latitude, <span class="at">color =</span> SSP1_WTP_bin),</span>
+<span id="cb15-869"><a href="#cb15-869" aria-hidden="true" tabindex="-1"></a>               <span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">alpha =</span> <span class="dv">1</span>) <span class="sc">+</span>    <span class="fu">geom_sf</span>(<span class="at">data =</span> hawaii_counties, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb15-870"><a href="#cb15-870" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">161</span>, <span class="sc">-</span><span class="dv">154</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">18.5</span>, <span class="fl">22.5</span>)) <span class="sc">+</span></span>
+<span id="cb15-871"><a href="#cb15-871" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(</span>
+<span id="cb15-872"><a href="#cb15-872" aria-hidden="true" tabindex="-1"></a>        <span class="at">values =</span> color_palette,</span>
+<span id="cb15-873"><a href="#cb15-873" aria-hidden="true" tabindex="-1"></a>        <span class="at">name =</span> <span class="st">"Total WTP"</span>,</span>
+<span id="cb15-874"><a href="#cb15-874" aria-hidden="true" tabindex="-1"></a>        <span class="at">drop =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb15-875"><a href="#cb15-875" aria-hidden="true" tabindex="-1"></a>        <span class="at">limits =</span> <span class="fu">names</span>(color_palette)</span>
+<span id="cb15-876"><a href="#cb15-876" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb15-877"><a href="#cb15-877" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
+<span id="cb15-878"><a href="#cb15-878" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'SSP1 Year: {closest_state}'</span>)</span>
+<span id="cb15-879"><a href="#cb15-879" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-880"><a href="#cb15-880" aria-hidden="true" tabindex="-1"></a>anim <span class="ot">&lt;-</span> base_map <span class="sc">+</span></span>
+<span id="cb15-881"><a href="#cb15-881" aria-hidden="true" tabindex="-1"></a>    <span class="fu">transition_states</span>(Year, <span class="at">transition_length =</span> <span class="dv">1</span>, <span class="at">state_length =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb15-882"><a href="#cb15-882" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ease_aes</span>(<span class="st">'cubic-in-out'</span>) <span class="sc">+</span></span>
+<span id="cb15-883"><a href="#cb15-883" aria-hidden="true" tabindex="-1"></a>    <span class="fu">shadow_wake</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">wake_length =</span> <span class="fl">0.2</span>)</span>
+<span id="cb15-884"><a href="#cb15-884" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-885"><a href="#cb15-885" aria-hidden="true" tabindex="-1"></a><span class="fu">animate</span>(anim, <span class="at">nframes =</span> <span class="dv">81</span>, <span class="at">fps =</span> <span class="dv">10</span>, <span class="at">width =</span> <span class="dv">800</span>, <span class="at">height =</span> <span class="dv">600</span>, <span class="at">renderer =</span> <span class="fu">gifski_renderer</span>())</span>
+<span id="cb15-886"><a href="#cb15-886" aria-hidden="true" tabindex="-1"></a><span class="fu">anim_save</span>(<span class="st">"hawaii_wtpssp1_animation.gif"</span>, <span class="at">animation =</span> <span class="fu">last_animation</span>())</span>
 <span id="cb15-887"><a href="#cb15-887" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-888"><a href="#cb15-888" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-888"><a href="#cb15-888" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-889"><a href="#cb15-889" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-890"><a href="#cb15-890" aria-hidden="true" tabindex="-1"></a><span class="fu">## SSP2</span></span>
+<span id="cb15-890"><a href="#cb15-890" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb15-891"><a href="#cb15-891" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-892"><a href="#cb15-892" aria-hidden="true" tabindex="-1"></a>2030<span class="sc">\&gt;\&gt;\&gt;\&gt;</span>2100</span>
+<span id="cb15-892"><a href="#cb15-892" aria-hidden="true" tabindex="-1"></a><span class="fu">### SSP2</span></span>
 <span id="cb15-893"><a href="#cb15-893" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-894"><a href="#cb15-894" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/hawaii_wtpssp2_animation.gif)</span></span>
+<span id="cb15-894"><a href="#cb15-894" aria-hidden="true" tabindex="-1"></a>2030<span class="sc">\&gt;\&gt;\&gt;\&gt;</span>2100</span>
 <span id="cb15-895"><a href="#cb15-895" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-896"><a href="#cb15-896" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=FALSE}</span></span>
-<span id="cb15-897"><a href="#cb15-897" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb15-898"><a href="#cb15-898" aria-hidden="true" tabindex="-1"></a>base_map <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(all_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">&gt;=</span> <span class="dv">2020</span> <span class="sc">&amp;</span> Year <span class="sc">&lt;=</span> <span class="dv">2100</span>)) <span class="sc">+</span></span>
-<span id="cb15-899"><a href="#cb15-899" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-900"><a href="#cb15-900" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> longitude, <span class="at">y =</span> latitude, <span class="at">color =</span> SSP2_WTP_bin),</span>
-<span id="cb15-901"><a href="#cb15-901" aria-hidden="true" tabindex="-1"></a>               <span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">alpha =</span> <span class="dv">1</span>) <span class="sc">+</span>    <span class="fu">geom_sf</span>(<span class="at">data =</span> hawaii_counties, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb15-902"><a href="#cb15-902" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">161</span>, <span class="sc">-</span><span class="dv">154</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">18.5</span>, <span class="fl">22.5</span>)) <span class="sc">+</span></span>
-<span id="cb15-903"><a href="#cb15-903" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(</span>
-<span id="cb15-904"><a href="#cb15-904" aria-hidden="true" tabindex="-1"></a>        <span class="at">values =</span> color_palette,</span>
-<span id="cb15-905"><a href="#cb15-905" aria-hidden="true" tabindex="-1"></a>        <span class="at">name =</span> <span class="st">"Total WTP"</span>,</span>
-<span id="cb15-906"><a href="#cb15-906" aria-hidden="true" tabindex="-1"></a>        <span class="at">drop =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb15-907"><a href="#cb15-907" aria-hidden="true" tabindex="-1"></a>        <span class="at">limits =</span> <span class="fu">names</span>(color_palette)</span>
-<span id="cb15-908"><a href="#cb15-908" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb15-909"><a href="#cb15-909" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
-<span id="cb15-910"><a href="#cb15-910" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'SSP2 Year: {closest_state}'</span>)</span>
-<span id="cb15-911"><a href="#cb15-911" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-912"><a href="#cb15-912" aria-hidden="true" tabindex="-1"></a>anim <span class="ot">&lt;-</span> base_map <span class="sc">+</span></span>
-<span id="cb15-913"><a href="#cb15-913" aria-hidden="true" tabindex="-1"></a>    <span class="fu">transition_states</span>(Year, <span class="at">transition_length =</span> <span class="dv">1</span>, <span class="at">state_length =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb15-914"><a href="#cb15-914" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ease_aes</span>(<span class="st">'cubic-in-out'</span>) <span class="sc">+</span></span>
-<span id="cb15-915"><a href="#cb15-915" aria-hidden="true" tabindex="-1"></a>    <span class="fu">shadow_wake</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">wake_length =</span> <span class="fl">0.2</span>)</span>
-<span id="cb15-916"><a href="#cb15-916" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-917"><a href="#cb15-917" aria-hidden="true" tabindex="-1"></a><span class="fu">animate</span>(anim, <span class="at">nframes =</span> <span class="dv">81</span>, <span class="at">fps =</span> <span class="dv">10</span>, <span class="at">width =</span> <span class="dv">800</span>, <span class="at">height =</span> <span class="dv">600</span>, <span class="at">renderer =</span> <span class="fu">gifski_renderer</span>())</span>
-<span id="cb15-918"><a href="#cb15-918" aria-hidden="true" tabindex="-1"></a><span class="fu">anim_save</span>(<span class="st">"hawaii_wtpssp2_animation.gif"</span>, <span class="at">animation =</span> <span class="fu">last_animation</span>())</span>
-<span id="cb15-919"><a href="#cb15-919" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-920"><a href="#cb15-920" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-921"><a href="#cb15-921" aria-hidden="true" tabindex="-1"></a><span class="fu">## SSP3</span></span>
+<span id="cb15-896"><a href="#cb15-896" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/hawaii_wtpssp2_animation.gif)</span></span>
+<span id="cb15-897"><a href="#cb15-897" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-898"><a href="#cb15-898" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=FALSE}</span></span>
+<span id="cb15-899"><a href="#cb15-899" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb15-900"><a href="#cb15-900" aria-hidden="true" tabindex="-1"></a>base_map <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(all_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">&gt;=</span> <span class="dv">2020</span> <span class="sc">&amp;</span> Year <span class="sc">&lt;=</span> <span class="dv">2100</span>)) <span class="sc">+</span></span>
+<span id="cb15-901"><a href="#cb15-901" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-902"><a href="#cb15-902" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> longitude, <span class="at">y =</span> latitude, <span class="at">color =</span> SSP2_WTP_bin),</span>
+<span id="cb15-903"><a href="#cb15-903" aria-hidden="true" tabindex="-1"></a>               <span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">alpha =</span> <span class="dv">1</span>) <span class="sc">+</span>    <span class="fu">geom_sf</span>(<span class="at">data =</span> hawaii_counties, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb15-904"><a href="#cb15-904" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">161</span>, <span class="sc">-</span><span class="dv">154</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">18.5</span>, <span class="fl">22.5</span>)) <span class="sc">+</span></span>
+<span id="cb15-905"><a href="#cb15-905" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(</span>
+<span id="cb15-906"><a href="#cb15-906" aria-hidden="true" tabindex="-1"></a>        <span class="at">values =</span> color_palette,</span>
+<span id="cb15-907"><a href="#cb15-907" aria-hidden="true" tabindex="-1"></a>        <span class="at">name =</span> <span class="st">"Total WTP"</span>,</span>
+<span id="cb15-908"><a href="#cb15-908" aria-hidden="true" tabindex="-1"></a>        <span class="at">drop =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb15-909"><a href="#cb15-909" aria-hidden="true" tabindex="-1"></a>        <span class="at">limits =</span> <span class="fu">names</span>(color_palette)</span>
+<span id="cb15-910"><a href="#cb15-910" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb15-911"><a href="#cb15-911" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
+<span id="cb15-912"><a href="#cb15-912" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'SSP2 Year: {closest_state}'</span>)</span>
+<span id="cb15-913"><a href="#cb15-913" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-914"><a href="#cb15-914" aria-hidden="true" tabindex="-1"></a>anim <span class="ot">&lt;-</span> base_map <span class="sc">+</span></span>
+<span id="cb15-915"><a href="#cb15-915" aria-hidden="true" tabindex="-1"></a>    <span class="fu">transition_states</span>(Year, <span class="at">transition_length =</span> <span class="dv">1</span>, <span class="at">state_length =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb15-916"><a href="#cb15-916" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ease_aes</span>(<span class="st">'cubic-in-out'</span>) <span class="sc">+</span></span>
+<span id="cb15-917"><a href="#cb15-917" aria-hidden="true" tabindex="-1"></a>    <span class="fu">shadow_wake</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">wake_length =</span> <span class="fl">0.2</span>)</span>
+<span id="cb15-918"><a href="#cb15-918" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-919"><a href="#cb15-919" aria-hidden="true" tabindex="-1"></a><span class="fu">animate</span>(anim, <span class="at">nframes =</span> <span class="dv">81</span>, <span class="at">fps =</span> <span class="dv">10</span>, <span class="at">width =</span> <span class="dv">800</span>, <span class="at">height =</span> <span class="dv">600</span>, <span class="at">renderer =</span> <span class="fu">gifski_renderer</span>())</span>
+<span id="cb15-920"><a href="#cb15-920" aria-hidden="true" tabindex="-1"></a><span class="fu">anim_save</span>(<span class="st">"hawaii_wtpssp2_animation.gif"</span>, <span class="at">animation =</span> <span class="fu">last_animation</span>())</span>
+<span id="cb15-921"><a href="#cb15-921" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb15-922"><a href="#cb15-922" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-923"><a href="#cb15-923" aria-hidden="true" tabindex="-1"></a>2030<span class="sc">\&gt;\&gt;\&gt;\&gt;</span>2100</span>
+<span id="cb15-923"><a href="#cb15-923" aria-hidden="true" tabindex="-1"></a><span class="fu">### SSP3</span></span>
 <span id="cb15-924"><a href="#cb15-924" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-925"><a href="#cb15-925" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/hawaii_wtpssp3_animation.gif)</span></span>
+<span id="cb15-925"><a href="#cb15-925" aria-hidden="true" tabindex="-1"></a>2030<span class="sc">\&gt;\&gt;\&gt;\&gt;</span>2100</span>
 <span id="cb15-926"><a href="#cb15-926" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-927"><a href="#cb15-927" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=FALSE}</span></span>
-<span id="cb15-928"><a href="#cb15-928" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb15-929"><a href="#cb15-929" aria-hidden="true" tabindex="-1"></a>base_map <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(all_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">&gt;=</span> <span class="dv">2020</span> <span class="sc">&amp;</span> Year <span class="sc">&lt;=</span> <span class="dv">2100</span>)) <span class="sc">+</span></span>
-<span id="cb15-930"><a href="#cb15-930" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-931"><a href="#cb15-931" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> longitude, <span class="at">y =</span> latitude, <span class="at">color =</span> SSP3_WTP_bin),</span>
-<span id="cb15-932"><a href="#cb15-932" aria-hidden="true" tabindex="-1"></a>               <span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">alpha =</span> <span class="dv">1</span>) <span class="sc">+</span>    <span class="fu">geom_sf</span>(<span class="at">data =</span> hawaii_counties, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb15-933"><a href="#cb15-933" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">161</span>, <span class="sc">-</span><span class="dv">154</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">18.5</span>, <span class="fl">22.5</span>)) <span class="sc">+</span></span>
-<span id="cb15-934"><a href="#cb15-934" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(</span>
-<span id="cb15-935"><a href="#cb15-935" aria-hidden="true" tabindex="-1"></a>        <span class="at">values =</span> color_palette,</span>
-<span id="cb15-936"><a href="#cb15-936" aria-hidden="true" tabindex="-1"></a>        <span class="at">name =</span> <span class="st">"Total WTP"</span>,</span>
-<span id="cb15-937"><a href="#cb15-937" aria-hidden="true" tabindex="-1"></a>        <span class="at">drop =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb15-938"><a href="#cb15-938" aria-hidden="true" tabindex="-1"></a>        <span class="at">limits =</span> <span class="fu">names</span>(color_palette)</span>
-<span id="cb15-939"><a href="#cb15-939" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb15-940"><a href="#cb15-940" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
-<span id="cb15-941"><a href="#cb15-941" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'SSP3 Year: {closest_state}'</span>)</span>
-<span id="cb15-942"><a href="#cb15-942" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-943"><a href="#cb15-943" aria-hidden="true" tabindex="-1"></a>anim <span class="ot">&lt;-</span> base_map <span class="sc">+</span></span>
-<span id="cb15-944"><a href="#cb15-944" aria-hidden="true" tabindex="-1"></a>    <span class="fu">transition_states</span>(Year, <span class="at">transition_length =</span> <span class="dv">1</span>, <span class="at">state_length =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb15-945"><a href="#cb15-945" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ease_aes</span>(<span class="st">'cubic-in-out'</span>) <span class="sc">+</span></span>
-<span id="cb15-946"><a href="#cb15-946" aria-hidden="true" tabindex="-1"></a>    <span class="fu">shadow_wake</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">wake_length =</span> <span class="fl">0.2</span>)</span>
-<span id="cb15-947"><a href="#cb15-947" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-948"><a href="#cb15-948" aria-hidden="true" tabindex="-1"></a><span class="fu">animate</span>(anim, <span class="at">nframes =</span> <span class="dv">81</span>, <span class="at">fps =</span> <span class="dv">10</span>, <span class="at">width =</span> <span class="dv">800</span>, <span class="at">height =</span> <span class="dv">600</span>, <span class="at">renderer =</span> <span class="fu">gifski_renderer</span>())</span>
-<span id="cb15-949"><a href="#cb15-949" aria-hidden="true" tabindex="-1"></a><span class="fu">anim_save</span>(<span class="st">"hawaii_wtpssp3_animation.gif"</span>, <span class="at">animation =</span> <span class="fu">last_animation</span>())</span>
-<span id="cb15-950"><a href="#cb15-950" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb15-951"><a href="#cb15-951" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-952"><a href="#cb15-952" aria-hidden="true" tabindex="-1"></a><span class="fu">### </span></span>
+<span id="cb15-927"><a href="#cb15-927" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/hawaii_wtpssp3_animation.gif)</span></span>
+<span id="cb15-928"><a href="#cb15-928" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-929"><a href="#cb15-929" aria-hidden="true" tabindex="-1"></a><span class="in">```{r eval=FALSE}</span></span>
+<span id="cb15-930"><a href="#cb15-930" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb15-931"><a href="#cb15-931" aria-hidden="true" tabindex="-1"></a>base_map <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(all_df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Year <span class="sc">&gt;=</span> <span class="dv">2020</span> <span class="sc">&amp;</span> Year <span class="sc">&lt;=</span> <span class="dv">2100</span>)) <span class="sc">+</span></span>
+<span id="cb15-932"><a href="#cb15-932" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-933"><a href="#cb15-933" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> longitude, <span class="at">y =</span> latitude, <span class="at">color =</span> SSP3_WTP_bin),</span>
+<span id="cb15-934"><a href="#cb15-934" aria-hidden="true" tabindex="-1"></a>               <span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">alpha =</span> <span class="dv">1</span>) <span class="sc">+</span>    <span class="fu">geom_sf</span>(<span class="at">data =</span> hawaii_counties, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb15-935"><a href="#cb15-935" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">161</span>, <span class="sc">-</span><span class="dv">154</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">18.5</span>, <span class="fl">22.5</span>)) <span class="sc">+</span></span>
+<span id="cb15-936"><a href="#cb15-936" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(</span>
+<span id="cb15-937"><a href="#cb15-937" aria-hidden="true" tabindex="-1"></a>        <span class="at">values =</span> color_palette,</span>
+<span id="cb15-938"><a href="#cb15-938" aria-hidden="true" tabindex="-1"></a>        <span class="at">name =</span> <span class="st">"Total WTP"</span>,</span>
+<span id="cb15-939"><a href="#cb15-939" aria-hidden="true" tabindex="-1"></a>        <span class="at">drop =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb15-940"><a href="#cb15-940" aria-hidden="true" tabindex="-1"></a>        <span class="at">limits =</span> <span class="fu">names</span>(color_palette)</span>
+<span id="cb15-941"><a href="#cb15-941" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb15-942"><a href="#cb15-942" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
+<span id="cb15-943"><a href="#cb15-943" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'SSP3 Year: {closest_state}'</span>)</span>
+<span id="cb15-944"><a href="#cb15-944" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-945"><a href="#cb15-945" aria-hidden="true" tabindex="-1"></a>anim <span class="ot">&lt;-</span> base_map <span class="sc">+</span></span>
+<span id="cb15-946"><a href="#cb15-946" aria-hidden="true" tabindex="-1"></a>    <span class="fu">transition_states</span>(Year, <span class="at">transition_length =</span> <span class="dv">1</span>, <span class="at">state_length =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb15-947"><a href="#cb15-947" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ease_aes</span>(<span class="st">'cubic-in-out'</span>) <span class="sc">+</span></span>
+<span id="cb15-948"><a href="#cb15-948" aria-hidden="true" tabindex="-1"></a>    <span class="fu">shadow_wake</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">wake_length =</span> <span class="fl">0.2</span>)</span>
+<span id="cb15-949"><a href="#cb15-949" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-950"><a href="#cb15-950" aria-hidden="true" tabindex="-1"></a><span class="fu">animate</span>(anim, <span class="at">nframes =</span> <span class="dv">81</span>, <span class="at">fps =</span> <span class="dv">10</span>, <span class="at">width =</span> <span class="dv">800</span>, <span class="at">height =</span> <span class="dv">600</span>, <span class="at">renderer =</span> <span class="fu">gifski_renderer</span>())</span>
+<span id="cb15-951"><a href="#cb15-951" aria-hidden="true" tabindex="-1"></a><span class="fu">anim_save</span>(<span class="st">"hawaii_wtpssp3_animation.gif"</span>, <span class="at">animation =</span> <span class="fu">last_animation</span>())</span>
+<span id="cb15-952"><a href="#cb15-952" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-953"><a href="#cb15-953" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-954"><a href="#cb15-954" aria-hidden="true" tabindex="-1"></a><span class="fu">### </span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

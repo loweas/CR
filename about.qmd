@@ -1,0 +1,19 @@
+---
+title: "About"
+---
+
+# Authors
+
+### Ashley Lowe Mackenzie^1^, Anders Dugstad^2,4^, Carlo Fezzi^3^, Lansing Perng^1^ and Kirsten L.L. Oleson^1^
+
+^1^University of Hawaiʻi at Mānoa, Honolulu, HI, 96822, USA
+
+^2^School of Economics and Business, Norwegian University of Life Sciences, Ås, Norway
+
+^3^University of Trento, Trento, Italy
+
+^4^Research Department, Statistics Norway, Oslo, Norway
+
+# **Acknowledgement**
+
+This research was supported by the National Oceanic and Atmospheric Administration\'s Ocean Acidification Program under grant Award \# NA21OAR0170191 to University of Hawaiʻi at Mānoa. The authors thank conference and seminar participants at thank participants in seminars at W5133 Multistate Research Project, Society for Benefit Cost Analysis, Marine Socio-Ecological Systems Symposium, Association of Environmental and Resource Economists and University of Hawaii at Manoa for helpful discussions and comments. Special thanks to Steven Dundas for providing valuable feedback.

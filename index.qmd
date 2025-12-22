@@ -1,6 +1,7 @@
 ---
 title: "The economic impact of climate change on coral reef in the Main Hawaiian Islands"
 author: "Ashley Lowe Mackenzie et. al"
+bibliography: references.bib
 ---
 
 # Coral Reef Hawaii
@@ -12,15 +13,14 @@ The following code estimates welfare changes associated with varying conditions 
 
 The graphical representation of this process is illustrated below
 
-![](images/Figure2.png)
+![](images/figure3.tiff)
 
 # Running Code
 
 This section calls the necessary R packages and sources external scripts from the original study. These scripts provide the estimated coefficients from the Random Utility Model (RUM), which will be used to simulate individual preferences and estimate welfare changes under different environmental quality scenarios. These parameters reflect the marginal utility of various site attributes, including coral reef biomass, travel cost, and environmental conditions.
 
 ```{r eval=FALSE}
-
-
+library(sf)
 library(dplyr)
 library(tidyr)
 library(ggplot2)
@@ -42,33 +42,6 @@ load(file = "codedata/model3.mod")
 
 m1
 
-
-```
-
-# Merge
-
-This file merges distance and sites from across the islands. The distance are based on kilometer grid and sites were determined across island.
-
-```{r eval=FALSE}
-
-dist1 <- read.csv("codedata/dist1.csv")
-sites_join <- read.csv("codedata/sites_join.csv")
-
-x1 <- merge(dist1, sites_join)
-x1$coastal[x1$name == "Home"]=0 
-
-### Prepared dataset for maps plot:
-
-out <- x1[order(x1$siteID),]
-out <- out[c(1,3,8:12)]
-m
-
-##using 85K because that was the survey amount
-out$incometran_track=out$medincome_tract/85000
-coasts <- sites[sites$coastal == 1 & sites$name!="Home",]
-
-
-
 ```
 
 # Atlantis Model
@@ -89,22 +62,24 @@ The base level of coral is the average biomass of 2015-2020 for each near polygo
 
 ![](images/match_boxs.png)
 
-## Yearly Percent Change
+## Yearly Relative Change
 
 Then for each time step out to 2100 we sum up the biomass of coral reef:
 
 $C_{pt} = \sum V_{pt} / \sum V_{pt}=0$
 
-The following code does this for scenario SSP1 1-3. The file required if from the Atlantis which is to large for github so please request.
+The following code does this for scenario SSP1 1-3. This looks at the relative change of coral biomass within each polygon in the nearshore environment.
 
 ```{r eval=FALSE}
 
 library(dplyr)
 library(tidyr)
+x1 <- readRDS("codedata/x1.rds")
 
+keep=unique(x1$Box_ID_2)
 ###This grabs Atlantis and gets it into the write steps
 SSP3_loPPkF <- readRDS("codedata/SSP3_control_last.rds")
-biomass_spatial_stanza=SSP3_loPPkF$biomass_spatial_stanza
+biomass_spatial_stanza=SSP3_loPPkF$cover
 ssp3_coral=subset(biomass_spatial_stanza,species=="Pocillopora" |species=="Porites branching" |species=="Porites massive"|species=="Montipora"
                   |species=="Leptoseris")
 ssp3_coral$time=round(ssp3_coral$time, digits = 0)
@@ -123,14 +98,14 @@ ssp3_coral=ssp3_coral %>%
 ssp3_coral=merge(t,ssp3_coral)
 percentchangeSSP3=ssp3_coral %>%
   group_by(polygon) %>%
-  mutate(Coral_perchange = Coral_NearShore/mean)
+  mutate(Coral_perchange = (Coral_NearShore)/mean+1)
 percentchangeSSP3=percentchangeSSP3[c(1,3,5)]
 percentchangeSSP3$time<- sub("^", "time", percentchangeSSP3$time )
 SSP3=spread(percentchangeSSP3, time, Coral_perchange)
 
 
-SSP1_loPPkF <- readRDS("~/codedata/SSP1_control_last.rds")
-biomass_spatial_stanza=SSP1_loPPkF$biomass_spatial_stanza
+SSP1_loPPkF <- readRDS("codedata/SSP1_control_last.rds")
+biomass_spatial_stanza=SSP1_loPPkF$cover
 ssp1_coral=subset(biomass_spatial_stanza,species=="Pocillopora" |species=="Porites branching" |species=="Porites massive"|species=="Montipora"
                   |species=="Leptoseris")
 ssp1_coral=ssp1_coral %>% group_by(polygon, time) %>% summarize(Coral_NearShore=sum(atoutput))
@@ -151,14 +126,14 @@ ssp1_coral=ssp1_coral %>%
 ssp1_coral=merge(t,ssp1_coral)
 percentchangeSSP1=ssp1_coral %>%
   group_by(polygon) %>%
-  mutate(Coral_perchange = Coral_NearShore/mean)
+  mutate(Coral_perchange = (Coral_NearShore)/mean)
 percentchangeSSP1=percentchangeSSP1[c(1,3,5)]
 percentchangeSSP1$time<- sub("^", "time", percentchangeSSP1$time )
 
 SSP1=spread(percentchangeSSP1, time, Coral_perchange)
 
-SSP2_loPPkF <- readRDS("~/codedata/SSP2_control_last.rds")
-biomass_spatial_stanza=SSP2_loPPkF$biomass_spatial_stanza
+SSP2_loPPkF <- readRDS("codedata/SSP2_control_last.rds")
+biomass_spatial_stanza=SSP2_loPPkF$cover
 ssp2_coral=subset(biomass_spatial_stanza,species=="Pocillopora" |species=="Porites branching" |species=="Porites massive"|species=="Montipora"
                   |species=="Leptoseris"| species=="crustose coralline algae")
 ssp2_coral=ssp2_coral %>% group_by(polygon, time) %>% summarize(Coral_NearShore=sum(atoutput))
@@ -177,15 +152,123 @@ ssp2_coral=ssp2_coral %>%
 ssp2_coral=merge(t,ssp2_coral)
 percentchangeSSP2=ssp2_coral %>%
   group_by(polygon) %>%
-  mutate(Coral_perchange = Coral_NearShore/mean)
+  mutate(Coral_perchange = (Coral_NearShore)/mean)
 percentchangeSSP2=percentchangeSSP2[c(1,3,5)]
 percentchangeSSP2$time<- sub("^", "time", percentchangeSSP2$time )
 
 SSP2=spread(percentchangeSSP2, time, Coral_perchange)
 
+percentchangeSSP1 <- percentchangeSSP1 %>% mutate(SSP = "SSP1")
+percentchangeSSP2 <- percentchangeSSP2 %>% mutate(SSP = "SSP2")
+percentchangeSSP3 <- percentchangeSSP3 %>% mutate(SSP = "SSP3")
+coral_graph=rbind(percentchangeSSP1,percentchangeSSP2,percentchangeSSP3)
 
+rm(ssp1_coral,SSP1_loPPkF,ssp2_coral,SSP2_loPPkF, ssp3_coral,SSP3_loPPkF,percentchangeSSP1,percentchangeSSP2,percentchangeSSP3, biomass_spatial_stanza)
 ```
 
+## Graph
+
+This shows the overall predicted relative change in coral cover across each scenario.
+
+```{r eval=FALSE}
+coral_graph <- coral_graph %>%
+  mutate(
+    time_step = as.numeric(gsub("time", "", time)) + 2006
+  ) %>%
+  filter(time_step <= 2100)
+
+ 
+
+coral1=coral_graph %>% group_by(SSP, time_step) %>% summarize(mean_coral=mean(Coral_perchange))
+
+
+ group.colors <- c(
+  SSP1 = "royalblue",
+  SSP2 = "springgreen",
+  SSP3 = "deeppink"
+)
+coral1$percentage=coral1$mean_coral-1
+ggplot(coral1, aes(x = time_step, y = percentage, color = SSP)) +
+    geom_point(alpha = 0.3) +       # optional: show raw means
+    geom_smooth(method =  "loess", se = TRUE, aes(fill = SSP), alpha = 0.2) +
+    scale_color_manual(values = group.colors) +
+    scale_fill_manual(values = group.colors) +
+    theme_minimal() +
+    theme(
+        text = element_text(family = "Times New Roman"),
+        plot.title = element_text(hjust = 0.5),
+        legend.position = "bottom",
+        legend.background = element_rect(fill = "white")
+    ) +
+    labs(
+        title = "Projected Change in Coral Cover By SSPs",
+        x = "Year",
+        y = "Relative Change Coral Cover",
+        color = "SSP"
+    ) +
+    theme_minimal(base_size = 14) +
+    theme(
+        text = element_text(family = "Times New Roman"), plot.title = element_text(hjust = 0.5), 
+        legend.position = "bottom",                 
+        legend.title = element_text(family = "Times New Roman"),
+        legend.text  = element_text(family = "Times New Roman")
+    )
+
+
+
+ggsave('images/avercoral_scenario.png', dpi = 300, height = 5, width = 8, unit = 'in')
+```
+
+# Population
+
+The following code shows the predicted change in population under scenario SSP1 1-3 using the data available for state of Hawaii @zoraghein2020
+
+```{r eval=FALSE}
+library(readxl)
+pop<- read_excel("codedata/population_Zoragheinetal2020.xlsx")
+pop$Population= as.numeric(pop$Population)
+pop=pop %>%
+    group_by(Scenario) %>%
+    mutate(
+        BasePop = Population[Year == 2020],
+        Population_weight = (Population) / BasePop
+    ) %>%
+    ungroup()
+
+pop <- pop %>%
+  mutate(across(c( Scenario), toupper))
+pop=subset(pop, Scenario!="SSP5" & Scenario!="SSP4")
+
+group.colors <- c(
+  SSP1 = "royalblue",
+  SSP2 = "springgreen",
+  SSP3 = "deeppink"
+)
+
+ggplot(pop, aes(x = Year, 
+                y = Population/1000000, 
+                color = Scenario, 
+                group = Scenario)) +
+    geom_line(size = 1.2) +
+
+    scale_color_manual(values = group.colors) +
+    labs(
+        title = "Population Growth By SSPs in Hawaii",
+        x = "Year",
+        y = "Population in Millions",
+        color = "Scenario"
+    ) +
+    theme_minimal(base_size = 14) +
+    theme(
+        text = element_text(family = "Times New Roman"), plot.title = element_text(hjust = 0.5), 
+        legend.position = "bottom",                 
+        legend.title = element_text(family = "Times New Roman"),
+        legend.text  = element_text(family = "Times New Roman")
+    )
+
+ggsave('images/population_scenario.png', dpi = 300, height = 5, width = 8, unit = 'in')
+
+```
 
 # Travel Cost
 
@@ -193,41 +276,6 @@ The following code calculates the **travel cost** from each residential grid to 
 
 Travel costs are estimated following the methodology of **Fezzi et al. (2023)**, who incorporate both time and monetary expenses into a unified measure of generalized cost. These estimates serve as one of the key explanatory variables in the Random Utility Model (RUM), which is used to simulate recreation site choice.
 
-
-```{r eval=FALSE}
-
-x1=merge(SSP1, x1, by.x = "polygon", by.y = "Box_ID_2", all.y = TRUE)
-
-x1 <- x1[order(x1$km2_ID,x1$siteID),]	## btw it is correct that the dim(x) is lower than dim(dist) because
-## I aggregated some sites
-length(unique(x1$siteID))
-
-### FINISHED LOADING AND MERGING DATASETS ###
-
-#rm(dist, pop, sitesjoin)
-
-### CALCULATE TRAVEL COST ####
-
-x1$cost <- 0
-x1$duration[ x1$siteID == 351] <- x1$duration[ x1$siteID == 351] + 40		## this sites needs 40min walking to be reached
-## Need to also do this for Hawaii
-### Change here for different fuel cost
-x1$cost <- x1$distance.meters*0.001 * (0.20 / 1.5	)				## fuel cost 
-## assumption on fuel cost:
-#
-# 20 miles/gallon
-# $4.3/gallon
-# means $4.3 per 20 miles --> 0.215 $/mile
-# 10 km --> 6.2 miles --> $1.33 travel cost per km
-# 10km * 0.20 / 1.5 = $1.33  so the values coincide with the cost used above.
-x1$cost <- x1$cost + (x1$duration / 60)* 3/4 * 24.14 	## add the value of time (assuming a 25$ per hour average wage rate)
-x1$cost <- x1$cost * 2 							## the value for a return trip
-#### put Molokini cost equal to the one of Makena Landing Beach Park + 100$ (cost of a snorkeling tour)
-x1$cost[x1$siteID == 388] <- x1$cost[x1$siteID == 359] + 100
-
-
-
-```
 # Prediction Model
 
 For each scenario predicted by the Atlantis ecosystem model (e.g., SSP1, SSP2, SSP3), we run a simulation loop across all time steps to estimate the welfare impacts of changing nearshore coral biomass.
@@ -267,12 +315,54 @@ Below is a loop (conceptual or in code) that:
 ```{r eval=FALSE}
 ### parameters
 
+x1 <- readRDS("codedata/x1.rds")
+x1$coastal[x1$name == "Home"]=0 
+
+### Prepared dataset for maps plot:
+
+out <- x1[order(x1$siteID),]
+out <- out[c(1,3,8:12)]
+out=out[!duplicated(out[2]),]
+
+##using 85K because that was the survey amount
+out$incometran_track=out$medincome_tract/85000
+sites_join <- read.csv("codedata/sites_join.csv")
+coasts <- sites_join[sites_join$coastal == 1 & sites_join$name!="Home",]
+
+
+x1=merge(SSP1, x1, by.x = "polygon", by.y = "Box_ID_2", all.y = TRUE)
+
+x1 <- x1[order(x1$km2_ID,x1$siteID),]	## btw it is correct that the dim(x) is lower than dim(dist) because
+## I aggregated some sites
+length(unique(x1$siteID))
+
+### FINISHED LOADING AND MERGING DATASETS ###
+
+#rm(dist, pop, sitesjoin)
+
+### CALCULATE TRAVEL COST ####
+
+x1$cost <- 0
+x1$duration[ x1$siteID == 351] <- x1$duration[ x1$siteID == 351] + 40		## this sites needs 40min walking to be reached
+## Need to also do this for Hawaii
+### Change here for different fuel cost
+x1$cost <- x1$distance.meters*0.001 * (0.20 / 1.5	)				## fuel cost 
+## assumption on fuel cost:
+#
+# 20 miles/gallon
+# $4.3/gallon
+# means $4.3 per 20 miles --> 0.215 $/mile
+# 10 km --> 6.2 miles --> $1.33 travel cost per km
+# 10km * 0.20 / 1.5 = $1.33  so the values coincide with the cost used above.
+x1$cost <- x1$cost + (x1$duration / 60)* 3/4 * 24.4	## add the value of time (assuming a 25$ per hour average wage rate)
+x1$cost <- x1$cost * 2 							## the value for a return trip
+#### put Molokini cost equal to the one of Makena Landing Beach Park + 100$ (cost of a snorkeling tour)
+x1$cost[x1$siteID == 388] <- x1$cost[x1$siteID == 359] + 100
+
+
+
+
 beta <- m1$results[,1]
-
-
-### Considering a transfer to Oahu:
-x1[is.na(x1)] <- 0
-
 
 
 X0 <- cbind( x1$cost,x1$home, x1$coastal, x1$citypark, x1$trailall,
@@ -314,12 +404,13 @@ for (i in 2:82) {
   
   b=merge(wtpw,out, by.x=c("id"),by.y=c("km2_ID"))
   b$time=i
-  a=b %>% group_by(island) %>% summarize(SSP1_block=sum(WTP * incometran_track*grid_km_censusblock_Pop18_densityKM * 365)
+  a=b %>% group_by(island) %>% summarize(SSP1_block=sum(WTP *grid_km_censusblock_Pop18_densityKM * 365)
   )
   a$time=i
   all=rbind(b,all)
   final=rbind(a,final)
 }
+
 df=final
 all_df=all
 colnames(all_df)[2]="SSP1"
@@ -331,10 +422,7 @@ colnames(all_df)[2]="SSP1"
 ## Predict SSP2
 
 ```{r eval=FALSE}
-####This is for SSP2
-
-x1 <- merge(dist1, sites_join)
-x1$coastal[x1$name == "Home"]=0 
+x1 <- readRDS("codedata/x1.rds")
 
 x1=merge(SSP2, x1, by.x = "polygon", by.y = "Box_ID_2", all.y = TRUE)
 
@@ -351,12 +439,8 @@ length(unique(x1$siteID))
 x1$cost <- 0
 x1$duration[ x1$siteID == 351] <- x1$duration[ x1$siteID == 351] + 40		## this sites needs 40min walking to be reached
 ## Need to also do this for Hawaii
-
-
 ### Change here for different fuel cost
-
 x1$cost <- x1$distance.meters*0.001 * (0.20 / 1.5	)				## fuel cost 
-
 ## assumption on fuel cost:
 #
 # 20 miles/gallon
@@ -364,25 +448,18 @@ x1$cost <- x1$distance.meters*0.001 * (0.20 / 1.5	)				## fuel cost
 # means $4.3 per 20 miles --> 0.215 $/mile
 # 10 km --> 6.2 miles --> $1.33 travel cost per km
 # 10km * 0.20 / 1.5 = $1.33  so the values coincide with the cost used above.
-
-x1$cost <- x1$cost + (x1$duration / 60)* 3/4 * 24.14 	## add the value of time (assuming a 25$ per hour average wage rate)
+x1$cost <- x1$cost + (x1$duration / 60)* 3/4 * 24.4
 x1$cost <- x1$cost * 2 							## the value for a return trip
-
 #### put Molokini cost equal to the one of Makena Landing Beach Park + 100$ (cost of a snorkeling tour)
-
 x1$cost[x1$siteID == 388] <- x1$cost[x1$siteID == 359] + 100
+
 
 
 ### PREPARE DATA FOR PREDICTIONS 
 
 ### parameters
 
-beta <- m3$results[,1]
-
-
-### Considering a transfer to Oahu:
-x1[is.na(x1)] <- 0
-
+beta <- m1$results[,1]
 
 
 X0 <- cbind( x1$cost,x1$home, x1$coastal, x1$citypark, x1$trailall,
@@ -425,7 +502,7 @@ for (i in 2:83) {
   
   b=merge(wtpw,out, by.x=c("id"),by.y=c("km2_ID"))
   b$time=i
-  a=b %>% group_by(island) %>% summarize(SSP2_block=sum(WTP * incometran_track*grid_km_censusblock_Pop18_densityKM * 365)
+  a=b %>% group_by(island) %>% summarize(SSP2_block=sum(WTP *grid_km_censusblock_Pop18_densityKM * 365)
   )
   a$time=i
   all=rbind(b,all)
@@ -443,9 +520,8 @@ all_df=merge(all_df, all, all.x = TRUE)
 
 ```{r eval=FALSE}
 ####This is for SSP3
+x1 <- readRDS("codedata/x1.rds")
 
-x1 <- merge(dist1, sites_join)
-x1$coastal[x1$name == "Home"]=0 
 
 x1=merge(SSP3, x1, by.x = "polygon", by.y = "Box_ID_2", all.y = TRUE)
 
@@ -455,19 +531,15 @@ length(unique(x1$siteID))
 
 ### FINISHED LOADING AND MERGING DATASETS ###
 
-
+#rm(dist, pop, sitesjoin)
 
 ### CALCULATE TRAVEL COST ####
 
 x1$cost <- 0
 x1$duration[ x1$siteID == 351] <- x1$duration[ x1$siteID == 351] + 40		## this sites needs 40min walking to be reached
 ## Need to also do this for Hawaii
-
-
 ### Change here for different fuel cost
-
 x1$cost <- x1$distance.meters*0.001 * (0.20 / 1.5	)				## fuel cost 
-
 ## assumption on fuel cost:
 #
 # 20 miles/gallon
@@ -475,25 +547,18 @@ x1$cost <- x1$distance.meters*0.001 * (0.20 / 1.5	)				## fuel cost
 # means $4.3 per 20 miles --> 0.215 $/mile
 # 10 km --> 6.2 miles --> $1.33 travel cost per km
 # 10km * 0.20 / 1.5 = $1.33  so the values coincide with the cost used above.
-
-x1$cost <- x1$cost + (x1$duration / 60)* 3/4 * 24.14 	## add the value of time (assuming a 25$ per hour average wage rate)
+x1$cost <- x1$cost + (x1$duration / 60)*  3/4 * 24.4
 x1$cost <- x1$cost * 2 							## the value for a return trip
-
 #### put Molokini cost equal to the one of Makena Landing Beach Park + 100$ (cost of a snorkeling tour)
-
 x1$cost[x1$siteID == 388] <- x1$cost[x1$siteID == 359] + 100
+
 
 
 ### PREPARE DATA FOR PREDICTIONS 
 
 ### parameters
 
-beta <- m3$results[,1]
-
-
-### Considering a transfer to Oahu:
-x1[is.na(x1)] <- 0
-
+beta <- m1$results[,1]
 
 
 X0 <- cbind( x1$cost,x1$home, x1$coastal, x1$citypark, x1$trailall,
@@ -536,7 +601,7 @@ for (i in 2:83) {
   
   b=merge(wtpw,out, by.x=c("id"),by.y=c("km2_ID"))
   b$time=i
-  a=b %>% group_by(island) %>% summarize(SSP3_block=sum(WTP * incometran_track*grid_km_censusblock_Pop18_densityKM * 365)
+  a=b %>% group_by(island) %>% summarize(SSP3_block=sum(WTP *grid_km_censusblock_Pop18_densityKM * 365)
   )
   a$time=i
   all=rbind(b,all)
@@ -553,62 +618,17 @@ all_df=merge(all_df, all, all.x = TRUE)
 
 Two datasets were created in the prediction modeling.
 
-1.  Aggregated Totals by population and income weighted by Island Each Year
-2.  Raw Welfare Predictions per KM Grid
+1.  Welfare Predictions per KM Grid
+2.  Aggregated Totals by population and income weighted by Island Each Year
 
 ```{r eval=FALSE}
-all_df$SSP1_TotalWTP=(all_df$SSP1*all_df$incometran_track*all_df$grid_km_censusblock_Pop18_densityKM * 365) 
-all_df$SSP2_TotalWTP=(all_df$SSP2*all_df$incometran_track*all_df$grid_km_censusblock_Pop18_densityKM * 365) 
-all_df$SSP3_TotalWTP=(all_df$SSP3*all_df$incometran_track*all_df$grid_km_censusblock_Pop18_densityKM * 365) 
+all_df$SSP1_TotalWTP=(all_df$SSP1*all_df$grid_km_censusblock_Pop18_densityKM * 365) 
+all_df$SSP2_TotalWTP=(all_df$SSP2*all_df$grid_km_censusblock_Pop18_densityKM * 365) 
+all_df$SSP3_TotalWTP=(all_df$SSP3*all_df$grid_km_censusblock_Pop18_densityKM * 365) 
+all_df$Year=all_df$time+2018
 
 
-wtpssp1_total=all_df %>%
-  filter(Year==2030 | Year==2050 | Year==2100)
-
-df_long <- wtpssp1_total %>%
-  pivot_longer(cols = starts_with("SSP"),
-               names_to = "SSP_Var",
-               values_to = "Value")
-
-# Step 2: Create wide column names with Year info
-df_long <- df_long %>%
-  mutate(column_name = paste0("year_", Year, "_", SSP_Var))
-
-# Step 3: Pivot wider using those column names
-df_wide <- df_long %>%
-  select(id, column_name, Value) %>%
-  pivot_wider(names_from = column_name, values_from = Value)
-
-write.csv(df_wide, file="allssps_islands.csv")
-
-coral=SSP1[c(1,12,32,82)]
-colnames(coral)[2]="SSP1_2030"
-colnames(coral)[3]="SSP1_2050"
-colnames(coral)[4]="SSP1_2100"
-
-coral1=SSP2[c(1,12,32,82)]
-colnames(coral1)[2]="SSP2_2030"
-colnames(coral1)[3]="SSP2_2050"
-colnames(coral1)[4]="SSP2_2100"
-
-coral=merge(coral,coral1)
-
-coral1=SSP3[c(1,12,32,82)]
-colnames(coral1)[2]="SSP3_2030"
-colnames(coral1)[3]="SSP3_2050"
-colnames(coral1)[4]="SSP3_2100"
-
-coral=merge(coral,coral1)
-write.csv(coral, file="coral_new.csv")
-
-df1=gather(df, condition, wtp, SSP1_block:SSP3_block, factor_key=TRUE)
-df1$condition=gsub("_block", "", df1$condition)
-df1$island=gsub("Kauai", "Kauaʻi", df1$island)
-df1$island=gsub("Molokai", "Molokaʻi", df1$island)
-df1$island=gsub("Oahu", "Oʻahu", df1$island)
-df1$island=gsub("Hawaii", "Hawaiʻi", df1$island)
-df1$island=gsub("Lanai", "Lānaʻi", df1$island)
-write.csv(df1, file="allssps_islands.csv")
+saveRDS(all_df, file = "codedata/all_grids.rds")
 
 ```
 
@@ -632,45 +652,97 @@ These discounted totals provide a long-term estimate of the economic cost of env
 
 ```{r eval=FALSE}
 
-library(readxl)
-allssps_islands <- read_csv("codedata/allssps_islands.csv") %>%
-  select(-starts_with("..."))
-                              
-allssps_islandspop <- read_excel("allssps_islands.xlsx",
-                                 sheet = "pop")
+df_long <- all_df[c(1:11)] %>%
+  pivot_longer(cols = starts_with("SSP"),
+               names_to = "SSP",
+               values_to = "Value")
+#points_sf_long$geometry=NULL
+#points_sf_long$pct_change[is.nan(points_sf_long$pct_change)] <- 0
+df_long$Year=df_long$time+2018
 
 
-allssps_islandspop=gather(allssps_islandspop,  condition, pop, SSP1:SSP3, factor_key=TRUE)
-allssps_islands=merge(allssps_islands,allssps_islandspop)
+#df_long=merge(df_long, points_sf_long[c(5:7,10)] ,by.x=c("id","Year","SSP"), by.y=c("km2_ID","year","scenario"), all.x=TRUE)
 
-allssps_islands$NPV=0
-allssps_islands$NPV[which(allssps_islands$Year>2020)]=.02
-allssps_islands$NPV[which(allssps_islands$Year>2079)]=.019
-allssps_islands$NPV[which(allssps_islands$Year>2094)]=.018
-allssps_islands$time_step <- allssps_islands$Year - 2020
+library(dplyr)
+library(zoo)
+
+#df_long <- df_long %>% group_by(id, SSP) %>% arrange(year) %>% mutate( pct_change = if_else( SSP != "SSP1", zoo::na.approx(pct_change, x = Year, na.rm = FALSE), pct_change  )) %>% ungroup()
+
+#df_long$island=droplevels(df_long$island)
+df_long$island <- as.character(df_long$island)
+
+df_long$island[which(df_long$island=="Oahu")]="Oʻahu"
+df_long$island[which(df_long$island=="Molokai")]="Molokaʻi"
+df_long$island[which(df_long$island=="Lanai")]="Lānaʻi"
+df_long$island[which(df_long$island=="Kauai")]="Kauaʻi"
+df_long$island[which(df_long$island=="Hawaii")]="Hawaiʻi"
+
+## Merge Population Of Hawaii Under SSP
+
+df_long=merge(df_long,pop[c(7,8,11)], by.x=c("Year", "SSP"),  by.y=c("Year","Scenario"), all.x=TRUE)
+df_long <- df_long %>%
+ group_by(SSP) %>% 
+  arrange(Year, .by_group = TRUE) %>% 
+  mutate(Year_j = Year + seq_along(Year)*1e-9) %>% 
+  mutate(pop = na.approx(Population_weight, Year_j, na.rm = FALSE)) %>% 
+  select(-Year_j) %>% 
+  ungroup()
 
 
-allssps_islands$NPV_WTP=allssps_islands$wtp/(1+allssps_islands$NPV)^allssps_islands$time_step
-allssps_islands$NPV_WTP_Pop=(allssps_islands$wtp*allssps_islands$pop)/(1+allssps_islands$NPV)^allssps_islands$time_step
-allssps_islands$NPV_WTP_pluristic=(allssps_islands$wtp*allssps_islands$pop*.4)/(1+0)^allssps_islands$time_step+(allssps_islands$wtp*allssps_islands$pop*.1)/(1)^allssps_islands$time_step+(allssps_islands$wtp*allssps_islands$pop*.3)/(1+.03)^allssps_islands$time_step+(allssps_islands$wtp*allssps_islands$pop*.2)/(1+.1)^allssps_islands$time_step
+# Start Discounting
+df_long$NPV_Lane=0
+df_long$NPV_Lane[which(df_long$Year>2020)]=.03
+df_long$NPV=0
+df_long$NPV[which(df_long$Year>2020)]=.02
+df_long$NPV[which(df_long$Year>2079)]=.019
+df_long$NPV[which(df_long$Year>2094)]=.018
+df_long$time_step <- df_long$Year - 2020
+df_long$time_step=df_long$time-2
 
-allssps_islands$NPV_WTP_pluristic2=(allssps_islands$wtp*allssps_islands$pop*.4)/(1+-.01)^allssps_islands$time_step+(allssps_islands$wtp*allssps_islands$pop*.1)/(1)^allssps_islands$time_step+(allssps_islands$wtp*allssps_islands$pop*.3)/(1+.01)^allssps_islands$time_step+(allssps_islands$wtp*allssps_islands$pop*.2)/(1+.5)^allssps_islands$time_step
+df_long <- df_long %>%
+    mutate( time_step = case_when(
+            time_step %in% 1:5 ~ 0,
+            time_step >= 6     ~ time_step - 5,
+            TRUE               ~ time_step) )
 
-allssps_islands$NPV_WTP_Lane=(allssps_islands$wtp*allssps_islands$pop)/(1+.03)^allssps_islands$time_step
+# value into annual terms by population km square
+df_long$pop=as.numeric(df_long$pop)
 
-allssps_islands$NPV_WTP_pluristic2=allssps_islands$NPV_WTP_pluristic2/1000
-allssps_islands$NPV_WTP_Lane=allssps_islands$NPV_WTP_Lane/1000
-allssps_islands$NPV_WTP_pluristic=allssps_islands$NPV_WTP_pluristic/1000
-allssps_islands$NPV_WTP=allssps_islands$NPV_WTP/1000
-allssps_islands$NPV_WTP_Pop=allssps_islands$NPV_WTP_Pop/1000
-colnames(allssps_islands)[3]="SSP Scenario"
+df_long$wtp=df_long$Value*df_long$grid_km_censusblock_Pop18_densityKM*365
+
+#df_long$wtp=df_long$Value*df_long$grid_km_censusblock_Pop18_densityKM*365
+df_long$NPV_WTP=df_long$wtp/(1+df_long$NPV)^df_long$time_step
+
+##OMB discounting long term decline 
+
+df_long$NPV_WTP_Pop=(df_long$wtp*df_long$pop)/(1+df_long$NPV)^df_long$time_step
+
+df_long$NPV_WTP_Lane=(df_long$wtp*df_long$pop)/(1+df_long$NPV_Lane)^df_long$time_step
 
 
-ggplot(allssps_islands, aes(x = Year)) +
-  geom_line(aes(y = NPV_WTP_Pop, color = `SSP Scenario`, group = `SSP Scenario`)) +
-  geom_line(aes(y = NPV_WTP_pluristic, color = `SSP Scenario`, group = `SSP Scenario`)) +
+##pluristic discounting
+
+df_long$NPV_WTP_pluristic=(df_long$wtp*df_long$pop*.4)/(1+0)^df_long$time_step+(df_long$wtp*df_long$pop*.1)/(1)^df_long$time_step+(df_long$wtp*df_long$pop*.3)/(1+.03)^df_long$time_step+(df_long$wtp*df_long$pop*.2)/(1+.1)^df_long$time_step
+
+df_long$NPV_WTP_pluristic_nonpop=(df_long$wtp*.4)/(1+0)^df_long$time_step+(df_long$wtp*.1)/(1)^df_long$time_step+(df_long$wtp*.3)/(1+.03)^df_long$time_step+(df_long$wtp*.2)/(1+.1)^df_long$time_step
+
+#df_long$NPV_WTP_kmgrid=(df_long$wtp*df_long$pct_change)/(1+df_long$NPV)^df_long$time_step
+
+```
+
+## Island Annual Social Welfare
+
+```{r eval=FALSE}
+
+group.colors <- c(SSP3 = "deeppink", SSP2 = "springgreen", SSP1 ="royalblue")
+
+df_island=df_long %>% group_by(island, SSP, Year) %>%summarise(NPV_WTP_Pop=sum(NPV_WTP_Pop)/1000, NPV_WTP_pluristic=sum(NPV_WTP_pluristic)/1000)
+
+ggplot(df_island, aes(x = Year)) +
+  geom_line(aes(y = NPV_WTP_Pop, color = SSP, group = SSP)) +
+  geom_line(aes(y = NPV_WTP_pluristic, color = SSP, group = SSP)) +
   geom_ribbon(
-    aes(ymin = NPV_WTP_pluristic, ymax = NPV_WTP_Pop, fill = `SSP Scenario`, group = `SSP Scenario`),
+    aes(ymin = NPV_WTP_pluristic, ymax = NPV_WTP_Pop, fill = SSP, group = SSP),
     alpha = 0.3, linetype = 0
   ) +
   scale_color_manual(values = group.colors) +
@@ -684,15 +756,28 @@ ggplot(allssps_islands, aes(x = Year)) +
   ) +
   xlab("Year") +
   ylab("Thousands Dollars") +
-  ggtitle("Projected Annual Welfare Impacts (in Thousands Dollars)") +
+  ggtitle("Annual Social Welfare Impacts (in Thousands Dollars)") +
   facet_wrap(~ factor(island, levels = c("Lānaʻi", "Molokaʻi", "Kauaʻi", "Hawaiʻi", "Maui", "Oʻahu")),
              ncol = 2, scales = "free")
 
-
-
+ggsave('images/islandgraphpluristic_new.png', dpi = 300, height = 8, width = 8, unit = 'in')
 ```
 
-## Snap Shot within Island
+## Tables
+
+```{r eval=FALSE}
+# Adjust for inflation from original data 2017 to 2014
+library(knitr)
+t=df_long %>% group_by(SSP) %>%summarise(NPV_WTP=sum(NPV_WTP)/1000000000*1.249,NPV_WTP_Pop=sum(NPV_WTP_Pop)/1000000000*1.249, NPV_WTP_pluristic_nonpop=sum(NPV_WTP_pluristic_nonpop)/1000000000*1.249,NPV_WTP_pluristic=sum(NPV_WTP_pluristic)/1000000000*1.249)
+
+
+kable(t, caption = "Summary of NPV_WTP_pluristic_nonpop", digits = 2)
+```
+
+```{r eval=FALSE}
+```
+
+## Grid Island
 
 The raw welfare estimates generated in previous steps are not yet adjusted for differences in income levels or population density. The next code snippet computes total willingness to pay (WTP) by:
 
@@ -709,8 +794,13 @@ This adjusted dataset is especially useful for understanding distributional impa
 ```{r eval=FALSE}
 #| eval: false
 # Define the cutpoints for 7 intervals
-all_df <- read_csv("codedata/all_grids.csv")%>%
-  select(-starts_with("..."))
+hawaii_counties=st_read("codedata/Coastline.shp")
+hawaii_counties <- sf::st_transform(hawaii_counties, 4326)
+all_df <- readRDS("codedata/all_grids.rds")
+
+locations=x1[c(87,90,91)]
+locations=unique(locations)
+all_df=merge(all_df, locations, by.x=c("id"),by.y=c("km2_ID"))
 all_df <- all_df %>%
   mutate(SSP1_WTP_bin = case_when(
     SSP1_TotalWTP <= -1e6         ~ "≤ -1M",
@@ -779,6 +869,8 @@ all_df$SSP2_WTP_bin <- factor(
   all_df$SSP2_WTP_bin,
   levels = names(color_palette)
 )
+
+
 
 # Then plot:
 ggplot(all_df %>% filter(Year %in% c(2020, 2050, 2075, 2100)),
@@ -856,7 +948,10 @@ legend(
 ![](images/hawaii_wtpssp1_animation.gif)
 
 ```{r eval=FALSE}
-#| eval: false
+
+library(ggplot2)
+
+library(gganimate)
 base_map <- ggplot(all_df %>% filter(Year >= 2020 & Year <= 2100)) +
 
     geom_point(aes(x = longitude, y = latitude, color = SSP1_WTP_bin),
@@ -876,10 +971,19 @@ anim <- base_map +
     ease_aes('cubic-in-out') +
     shadow_wake(alpha = 0.3, wake_length = 0.2)
 
-animate(anim, nframes = 81, fps = 10, width = 800, height = 600, renderer = gifski_renderer())
-anim_save("hawaii_wtpssp1_animation.gif", animation = last_animation())
+gganimate::animate(
+  anim,
+  nframes = 81,
+  fps = 10,
+  width = 800,
+  height = 600,
+  renderer = gifski_renderer()
+) 
 
-
+gganimate::anim_save(
+  "hawaii_wtpssp1_animation.gif",
+  animation = gganimate::last_animation()
+)
 
 ```
 
@@ -910,8 +1014,21 @@ anim <- base_map +
     ease_aes('cubic-in-out') +
     shadow_wake(alpha = 0.3, wake_length = 0.2)
 
-animate(anim, nframes = 81, fps = 10, width = 800, height = 600, renderer = gifski_renderer())
-anim_save("hawaii_wtpssp2_animation.gif", animation = last_animation())
+gganimate::animate(
+  anim,
+  nframes = 81,
+  fps = 10,
+  width = 800,
+  height = 600,
+  renderer = gifski_renderer()
+) 
+
+gganimate::anim_save(
+  "hawaii_wtpssp2_animation.gif",
+  animation = gganimate::last_animation()
+)
+
+
 ```
 
 ## SSP3
@@ -941,8 +1058,114 @@ anim <- base_map +
     ease_aes('cubic-in-out') +
     shadow_wake(alpha = 0.3, wake_length = 0.2)
 
-animate(anim, nframes = 81, fps = 10, width = 800, height = 600, renderer = gifski_renderer())
-anim_save("hawaii_wtpssp3_animation.gif", animation = last_animation())
+gganimate::animate(
+  anim,
+  nframes = 81,
+  fps = 10,
+  width = 800,
+  height = 600,
+  renderer = gifski_renderer()
+) 
+
+gganimate::anim_save(
+  "hawaii_wtpssp3_animation.gif",
+  animation = gganimate::last_animation()
+)
+
+
 ```
 
-### 
+# Environmental Justice
+
+```{r eval=FALSE}
+
+dishawaii=read_sf("/codedata/hawaii_statepercentiles.shp")
+
+ejscreen_data <- dishawaii %>%
+  rowwise() %>%
+  mutate(
+    env_burden = any(c_across(c(P_PM25,P_OZONE,P_DSLPM,P_RSEI_AIR,P_PTRAF,
+P_LDPNT,P_PNPL,P_PRMP,P_PTSDF,P_UST,P_PWDIS,P_NO2,P_DWATER)) >= 90, na.rm = TRUE),
+    soc_vulnerable = any(c_across(c(P_PEOPCOLO,P_LOWINCPC,P_UNEMPPCT,P_DISABILI,P_LINGISOP,P_LESSHSPC,P_UNDER5PC,P_OVER64PC,P_LIFEEXPP)) >= 90, na.rm = TRUE),
+  Disadvantage_block_either = as.integer(env_burden | soc_vulnerable, 1, 0),
+  Disadvantage_block = as.integer(env_burden & soc_vulnerable, 1, 0)
+  ) %>%
+  ungroup()
+
+ejscreen_data=ejscreen_data[c(1:4,232:235)]
+
+ejscreen_data <- st_transform(ejscreen_data, 4326)
+
+latlon <- x1[order(x1$siteID),]
+latlon=latlon[c(85,87,90:91)]
+library(sf)
+library(dplyr)
+
+latlon=distinct(latlon)
+latlon <- st_as_sf(latlon, coords = c("longitude", "latitude"), crs = 4326)
+
+
+nearest_idx <- st_nearest_feature(latlon, ejscreen_data)
+
+# Join attributes from the nearest polygon
+latlon_joined <- cbind(
+  latlon,
+  ejscreen_data[nearest_idx, ]
+)
+latlon_joined=data.frame(latlon_joined)
+
+
+
+
+dishawaii=read_sf("/Users/ashleylowe/EJ/EPA_IRA_Disadvantage_Hawaii.shp")
+dishawaii <- st_transform(dishawaii, 4326)
+
+nearest_idx <- st_nearest_feature(latlon, dishawaii)
+
+# Join attributes from the nearest polygon
+latlon_joined <- cbind(
+  latlon_joined,
+  dishawaii[nearest_idx, ]
+)
+all_df_sf=merge(all_df_time,latlon_joined, by.x = c("id","island"),by.y = c("km2_ID", "island"))
+all_df_sf$Year=all_df$time+2018
+#all_df_sf=merge(latlon, all_df, by.y = c("id","island"),by.x = c("km2_ID", "island"))
+
+
+
+summary_table <- all_df %>%
+    st_drop_geometry() %>%
+    group_by(env_burden, island) %>%
+    summarise(
+        variance = var(avg_welfare_loss_zip), 
+        median = median(avg_welfare_loss_zip), 
+        mean = mean(avg_welfare_loss_zip),
+        .groups = "drop"
+    ) %>%
+    mutate(
+        env_burden = ifelse(env_burden, "Disadvantaged", "Not Disadvantaged")
+    )
+
+
+all_df_sf %>%
+  filter(Year == 2030) %>%
+  group_by(Disadvanta, island) %>%
+  summarise(
+    total_pop = sum(grid_km_censusblock_Pop18_densityKM, na.rm = TRUE),
+
+    total_welfare = sum(
+      SSP1 * 365 * 1.249 *
+      grid_km_censusblock_Pop18_densityKM,
+      na.rm = TRUE
+    ),
+
+    welfare_per_person = total_welfare / total_pop,
+
+    average_welfare = mean(
+      SSP1 * 365 * 1.24,
+      na.rm = TRUE
+    ),
+
+    .groups = "drop"
+  )
+```

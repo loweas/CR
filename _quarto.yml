@@ -3,6 +3,9 @@ project:
 
 website:
   title: ""
+  search: true
+  google-analytics: "G-PZG13ETS1Z" # Replace with your Google Tag ID
+
   navbar:
     left:
       - href: index.qmd

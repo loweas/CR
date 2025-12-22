@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://loweas.github.io/CR/about.html</loc>
-    <lastmod>2025-11-16T02:06:23.556Z</lastmod>
+    <loc>https://loweas.github.io/CR/codedata/Ej/hawaii_statepercentiles.html</loc>
+    <lastmod>2025-11-27T23:07:04.492Z</lastmod>
   </url>
   <url>
     <loc>https://loweas.github.io/CR/index.html</loc>
-    <lastmod>2025-11-16T02:28:41.859Z</lastmod>
+    <lastmod>2025-12-22T07:32:39.617Z</lastmod>
+  </url>
+  <url>
+    <loc>https://loweas.github.io/CR/about.html</loc>
+    <lastmod>2025-12-04T00:27:43.475Z</lastmod>
   </url>
 </urlset>

@@ -66,5 +66,4 @@ Discount rate schedules and effective discount factors are reported in Supplemen
 
 ## Citation
 
-Lowe Mackenzie, A., Dugstad, A., Fezzi, C., Perng, L., & Oleson, K. L. L. (2024). The economic impact of climate change on coral reef in the Main Hawaiian Islands. *Ecological Economics*, 220, 107096. https://doi.org/10.1016/j.ecolecon.2024.107096
-
+Lowe Mackenzie, Ashley and Dugstad, Anders and Fezzi, Carlo and Perng, Lansing and Oleson, Kirsten, The economic impact of climate change on coral reef in the Main Hawaiian Islands. Available at SSRN: https://ssrn.com/abstract=5495504 or http://dx.doi.org/10.2139/ssrn.5495504

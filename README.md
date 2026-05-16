@@ -14,7 +14,7 @@ The following code will produce predicts for changes welfare based on changes in
 
 The graphical representation of this process is illustrated below
 
-![](images/figure3.png)
+![](images/Figure3_V2.png)
 
 This repository contains the data, code, and outputs supporting the analysis of projected recreation-related welfare losses associated with coral reef decline across the Hawaiian Islands to 2100.
 
